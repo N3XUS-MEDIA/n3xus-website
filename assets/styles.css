@@ -4010,3 +4010,30 @@ body { animation: pageEntry 0.4s ease both; }
   }
 }
 
+/* ════════════════════════════════════
+   PAYMENT STRIP + SYRAX BADGE
+════════════════════════════════════ */
+.payment-strip { padding:56px 0;border-top:1px solid var(--bdr);background:var(--bg2) }
+.payment-strip-label { font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--white4);text-align:center;margin-bottom:24px }
+.payment-methods { display:flex;align-items:flex-start;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:20px }
+.payment-badge { display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 24px;border:1px solid var(--bdr);border-radius:10px;background:var(--surface);color:var(--white3);font-size:13px;font-weight:500;min-width:120px;text-align:center }
+.payment-badge svg { color:var(--white3);flex-shrink:0 }
+.payment-badge--accent { border-color:rgba(0,200,163,0.3);background:rgba(0,200,163,0.04);color:var(--white) }
+.payment-badge--accent svg { color:var(--accent) }
+.payment-powered { font-size:10px;font-family:var(--font-mono);color:var(--accent);text-decoration:none;letter-spacing:0.05em;margin-top:2px }
+.payment-powered:hover { opacity:0.75 }
+.payment-note { text-align:center;font-size:12px;color:var(--white4);max-width:480px;margin:0 auto;line-height:1.7 }
+.payment-note a { color:var(--accent);text-decoration:none }
+.payment-note a:hover { opacity:0.75 }
+
+/* Footer Syrax badge */
+.footer-payment { display:flex;align-items:center;gap:6px;font-size:11px;color:var(--white4);margin-top:10px }
+.footer-syrax-link { display:inline-flex;align-items:center;gap:4px;color:var(--accent);text-decoration:none;font-weight:600;font-size:11px;transition:opacity 0.2s }
+.footer-syrax-link:hover { opacity:0.75 }
+.footer-syrax-link svg { flex-shrink:0 }
+
+@media (max-width:600px) {
+  .payment-methods { flex-direction:column;align-items:center }
+  .payment-badge { width:100%;max-width:260px }
+}
+
