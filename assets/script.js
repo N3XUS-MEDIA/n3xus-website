@@ -9,6 +9,39 @@
   'use strict';
 
   /* ─────────────────────────────────────
+     THEME TOGGLE  (light default, dark opt-in, persisted)
+     The inline <head> script sets data-theme before paint to
+     avoid a flash; here we sync the button and handle clicks.
+  ───────────────────────────────────── */
+  (function () {
+    var KEY = 'n3xus-theme';
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+
+    function apply(theme) {
+      if (theme === 'dark') root.setAttribute('data-theme', 'dark');
+      else root.removeAttribute('data-theme');
+      if (btn) {
+        var dark = theme === 'dark';
+        btn.setAttribute('aria-pressed', String(dark));
+        btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+    }
+
+    var stored = null;
+    try { stored = localStorage.getItem(KEY); } catch (e) {}
+    apply(stored === 'dark' ? 'dark' : 'light');
+
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        try { localStorage.setItem(KEY, next); } catch (e) {}
+        apply(next);
+      });
+    }
+  })();
+
+  /* ─────────────────────────────────────
      SCROLL PROGRESS BAR
   ───────────────────────────────────── */
   const progressBar = document.createElement('div');
@@ -641,10 +674,25 @@ Keep replies concise (2-4 sentences). Guide toward booking a strategy call.`;
       animId = requestAnimationFrame(frame);
     }
 
+    const _rmCanvas = window.matchMedia('(prefers-reduced-motion:reduce)');
+
     document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
 
-    function start() { resize(); dots = Array.from({ length: COUNT }, mkDot); frame(); }
-    window.addEventListener('resize', () => { cancelAnimationFrame(animId); resize(); dots = Array.from({ length: COUNT }, mkDot); frame(); }, { passive: true });
+    function start() {
+      if (_rmCanvas.matches) { return; }      /* honour reduced-motion (canvas is also hidden via CSS) */
+      cancelAnimationFrame(animId);            /* never run two loops at once */
+      resize();
+      dots = Array.from({ length: COUNT }, mkDot);
+      frame();
+    }
+    function stop() { cancelAnimationFrame(animId); }
+
+    window.addEventListener('resize', start, { passive: true });
+    /* Pause the render loop while the tab is hidden — saves CPU/battery */
+    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+    /* React live if the user toggles their reduced-motion preference */
+    if (_rmCanvas.addEventListener) _rmCanvas.addEventListener('change', () => { _rmCanvas.matches ? stop() : start(); });
+
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
     else start();
   }
