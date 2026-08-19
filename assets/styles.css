@@ -4381,3 +4381,40 @@ body { animation: pageEntry 0.4s ease both; }
   .painnav-card { padding:22px 20px }
 }
 @media (prefers-reduced-motion:reduce) { .painnav-card:hover { transform:none } }
+
+/* ── HOMEPAGE SERVICE-CARD ICON ANIMATIONS (new keys) ────────────────────────
+   The grid was rebuilt around the four Core3 layers, introducing data-svc
+   keys the original animation set didn't cover (webos, agents, content,
+   intel). Without these, four of the eight cards hover dead. Same idiom and
+   intensity as the existing set above. */
+
+/* Website OS — screen powering up */
+@keyframes screenBoot {
+  0%,100% { transform: scale(1);    filter: drop-shadow(0 0 4px rgba(0,200,163,0.4)); }
+  30%     { transform: scale(1.08); filter: drop-shadow(0 0 12px rgba(0,200,163,1)) drop-shadow(0 0 20px rgba(0,200,163,0.5)); }
+  60%     { transform: scale(1.02); filter: drop-shadow(0 0 7px rgba(0,200,163,0.7)); }
+}
+.svc-card[data-svc="webos"]:hover .svc-card-icon { animation: screenBoot 1.5s ease-in-out infinite; }
+
+/* AI Agents — attentive tilt, like something listening */
+@keyframes agentNod {
+  0%,100% { transform: translateY(0)     rotate(0deg);   filter: drop-shadow(0 0 4px rgba(0,200,163,0.4)); }
+  30%     { transform: translateY(-3px)  rotate(-6deg);  filter: drop-shadow(0 0 12px rgba(0,200,163,0.95)); }
+  65%     { transform: translateY(-1px)  rotate(5deg);   filter: drop-shadow(0 0 8px rgba(0,200,163,0.7)); }
+}
+.svc-card[data-svc="agents"]:hover .svc-card-icon { animation: agentNod 1.3s ease-in-out infinite; }
+
+/* Content & Social — message lifting off */
+@keyframes contentFloat {
+  0%,100% { transform: translateY(0)    scale(1);    filter: drop-shadow(0 0 4px rgba(0,200,163,0.4)); }
+  50%     { transform: translateY(-4px) scale(1.06); filter: drop-shadow(0 0 12px rgba(0,200,163,0.95)) drop-shadow(0 0 18px rgba(0,200,163,0.45)); }
+}
+.svc-card[data-svc="content"]:hover .svc-card-icon { animation: contentFloat 1.7s ease-in-out infinite; }
+
+/* Intelligence — bars stepping up */
+@keyframes barsRise {
+  0%,100% { transform: scaleY(1);    filter: drop-shadow(0 0 4px rgba(0,200,163,0.4)); }
+  35%     { transform: scaleY(1.16); filter: drop-shadow(0 0 12px rgba(0,200,163,1)); }
+  70%     { transform: scaleY(1.06); filter: drop-shadow(0 0 8px rgba(0,200,163,0.7)); }
+}
+.svc-card[data-svc="intel"]:hover .svc-card-icon { animation: barsRise 1.5s ease-in-out infinite;transform-origin:center bottom }
