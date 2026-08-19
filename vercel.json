@@ -2,7 +2,9 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/services/website-os", "destination": "/services/website-os.html" },
     { "source": "/services/brand",     "destination": "/services/brand.html" },
+    { "source": "/services/dstv-stream", "destination": "/services/dstv-stream.html" },
     { "source": "/services/digital",  "destination": "/services/digital.html" },
     { "source": "/services/ai",       "destination": "/services/ai.html" },
     { "source": "/services/software", "destination": "/services/software.html" },

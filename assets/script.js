@@ -331,6 +331,14 @@
     const errMsg  = form && form.querySelector('.form-error-msg');
     if (!form) return;
 
+    // Preselect service from ?service= so campaign/CTA links land on the right intent
+    const requested = new URLSearchParams(window.location.search).get('service');
+    if (requested) {
+      const select = form.querySelector('#cf-service');
+      const match = select && [...select.options].some(o => o.value === requested);
+      if (match) select.value = requested;
+    }
+
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
       const btn     = form.querySelector('[type="submit"]');
@@ -429,34 +437,12 @@
     document.querySelectorAll('.svc-panel').forEach(p => p.classList.toggle('on', p.id === 'panel-' + id));
   };
 
-  /* ─────────────────────────────────────
-     N3XUS BRAND FONT WALKER
-  ───────────────────────────────────── */
-  function runBrandWalker() {
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-      acceptNode(n) {
-        const p = n.parentElement;
-        if (!p || p.classList.contains('n3xus-brand') || p.nodeName === 'SCRIPT' || p.nodeName === 'STYLE') return NodeFilter.FILTER_REJECT;
-        return n.nodeValue.includes('N3XUS') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
-      }
-    });
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach(n => {
-      const frag = document.createDocumentFragment();
-      n.nodeValue.split(/(N3XUS)/g).forEach(part => {
-        if (part === 'N3XUS') {
-          const s = document.createElement('span');
-          s.className = 'n3xus-brand';
-          s.textContent = 'N3XUS';
-          frag.appendChild(s);
-        } else { frag.appendChild(document.createTextNode(part)); }
-      });
-      n.parentNode.replaceChild(frag, n);
-    });
-  }
-  if (typeof requestIdleCallback !== 'undefined') requestIdleCallback(runBrandWalker);
-  else setTimeout(runBrandWalker, 500);
+  /* The old "brand font walker" wrapped every literal "N3XUS" in a
+     <span class="n3xus-brand">. It changed only weight (same Syne family)
+     but split text nodes inside flex/inline-flex containers — .faq-q,
+     .nav-link, .btn — where each fragment became its own flex item and
+     `justify-content:space-between` blew them apart. Removed: body copy
+     now renders "N3XUS" in one consistent font, with no layout damage. */
 
   /* ─────────────────────────────────────
      AI CHATBOT — new pages (#chat-toggle)
@@ -609,93 +595,11 @@ Keep replies concise (2-4 sentences). Guide toward booking a strategy call.`;
     setTimeout(() => { if (!chatOpen && unread) { unread.style.display = 'flex'; unread.textContent = '1'; } }, 2000);
   })();
 
-  /* ─────────────────────────────────────
-     NEURAL NETWORK CANVAS (mouse-reactive)
-  ───────────────────────────────────── */
-  const canvas = document.getElementById('bg-canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let W, H, dots = [], mouse = { x: -1000, y: -1000 }, animId;
-    const COUNT   = Math.min(70, Math.floor(window.innerWidth / 18));
-    const MAX_D   = 170;
-    const MOUSE_R = 120;
-
-    function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
-
-    function mkDot() {
-      return {
-        x: Math.random() * W,
-        y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
-        r: Math.random() * 1.6 + 0.4
-      };
-    }
-
-    function frame() {
-      ctx.clearRect(0, 0, W, H);
-      dots.forEach(d => {
-        /* subtle mouse repulsion */
-        const dx = d.x - mouse.x, dy = d.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < MOUSE_R) {
-          const force = (MOUSE_R - dist) / MOUSE_R * 0.6;
-          d.vx += (dx / dist) * force;
-          d.vy += (dy / dist) * force;
-        }
-        /* dampen speed */
-        d.vx *= 0.99; d.vy *= 0.99;
-        d.x += d.vx; d.y += d.vy;
-        if (d.x < 0) { d.x = 0; d.vx = Math.abs(d.vx); }
-        if (d.x > W) { d.x = W; d.vx = -Math.abs(d.vx); }
-        if (d.y < 0) { d.y = 0; d.vy = Math.abs(d.vy); }
-        if (d.y > H) { d.y = H; d.vy = -Math.abs(d.vy); }
-
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0,200,163,0.5)';
-        ctx.fill();
-      });
-
-      for (let i = 0; i < dots.length; i++) {
-        for (let j = i + 1; j < dots.length; j++) {
-          const dx = dots[i].x - dots[j].x, dy = dots[i].y - dots[j].y;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < MAX_D) {
-            ctx.beginPath();
-            ctx.moveTo(dots[i].x, dots[i].y);
-            ctx.lineTo(dots[j].x, dots[j].y);
-            ctx.strokeStyle = `rgba(0,200,163,${0.14 * (1 - d / MAX_D)})`;
-            ctx.lineWidth = 0.6;
-            ctx.stroke();
-          }
-        }
-      }
-      animId = requestAnimationFrame(frame);
-    }
-
-    const _rmCanvas = window.matchMedia('(prefers-reduced-motion:reduce)');
-
-    document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
-
-    function start() {
-      if (_rmCanvas.matches) { return; }      /* honour reduced-motion (canvas is also hidden via CSS) */
-      cancelAnimationFrame(animId);            /* never run two loops at once */
-      resize();
-      dots = Array.from({ length: COUNT }, mkDot);
-      frame();
-    }
-    function stop() { cancelAnimationFrame(animId); }
-
-    window.addEventListener('resize', start, { passive: true });
-    /* Pause the render loop while the tab is hidden — saves CPU/battery */
-    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
-    /* React live if the user toggles their reduced-motion preference */
-    if (_rmCanvas.addEventListener) _rmCanvas.addEventListener('change', () => { _rmCanvas.matches ? stop() : start(); });
-
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-    else start();
-  }
+  /* Legacy duplicate removed: a second, older neural-network canvas loop
+     also bound to #bg-canvas and ran its own requestAnimationFrame, while
+     the ANIMATED BACKGROUND block below created a SECOND element with the
+     same id. Result on every page: duplicate DOM ids and two animation
+     loops painting over each other. One system is kept, below. */
 
   /* ─────────────────────────────────────
      SERVICE CARD MOUSE-TRACKING HIGHLIGHT
@@ -764,20 +668,23 @@ Keep replies concise (2-4 sentences). Guide toward booking a strategy call.`;
   (function bgCanvas() {
     if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
 
-    /* Inject canvas as first body element */
-    const cv = document.createElement('canvas');
-    cv.id = 'bg-canvas';
-    cv.setAttribute('aria-hidden', 'true');
-    document.body.prepend(cv);
+    /* Reuse the canvas already in the page markup. Creating a new one here
+       produced a second element with the same id on every page. */
+    let cv = document.getElementById('bg-canvas');
+    if (!cv) {
+      cv = document.createElement('canvas');
+      cv.id = 'bg-canvas';
+      cv.setAttribute('aria-hidden', 'true');
+      document.body.prepend(cv);
+    }
 
     const cx   = cv.getContext('2d');
     const BG   = '#030c0d';
     const TEAL  = [0, 200, 163];
-    const PURP  = [131, 90, 241];
-    const WHITE = [220, 235, 240];  /* neutral white particles */
-    const N    = 85;        /* particle count (was 72) */
-    const LINK = 160;       /* max connection px (was 145) */
-    const SPD  = 0.22;      /* max drift speed */
+    const WHITE = [220, 235, 240];  /* neutral white particles — single teal accent, brand rule */
+    const N    = 58;        /* particle count — airier, less "network diagram" */
+    const LINK = 145;       /* max connection px */
+    const SPD  = 0.18;      /* max drift speed */
     const LSQR = LINK * LINK;
 
     let W, H;
@@ -795,9 +702,9 @@ Keep replies concise (2-4 sentences). Guide toward booking a strategy call.`;
         y:  Math.random() * H,
         vx: (Math.random() - 0.5) * SPD,
         vy: (Math.random() - 0.5) * SPD,
-        r:  rand(0.5, 1.8),
-        col: (function(){ const r = Math.random(); return r > 0.82 ? PURP : r > 0.65 ? WHITE : TEAL; })(),
-        a:  rand(0.32, 0.72),
+        r:  rand(0.5, 1.6),
+        col: Math.random() > 0.78 ? WHITE : TEAL,
+        a:  rand(0.2, 0.5),
         t:  Math.random() * Math.PI * 2,
         pt: rand(0.006, 0.014),
       };
@@ -828,7 +735,7 @@ Keep replies concise (2-4 sentences). Guide toward booking a strategy call.`;
             a, b,
             t:     0,
             spd:   rand(0.008, 0.018),
-            col:   Math.random() > 0.5 ? TEAL : PURP,
+            col:   TEAL,
           });
           break;
         }
@@ -838,6 +745,10 @@ Keep replies concise (2-4 sentences). Guide toward booking a strategy call.`;
     /* ── main render loop ── */
     function frame() {
       requestAnimationFrame(frame);
+
+      /* Canvas can be zero-sized (hidden tab, zero-height container) —
+         `scanY % 0` is NaN, which makes createLinearGradient throw. */
+      if (!W || !H) return;
 
       /* dark background */
       cx.fillStyle = BG;
@@ -860,7 +771,7 @@ Keep replies concise (2-4 sentences). Guide toward booking a strategy call.`;
           const dx = a.x - b.x, dy = a.y - b.y;
           const dSq = dx * dx + dy * dy;
           if (dSq < LSQR) {
-            const alpha = (1 - dSq / LSQR) * 0.22;
+            const alpha = (1 - dSq / LSQR) * 0.14;
             cx.beginPath();
             cx.strokeStyle = `rgba(${a.col[0]},${a.col[1]},${a.col[2]},${alpha})`;
             cx.lineWidth = 0.5;
