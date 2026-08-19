@@ -2,6 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/services",          "destination": "/services/index.html" },
     { "source": "/services/website-os", "destination": "/services/website-os.html" },
     { "source": "/services/brand",     "destination": "/services/brand.html" },
     { "source": "/services/dstv-stream", "destination": "/services/dstv-stream.html" },
@@ -12,9 +13,6 @@
     { "source": "/about",             "destination": "/about.html" },
     { "source": "/contact",           "destination": "/contact.html" },
     { "source": "/pricing",           "destination": "/pricing.html" }
-  ],
-  "redirects": [
-    { "source": "/services",          "destination": "/services/ai", "permanent": false }
   ],
   "headers": [
     {

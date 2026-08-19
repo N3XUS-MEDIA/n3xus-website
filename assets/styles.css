@@ -4348,3 +4348,36 @@ body { animation: pageEntry 0.4s ease both; }
   .caplist li { font-size:0.76rem;padding:5px 10px }
 }
 @media (prefers-reduced-motion:reduce) { .capgroup:hover { box-shadow:none } }
+
+/* ── SOLUTIONS HUB (/services) ───────────────────────────────────────────── */
+/* Problem-led entry cards — the client picks their pain, not our taxonomy */
+.painnav { display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px }
+.painnav-card { display:block;text-decoration:none;background:var(--surface);border:1px solid var(--bdr);border-radius:16px;padding:26px 24px;transition:border-color 0.3s var(--ease-out),transform 0.3s var(--ease-out),box-shadow 0.3s var(--ease-out) }
+.painnav-card:hover { border-color:var(--accent-bdr);transform:translateY(-3px);box-shadow:var(--shadow-md) }
+.painnav-quote { font-family:var(--font-head);font-size:1.02rem;color:var(--white);font-weight:600;line-height:1.4;margin:0 0 10px }
+.painnav-fix { font-size:0.87rem;color:var(--white2);line-height:1.6;margin:0 0 14px }
+.painnav-go { font-size:0.8rem;color:var(--accent-ink);font-weight:600 }
+
+/* Solution catalogue — every solution, each with the value it creates */
+.cat-layer { margin-bottom:56px }
+.cat-layer:last-child { margin-bottom:0 }
+.cat-layer-head { display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:8px }
+.cat-layer-num { font-family:var(--font-mono);font-size:0.78rem;font-weight:600;color:var(--accent-ink);letter-spacing:0.08em }
+.cat-layer-head h3 { font-family:var(--font-head);font-size:1.5rem;color:var(--white);margin:0;font-weight:700;line-height:1.25 }
+.cat-layer-desc { font-size:0.95rem;color:var(--white2);line-height:1.7;margin:0 0 26px;max-width:760px }
+
+.cat-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px }
+.cat-item { background:var(--surface);border:1px solid var(--bdr);border-radius:14px;padding:22px;transition:border-color 0.3s var(--ease-out),box-shadow 0.3s var(--ease-out) }
+.cat-item:hover { border-color:var(--accent-bdr);box-shadow:var(--shadow-sm) }
+.cat-item h4 { font-family:var(--font-head);font-size:0.97rem;color:var(--white);margin:0 0 8px;font-weight:600;line-height:1.35 }
+.cat-item p { font-size:0.85rem;color:var(--white2);line-height:1.6;margin:0 0 12px }
+/* The value line is the point of this page — it must read differently to the description */
+.cat-value { display:flex;align-items:flex-start;gap:8px;padding-top:11px;border-top:1px solid var(--hairline);font-size:0.82rem;color:var(--accent-ink);font-weight:500;line-height:1.5 }
+.cat-value svg { flex-shrink:0;margin-top:3px }
+
+@media (max-width:600px) {
+  .cat-layer-head h3 { font-size:1.28rem }
+  .cat-item { padding:19px }
+  .painnav-card { padding:22px 20px }
+}
+@media (prefers-reduced-motion:reduce) { .painnav-card:hover { transform:none } }
