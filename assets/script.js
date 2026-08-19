@@ -339,6 +339,37 @@
       if (match) select.value = requested;
     }
 
+    /* Prefill from the Website OS calculator, if the visitor arrived from it.
+       Only ever fills an empty message box — never overwrites typed text —
+       and clears the stored figures once used so a later visit starts clean. */
+    (function prefillFromLeakCalc() {
+      let data;
+      try {
+        const raw = sessionStorage.getItem('n3xus-leak');
+        if (!raw) return;
+        data = JSON.parse(raw);
+        sessionStorage.removeItem('n3xus-leak');
+      } catch (e) { return; }
+      if (!data || !data.total) return;
+
+      const msg = form.querySelector('#cf-message');
+      if (!msg || msg.value.trim() !== '') return;
+
+      const fmt = n => '$' + Number(n).toLocaleString('en-US');
+
+      msg.value =
+        'I used the calculator on your Website OS page. Based on my own figures:\n\n' +
+        '• About ' + data.leads + ' enquiries a month, average job around ' + fmt(data.value) + '\n' +
+        '• I win roughly ' + data.close + '% of them, and about ' + data.missed + '% never get a proper follow-up\n' +
+        '• Around ' + data.hours + ' hours a week goes on manual admin at about ' + fmt(data.rate) + '/hr\n\n' +
+        'That came out at ' + data.admin + ' a year in admin time and ' + data.lost +
+        ' in enquiries going cold (' + data.count + ' of them) — ' + data.total + ' in total.\n\n' +
+        'I’d like the free audit to see how much of that is actually recoverable.';
+
+      /* Grow the textarea to fit if it is an auto-sizing one */
+      if (msg.scrollHeight > msg.clientHeight) msg.style.height = msg.scrollHeight + 'px';
+    })();
+
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
       const btn     = form.querySelector('[type="submit"]');
@@ -673,6 +704,31 @@ Keep replies concise (2-4 sentences). Guide toward booking a strategy call.`;
 
     Object.values(inputs).forEach(el => el.addEventListener('input', recalc));
     recalc();
+
+    /* Carry the result into the enquiry form. Deliberately via sessionStorage
+       rather than query parameters: these are the visitor's own trading
+       figures, and query strings end up in analytics, referrer headers and
+       shared links. sessionStorage stays same-tab, same-origin, and is
+       cleared the moment it has been read. */
+    const cta = document.getElementById('leak-cta-link');
+    if (cta) {
+      cta.addEventListener('click', function () {
+        try {
+          sessionStorage.setItem('n3xus-leak', JSON.stringify({
+            leads:  +inputs.leads.value,
+            value:  +inputs.value.value,
+            close:  +inputs.close.value,
+            missed: +inputs.missed.value,
+            hours:  +inputs.hours.value,
+            rate:   +inputs.rate.value,
+            admin:  out.admin.textContent,
+            lost:   out.lost.textContent,
+            count:  out.count.textContent,
+            total:  out.total.textContent
+          }));
+        } catch (e) { /* private mode / storage disabled — link still works */ }
+      });
+    }
   })();
 
   /* ─────────────────────────────────────
