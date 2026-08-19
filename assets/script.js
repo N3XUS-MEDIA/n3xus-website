@@ -602,6 +602,80 @@ Keep replies concise (2-4 sentences). Guide toward booking a strategy call.`;
      loops painting over each other. One system is kept, below. */
 
   /* ─────────────────────────────────────
+     WEBSITE OS — COST-OF-INACTION CALCULATOR
+     Every figure shown is derived arithmetically from what the visitor
+     types. Deliberately no benchmark multipliers, industry averages or
+     assumed conversion lift: the page must never assert a number it
+     cannot show the working for.
+  ───────────────────────────────────── */
+  (function leakCalc() {
+    const root = document.getElementById('leak-calc');
+    if (!root) return;
+
+    const inputs = {
+      leads:  document.getElementById('lk-leads'),
+      value:  document.getElementById('lk-value'),
+      close:  document.getElementById('lk-close'),
+      missed: document.getElementById('lk-missed'),
+      hours:  document.getElementById('lk-hours'),
+      rate:   document.getElementById('lk-rate')
+    };
+    /* Bail out rather than throw if the markup and script drift apart */
+    if (Object.values(inputs).some(el => !el)) return;
+
+    const out = {
+      leads:  document.getElementById('lk-leads-v'),
+      value:  document.getElementById('lk-value-v'),
+      close:  document.getElementById('lk-close-v'),
+      missed: document.getElementById('lk-missed-v'),
+      hours:  document.getElementById('lk-hours-v'),
+      rate:   document.getElementById('lk-rate-v'),
+      admin:  document.getElementById('lk-out-admin'),
+      lost:   document.getElementById('lk-out-lost'),
+      count:  document.getElementById('lk-out-count'),
+      total:  document.getElementById('lk-out-total')
+    };
+
+    const money = n => '$' + Math.round(n).toLocaleString('en-US');
+
+    function recalc() {
+      const leads  = +inputs.leads.value;    /* enquiries per month          */
+      const value  = +inputs.value.value;    /* average value of a closed job */
+      const close  = +inputs.close.value;    /* % of enquiries they win today */
+      const missed = +inputs.missed.value;   /* % never properly followed up  */
+      const hours  = +inputs.hours.value;    /* admin hours per week          */
+      const rate   = +inputs.rate.value;     /* loaded hourly cost            */
+
+      /* Echo each control's current value back to its label */
+      out.leads.textContent  = leads;
+      out.value.textContent  = money(value);
+      out.close.textContent  = close + '%';
+      out.missed.textContent = missed + '%';
+      out.hours.textContent  = hours + ' hrs';
+      out.rate.textContent   = money(rate) + '/hr';
+
+      /* Manual admin: hours × weeks × loaded cost */
+      const adminCost = hours * 52 * rate;
+
+      /* Enquiries that never get a proper follow-up, over a year */
+      const lostLeads = leads * 12 * (missed / 100);
+
+      /* Valued at the visitor's OWN close rate — i.e. "if you converted
+         these at the same rate you already convert everything else".
+         No uplift is assumed beyond their existing performance. */
+      const lostRevenue = lostLeads * (close / 100) * value;
+
+      out.admin.textContent = money(adminCost);
+      out.lost.textContent  = money(lostRevenue);
+      out.count.textContent = Math.round(lostLeads).toLocaleString('en-US');
+      out.total.textContent = money(adminCost + lostRevenue);
+    }
+
+    Object.values(inputs).forEach(el => el.addEventListener('input', recalc));
+    recalc();
+  })();
+
+  /* ─────────────────────────────────────
      SERVICE CARD MOUSE-TRACKING HIGHLIGHT
      Updates --mx / --my CSS vars on each
      .svc-card for the radial glow ::before

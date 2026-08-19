@@ -122,6 +122,72 @@
   </div>
 </section>
 
+<!-- COST OF INACTION -->
+<section class="section section--dark" aria-labelledby="leak-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">The Cost Of Leaving It</span>
+      <h2 id="leak-title">Doing nothing is not the free option</h2>
+      <div class="section-divider" aria-hidden="true"></div>
+      <p>The manual version of your business already has a price &#8212; it&#39;s just paid in staff hours and enquiries that go cold, so it never appears on an invoice. Put your own numbers in and see it.</p>
+    </div>
+
+    <div class="leak-wrap reveal" id="leak-calc">
+      <div class="leak-controls">
+        <div class="leak-field">
+          <label for="lk-leads">Enquiries you receive a month <span class="leak-val" id="lk-leads-v">40</span></label>
+          <input type="range" id="lk-leads" min="5" max="500" step="5" value="40">
+        </div>
+        <div class="leak-field">
+          <label for="lk-value">Average value of a job you win <span class="leak-val" id="lk-value-v">$2,500</span></label>
+          <input type="range" id="lk-value" min="100" max="50000" step="100" value="2500">
+        </div>
+        <div class="leak-field">
+          <label for="lk-close">Of those enquiries, how many you win <span class="leak-val" id="lk-close-v">20%</span></label>
+          <input type="range" id="lk-close" min="1" max="90" step="1" value="20">
+          <span class="leak-hint">Your current close rate &#8212; we use this exact figure rather than assuming you&#39;d do better.</span>
+        </div>
+        <div class="leak-field">
+          <label for="lk-missed">Enquiries that never get a proper follow-up <span class="leak-val" id="lk-missed-v">30%</span></label>
+          <input type="range" id="lk-missed" min="0" max="80" step="1" value="30">
+          <span class="leak-hint">The ones that arrive after hours, sit in an inbox, or get chased once and forgotten.</span>
+        </div>
+        <div class="leak-field">
+          <label for="lk-hours">Hours a week your team spends on manual admin <span class="leak-val" id="lk-hours-v">10 hrs</span></label>
+          <input type="range" id="lk-hours" min="1" max="120" step="1" value="10">
+          <span class="leak-hint">Capturing details, typing quotes, chasing payment, booking, re-keying between tools.</span>
+        </div>
+        <div class="leak-field">
+          <label for="lk-rate">Loaded hourly cost of the people doing it <span class="leak-val" id="lk-rate-v">$25/hr</span></label>
+          <input type="range" id="lk-rate" min="5" max="200" step="1" value="25">
+        </div>
+      </div>
+
+      <div class="leak-result">
+        <span class="leak-result-tag">Every year, at your numbers</span>
+        <div class="leak-row">
+          <span class="leak-row-label">Manual admin, costed at staff time</span>
+          <span class="leak-row-value" id="lk-out-admin">$13,000</span>
+        </div>
+        <div class="leak-row">
+          <span class="leak-row-label">Enquiries that go cold <span id="lk-out-count">144</span> a year</span>
+          <span class="leak-row-value" id="lk-out-lost">$72,000</span>
+        </div>
+        <div class="leak-total">
+          <span class="leak-total-label">What the manual version costs you</span>
+          <!-- polite live region: announces the headline figure as the sliders
+               move, without re-reading the whole panel on every input event -->
+          <span class="leak-total-value" id="lk-out-total" aria-live="polite" aria-atomic="true">$85,000</span>
+        </div>
+        <p class="leak-disclaimer">Calculated only from the figures you entered, and shown so you can check the arithmetic: admin is hours &times; 52 weeks &times; hourly cost. Cold enquiries are valued at <em>your own</em> close rate &#8212; we assume no improvement on how well you already sell. Nothing here is an industry average or a promise of results.</p>
+        <div class="leak-cta">
+          <a href="https://link.n3xus.media/widget/bookings/jared-sinclair-calendar" class="btn btn-primary btn-full" target="_blank" rel="noopener">Show Me Where Mine Is Leaking</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- WHAT WE CONNECT -->
 <section class="section" aria-labelledby="connect-title">
   <div class="container">
@@ -136,48 +202,119 @@
         <div class="sdc-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
         <h3>Bookings &amp; Scheduling</h3>
         <p>Customers book, reschedule and pay deposits themselves. Calendars sync, reminders send automatically, and no-shows drop without anyone lifting a phone.</p>
+        <div class="sdc-outcome"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Replaces phone-tag, and the no-show that follows it</span></div>
       </div>
       <div class="svc-detail-card reveal">
         <div class="sdc-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
         <h3>CRM &amp; Sales Pipeline</h3>
         <p>Every enquiry lands as a tracked record, scored and routed to the right person. Nothing sits forgotten in a shared inbox, and you can see exactly where revenue is stuck.</p>
+        <div class="sdc-outcome"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Replaces the shared inbox nobody actually owns</span></div>
       </div>
       <div class="svc-detail-card reveal">
         <div class="sdc-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
         <h3>Payments, Quotes &amp; Invoicing</h3>
         <p>Generate quotes, take deposits, run subscriptions and reconcile invoices directly from the site. Cards, EFT, and crypto settlement via Syrax where it makes sense.</p>
+        <div class="sdc-outcome"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Turns days of quote turnaround into minutes</span></div>
       </div>
       <div class="svc-detail-card reveal">
         <div class="sdc-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
         <h3>AI Agents &amp; Assistants</h3>
         <p>An assistant that knows your business, answers real questions, qualifies leads, books jobs and hands off to a human at the right moment &#8212; on the site and on WhatsApp.</p>
+        <div class="sdc-outcome"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Answers at 2am, when a contact form just sits there</span></div>
       </div>
       <div class="svc-detail-card reveal">
         <div class="sdc-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
         <h3>Automations &amp; Workflows</h3>
         <p>The follow-up email, the reminder, the handover, the report, the escalation. Every repetitive step your staff does by hand becomes a workflow that runs without them.</p>
+        <div class="sdc-outcome"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Replaces the step someone forgets in a busy week</span></div>
       </div>
       <div class="svc-detail-card reveal">
         <div class="sdc-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <h3>Live Dashboards &amp; Reporting</h3>
         <p>One screen showing leads, bookings, revenue, campaign performance and pipeline &#8212; live. Decisions stop waiting on someone to assemble a monthly spreadsheet.</p>
+        <div class="sdc-outcome"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Replaces the monthly spreadsheet nobody fully trusts</span></div>
       </div>
       <div class="svc-detail-card reveal">
         <div class="sdc-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></div>
         <h3>Inventory &amp; Operations</h3>
         <p>Stock levels, order status, job progress and fulfilment connected to the same system your customers and staff already use. No double-capturing between platforms.</p>
+        <div class="sdc-outcome"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Ends double-capturing the same data in two places</span></div>
       </div>
       <div class="svc-detail-card reveal">
         <div class="sdc-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3>Client &amp; Staff Portals</h3>
         <p>Secure logins where customers track their jobs, download documents and pay, and where your team works &#8212; without buying another seat-based SaaS subscription.</p>
+        <div class="sdc-outcome"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Replaces another per-seat SaaS subscription</span></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ONE LEAD, END TO END -->
+<section class="section section--dark" aria-labelledby="flow-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">What It Looks Like In Practice</span>
+      <h2 id="flow-title">One enquiry, start to finish, while you sleep</h2>
+      <div class="section-divider" aria-hidden="true"></div>
+      <p>This is the same journey on a brochure site and on an operating system. The difference isn&#39;t the traffic &#8212; it&#39;s what happens after someone arrives.</p>
+    </div>
+
+    <div class="flow-rail reveal">
+      <div class="flow-step flow-step--live">
+        <div class="flow-marker"><span class="flow-time">23:41</span></div>
+        <div class="flow-body">
+          <span class="flow-actor">Customer</span>
+          <h3>They arrive from an AI answer, not a search result</h3>
+          <p>Someone asks an assistant who to use for the work you do. Your site is structured and credible enough to be cited, so you&#39;re in the answer. They land on the page at twenty to midnight &#8212; long after anyone in your office has stopped replying.</p>
+        </div>
+      </div>
+
+      <div class="flow-step flow-step--live">
+        <div class="flow-marker"><span class="flow-time">23:42</span></div>
+        <div class="flow-body">
+          <span class="flow-actor">Assistant</span>
+          <h3>They get a real answer instead of a contact form</h3>
+          <p>They ask something specific &#8212; do you cover their area, can you handle their size of job, roughly what does it cost. The assistant knows your business well enough to answer properly, and asks the two or three questions you&#39;d have asked yourself.</p>
+        </div>
+      </div>
+
+      <div class="flow-step flow-step--live">
+        <div class="flow-marker"><span class="flow-time">23:45</span></div>
+        <div class="flow-body">
+          <span class="flow-actor">System</span>
+          <h3>They book, and pay a deposit, without you</h3>
+          <p>A real slot from your live calendar, not a &ldquo;we&#39;ll be in touch&rdquo;. Deposit taken, confirmation sent, reminders scheduled. The slot is gone from your availability before you&#39;ve woken up.</p>
+        </div>
+      </div>
+
+      <div class="flow-step flow-step--live">
+        <div class="flow-marker"><span class="flow-time">23:45</span></div>
+        <div class="flow-body">
+          <span class="flow-actor">System</span>
+          <h3>The record writes itself</h3>
+          <p>They exist in your CRM with everything they said, scored against how you rank a good job, routed to whoever handles that kind of work. Nobody re-types anything, and nothing depends on someone remembering.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-marker"><span class="flow-time">07:00</span></div>
+        <div class="flow-body">
+          <span class="flow-actor">You</span>
+          <h3>You find out over coffee</h3>
+          <p>The job is on the calendar, the deposit has cleared, the file is prepared, and the dashboard shows where it came from. Your first decision of the day is about the work &#8212; not about which enquiries you forgot to chase.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-close reveal">
+      <p>On a brochure site, that same person filled in a form at 23:41 and waited. By the time anyone replied on Monday, they had already booked whoever answered first. <strong>Nothing about the traffic changed. Everything about the outcome did.</strong></p>
+    </div>
+  </div>
+</section>
+
 <!-- SEO IS NOT ENOUGH -->
-<section class="section section--dark" aria-labelledby="seo-title">
+<section class="section" aria-labelledby="seo-title">
   <div class="container">
     <div class="intel-split">
       <div class="intel-content reveal">
@@ -192,6 +329,9 @@
           <li><span class="feat-dot" aria-hidden="true"></span>Attribution that shows which channel actually produced revenue</li>
         </ul>
         <a href="/services/digital" class="btn btn-ghost">See Growth &amp; Demand Services &rarr;</a>
+        <div class="whynow" style="margin-left:0;margin-right:0;text-align:left">
+          <p><strong>Why this matters now rather than later:</strong> the businesses being cited in AI answers today are the ones whose sites were already structured for it. That position compounds &#8212; being the cited answer earns the engagement that keeps you the cited answer. This is a window that rewards arriving early, and quietly penalises waiting until it&#39;s obvious.</p>
+        </div>
       </div>
       <div class="intel-visual reveal">
         <div class="hv-main">
@@ -218,6 +358,56 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTOR SNAPSHOTS -->
+<section class="section section--dark" aria-labelledby="sector-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">What It Becomes In Your Sector</span>
+      <h2 id="sector-title">The same system, shaped around how you actually trade</h2>
+      <div class="section-divider" aria-hidden="true"></div>
+      <p>&ldquo;Operating system&rdquo; means something different in a restaurant than it does in a law firm. These are the workflows we typically build first in each &#8212; illustrative of the approach, and confirmed against your real operations during the audit.</p>
+    </div>
+    <div class="sector-grid">
+      <div class="sector-card reveal">
+        <h3 class="sector-name">Hospitality &amp; Venues</h3>
+        <ul class="sector-list">
+          <li>Table or room booking with deposits held against no-shows</li>
+          <li>Automatic reminders and rebooking prompts</li>
+          <li>Menu, event and availability updates in one place</li>
+          <li>Reviews requested at the moment guests are happiest</li>
+        </ul>
+      </div>
+      <div class="sector-card reveal">
+        <h3 class="sector-name">Trades &amp; Field Services</h3>
+        <ul class="sector-list">
+          <li>Job requests qualified before they reach your phone</li>
+          <li>Quotes generated from your own pricing rules</li>
+          <li>Scheduling that respects travel time and crew capacity</li>
+          <li>Photos, sign-off and payment collected on site</li>
+        </ul>
+      </div>
+      <div class="sector-card reveal">
+        <h3 class="sector-name">Professional Services</h3>
+        <ul class="sector-list">
+          <li>Intake forms that build the matter file automatically</li>
+          <li>Engagement letters and e-signature without the back-and-forth</li>
+          <li>Client portal for documents, status and invoices</li>
+          <li>Retainer billing and reconciliation handled on schedule</li>
+        </ul>
+      </div>
+      <div class="sector-card reveal">
+        <h3 class="sector-name">E-commerce &amp; Retail</h3>
+        <ul class="sector-list">
+          <li>Stock, orders and fulfilment status in one source of truth</li>
+          <li>Abandoned-cart and post-purchase sequences</li>
+          <li>Returns and support handled by an assistant that knows the order</li>
+          <li>Margin and channel performance visible live, not monthly</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -260,6 +450,24 @@
       <h2 id="tiers-title">Built once. Improved every month.</h2>
       <div class="section-divider" aria-hidden="true"></div>
       <p>A website project ends at launch and starts depreciating. An operating system compounds. All plans include N3XUS Intelligence access and transparent reporting &#8212; no media markup, ever.</p>
+    </div>
+
+    <div class="anchor-grid reveal" style="margin-bottom:44px">
+      <div class="anchor-card">
+        <p class="anchor-what">One part-time admin to do this work manually</p>
+        <p class="anchor-cost">Salary + on-costs</p>
+        <p class="anchor-note">Works your hours, takes leave, and the knowledge leaves when they do.</p>
+      </div>
+      <div class="anchor-card">
+        <p class="anchor-what">A conventional website rebuild</p>
+        <p class="anchor-cost">Every ~3 years</p>
+        <p class="anchor-note">Large one-off cost that starts ageing the day it launches, then repeats.</p>
+      </div>
+      <div class="anchor-card anchor-card--us">
+        <p class="anchor-what">A Website Operating System</p>
+        <p class="anchor-cost">From $950/mo</p>
+        <p class="anchor-note">Runs every hour of every day, and is worth more each month than the last.</p>
+      </div>
     </div>
     <div class="price-cards price-cards--3">
       <div class="price-card reveal">
@@ -309,6 +517,25 @@
       </div>
     </div>
     <p class="form-note" style="text-align:center;margin-top:24px">Not sure which tier fits? The free audit tells you exactly what your site should be doing &#8212; and what it&#39;s currently costing you not to.</p>
+
+    <div class="assure-grid reveal">
+      <div class="assure-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div><strong>You own all of it</strong><span>Your site, your data, your customer records, your accounts with every tool we connect.</span></div>
+      </div>
+      <div class="assure-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        <div><strong>No lock-in box</strong><span>Built on your infrastructure, not inside a proprietary platform you can&#39;t leave.</span></div>
+      </div>
+      <div class="assure-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <div><strong>Audit before commitment</strong><span>You get the findings and the opportunity map whether or not you continue with us.</span></div>
+      </div>
+      <div class="assure-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <div><strong>No media markup</strong><span>Ad spend goes to the platform at cost. You see exactly what was spent and what it returned.</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -320,6 +547,10 @@
       <h2 id="proof-title">This isn&#39;t theory &#8212; it&#39;s how we operate</h2>
       <div class="section-divider" aria-hidden="true"></div>
       <p>We don&#39;t recommend an approach we haven&#39;t engineered and run ourselves. Every N3XUS product is built on the same architecture we deploy for clients.</p>
+    </div>
+
+    <div class="whynow reveal" style="margin-top:0;margin-bottom:40px">
+      <p><strong>Start with the page you&#39;re on.</strong> This site is structured for AI citation, engineered for Core Web Vitals, and wired to the same CRM, assistant and reporting stack we&#39;d build for you. The assistant in the corner is the one described above. You don&#39;t have to take our word for any of it &#8212; you&#39;re currently using it.</p>
     </div>
     <div class="core3-cards">
       <div class="core3-card reveal">
