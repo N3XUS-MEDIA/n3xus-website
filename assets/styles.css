@@ -4543,3 +4543,26 @@ body { animation: pageEntry 0.4s ease both; }
 .pain-col--after .pain-item--good { animation:none }
 .pain-divider { animation:none }
 .c3d-node--ai .c3d-node-icon svg { animation:none }
+
+/* ── Hero typewriter line: allow wrap, reserve the space ─────────────────────
+   .hero-line is overflow:hidden for the slide-up reveal, so a nowrap line
+   wider than the 532px hero column was clipped mid-word rather than wrapping —
+   which is exactly what it had been doing, including for the original phrases
+   ("Custom Software" measures 795px against a 532px column).
+   Wrapping fixes the clip; reserving two lines of height stops the page
+   reflowing each time the carousel cycles between a one- and two-line phrase. */
+.hero-type-line { white-space:normal }
+.hero-title .hero-line.l4 { display:block;min-height:2.1em }
+
+/* ── Comparison rows: keep label and value apart ─────────────────────────────
+   .pain-item is flex + space-between with no gap, so as soon as a value is
+   long enough to fill the remaining track it sits flush against the label —
+   "Website" and "a brochure, does nothing" were touching at exactly the same
+   x. A gap guarantees separation, and right-aligning the value keeps a wrapped
+   two-line value reading as one right-hand column. */
+.pain-item { gap:18px }
+.pain-item span { text-align:right;flex-shrink:0;max-width:58% }
+
+/* Stat values must never wrap — a two-line value drops its label out of
+   alignment with the rest of the row. */
+.stat-card-val,.stat-val,.about-stat-val { white-space:nowrap }
