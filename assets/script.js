@@ -736,16 +736,29 @@ Keep replies concise (2-4 sentences). Guide toward booking a strategy call.`;
      Updates --mx / --my CSS vars on each
      .svc-card for the radial glow ::before
   ───────────────────────────────────── */
-  (function () {
+  (function specularSheen() {
     if (!window.matchMedia('(pointer:fine)').matches) return;
-    const cards = document.querySelectorAll('.svc-card');
-    cards.forEach(card => {
-      card.addEventListener('mousemove', e => {
+
+    /* Every card type that carries the ::after sheen in styles.css. */
+    const SEL = '.svc-card,.cat-item,.capgroup,.sector-card,' +
+                '.painnav-card,.price-card,.core3-card,.svc-detail-card';
+
+    /* ONE delegated listener for the whole page, rAF-throttled — the previous
+       version attached a mousemove handler to every card, which on the
+       solutions hub alone meant 26+ handlers all writing style on every move. */
+    let raf = null, lastEvt = null;
+    document.addEventListener('mousemove', e => {
+      lastEvt = e;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = null;
+        const card = lastEvt.target.closest && lastEvt.target.closest(SEL);
+        if (!card) return;
         const r = card.getBoundingClientRect();
-        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100) + '%');
-        card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100) + '%');
-      }, { passive: true });
-    });
+        card.style.setProperty('--mx', (lastEvt.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (lastEvt.clientY - r.top)  + 'px');
+      });
+    }, { passive: true });
   })();
 
   /* ─────────────────────────────────────
