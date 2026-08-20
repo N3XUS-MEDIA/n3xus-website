@@ -414,7 +414,7 @@ A: This is called LLM Marketing or Generative Engine Optimisation (GEO). N3XUS M
 A: Core3 is N3XUS Media's proprietary growth methodology integrating three pillars: Brand & Market Presence (TV, activations), Digital Growth & Performance (SEO, Ads, web), and AI Systems & Development (LLM apps, agents, software). When all three run as one system through N3XUS Intelligence, results compound rather than operating in isolation.
 
 **Q: How much does N3XUS Media cost for marketing?**
-A: Digital marketing retainers start at $500/mo (Launch), $1,025/mo (Growth), $2,025/mo (Dominate). Individual services from $130/mo. Zero media markup — transparent management fees only. Full pricing: https://n3xus.media/pricing.
+A: Digital marketing retainers start at $500/mo (Launch), $1,000/mo (Growth), $2,000/mo (Dominate). Individual services from $135/mo. Zero media markup — transparent management fees only. Full pricing: https://n3xus.media/pricing.
 
 **Q: Where is N3XUS Media based and who do they serve?**
 A: N3XUS Media is a global agency serving ambitious businesses worldwide across the US, UK, Europe, Asia-Pacific, and beyond. AI and software development for any company anywhere. Full-service marketing for businesses ready to dominate their market. Contact info@n3xus.media.
@@ -527,22 +527,23 @@ A: Email info@n3xus.media or book a free 45-minute consultation at https://link.
 
 ### Marketing Retainers (USD)
 - Launch: $500/mo
-- Growth: $1,025/mo
-- Dominate: $2,025/mo
-- Individual digital services: from $130/mo
+- Growth: $1,000/mo
+- Dominate: $2,000/mo
+- Individual digital services: from $135/mo
 
 Full pricing: https://n3xus.media/pricing
 
 
-## PERFORMANCE & PROOF
+## WHAT CLIENTS GET, AND HOW ENGAGEMENT WORKS
 
 - 528 campaigns delivered across AI, Digital, and Traditional channels (and counting)
-- 92% client retention rate (industry-leading)
-- 47% average increase in qualified leads within 90 days
-- 63% average brand recall improvement after TV campaigns
-- 31% average reduction in cost per qualified lead
-- AI systems response time: under 3 seconds average
-- RAG system accuracy: 99%+ on well-structured knowledge bases
+- Zero media markup: ad spend is paid to the platform at cost and reconciled against invoices
+- Clients own their website, their data, their customer records, and their accounts with every connected tool
+- Built on client infrastructure, not inside a proprietary platform the client cannot leave
+- Engagements begin with a free 45-minute audit; the findings and opportunity map are provided whether or not the client proceeds
+- Work is sequenced highest-value-first: the workflow costing the most staff hours or losing the most enquiries goes live before the full build completes
+- Software and AI projects are scoped and fixed-price before work begins
+- Enquiries arriving outside office hours are answered by the system rather than queued until the next working day
 - Clients span: financial services, insurance, real estate, e-commerce, technology, automotive, healthcare, education, logistics, media, professional services
 - Geographic reach: Global — US, UK, Europe, Asia-Pacific, and worldwide
 

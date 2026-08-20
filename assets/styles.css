@@ -4280,8 +4280,7 @@ body { animation: pageEntry 0.4s ease both; }
 }
 
 /* ── OUTCOME LINE ON CAPABILITY CARDS ────────────────────────────────────── */
-.sdc-outcome { display:flex;align-items:flex-start;gap:9px;margin-top:16px;padding-top:15px;border-top:1px solid var(--hairline);font-size:0.83rem;color:var(--accent-ink);font-weight:500;line-height:1.5 }
-.sdc-outcome svg { flex-shrink:0;margin-top:2px }
+/* .sdc-outcome is an alias of .cat-value — see the canonical rule below. */
 
 /* ── SECTOR SNAPSHOTS ────────────────────────────────────────────────────── */
 .sector-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px }
@@ -4368,8 +4367,19 @@ body { animation: pageEntry 0.4s ease both; }
 .cat-item h4 { font-family:var(--font-head);font-size:0.97rem;color:var(--white);margin:0 0 8px;font-weight:600;line-height:1.35 }
 .cat-item p { font-size:0.85rem;color:var(--white2);line-height:1.6;margin:0 0 12px }
 /* The value line is the point of this page — it must read differently to the description */
-.cat-value { display:flex;align-items:flex-start;gap:8px;padding-top:11px;border-top:1px solid var(--hairline);font-size:0.82rem;color:var(--accent-ink);font-weight:500;line-height:1.5 }
-.cat-value svg { flex-shrink:0;margin-top:3px }
+/* ── Outcome line (canonical) ────────────────────────────────────────────────
+   The single component for "what the client gets", used under any card that
+   describes a service. .sdc-outcome is kept as an alias so the existing
+   markup on services/website-os.html needs no churn.
+   Styled deliberately unlike the description above it: accent ink, hairline
+   rule, medium weight — the reader should be able to skim only these. */
+.cat-value,.sdc-outcome { display:flex;align-items:flex-start;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--hairline);font-size:0.82rem;color:var(--accent-ink);font-weight:500;line-height:1.5 }
+.cat-value svg,.sdc-outcome svg { flex-shrink:0;margin-top:3px }
+/* Detail cards carry more body copy above the line and need the extra air. */
+.sdc-outcome { margin-top:16px;padding-top:15px;gap:9px }
+/* .sdc-pricing already draws its own border-top; without this the outcome line
+   above it stacks a second hairline 16px away. */
+.sdc-outcome + .sdc-pricing { border-top:none;padding-top:16px }
 
 @media (max-width:600px) {
   .cat-layer-head h3 { font-size:1.28rem }
