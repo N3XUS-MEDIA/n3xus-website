@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from 'next/font/google';
 import { SiteHeader } from '@/ui/layout/SiteHeader';
 import { SiteFooter } from '@/ui/layout/SiteFooter';
 import { THEME_INIT_SCRIPT } from '@/lib/theme';
+import { Analytics, AnalyticsNoScript } from '@/ui/Analytics';
 import { site } from '@/content/copy';
 import './globals.css';
 
@@ -42,6 +43,13 @@ export const metadata: Metadata = {
     images: ['/assets/og-image.png'],
   },
   twitter: { card: 'summary_large_image' },
+  icons: {
+    icon: [
+      { url: '/assets/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/assets/favicon-64.png', sizes: '64x64', type: 'image/png' },
+    ],
+    apple: '/assets/n3xus-icon.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -52,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body className="flex min-h-dvh flex-col">
+        <AnalyticsNoScript />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-paper focus:px-4 focus:py-2 focus:text-ink"
@@ -63,6 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <SiteFooter />
+        <Analytics />
       </body>
     </html>
   );
