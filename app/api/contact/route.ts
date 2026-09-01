@@ -7,6 +7,46 @@ export const runtime = 'nodejs';
 const TO_EMAIL = 'info@n3xus.media';
 const FROM_EMAIL = 'website@n3xus.media'; // must be a verified sender in Resend
 
+/**
+ * The endpoint the previous static site posted to, and which has been carrying
+ * real enquiries. Kept as a fallback so the cutover cannot lose a lead.
+ *
+ * Order of preference:
+ *   1. Resend, if RESEND_API_KEY is configured and the send succeeds.
+ *   2. Formspree, if Resend is unconfigured or fails.
+ *   3. A visible error telling the person to email directly.
+ *
+ * This exists because deleting assets/script.js removed the only path
+ * enquiries had. Without it, deploying before the Resend key was set in Vercel
+ * would have silently pointed the form at nothing.
+ *
+ * Once Resend is confirmed working in production, this can be deleted — but
+ * there is no cost to leaving it, and it is the difference between a bad
+ * afternoon and a lost month of leads.
+ */
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xeenrqej';
+
+async function sendViaFormspree(payload: {
+  name: string;
+  email: string;
+  phone?: string;
+  service?: string;
+  message: string;
+}): Promise<boolean> {
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) console.error('[contact] formspree fallback rejected', res.status);
+    return res.ok;
+  } catch (err) {
+    console.error('[contact] formspree fallback failed', err);
+    return false;
+  }
+}
+
 const schema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(200),
   email: z.string().trim().email('A valid email is required').max(320),
@@ -65,19 +105,27 @@ export async function POST(req: Request) {
   }
 
   /**
-   * If the key is missing this MUST fail loudly.
+   * An enquiry must never be silently dropped.
    *
    * The version of this handler that shipped on the static site returned
    * `200 {ok:true}` with a console.warn when RESEND_API_KEY was unset — so
-   * every enquiry would vanish while the sender saw a success message. On a
-   * site whose whole job is lead capture that is the worst available failure
-   * mode. A visible error at least lets someone email directly.
+   * every enquiry vanished while the sender saw a success message. On a site
+   * whose whole job is lead capture that is the worst available failure mode.
+   *
+   * Now: try Resend, fall back to the endpoint that has been carrying real
+   * enquiries, and only then show a visible error with a direct email address.
    */
+  const forward = { name, email, phone, service, message };
+
   const apiKey = process.env.RESEND_API_KEY;
+
+  // No Resend key: try the endpoint that has been carrying enquiries until now
+  // rather than dropping the lead. Only error if that fails too.
   if (!apiKey) {
-    console.error('[contact] RESEND_API_KEY is not configured — enquiry NOT delivered', {
-      from: email,
-    });
+    console.warn('[contact] RESEND_API_KEY not configured — using Formspree fallback');
+    if (await sendViaFormspree(forward)) return NextResponse.json({ ok: true });
+
+    console.error('[contact] no delivery path available — enquiry NOT delivered', { from: email });
     return NextResponse.json(
       {
         ok: false,
@@ -105,7 +153,7 @@ export async function POST(req: Request) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: `N3XUS Media Website <${FROM_EMAIL}>`,
+        from: `N3XUS Website <${FROM_EMAIL}>`,
         to: [TO_EMAIL],
         reply_to: email,
         subject: `New enquiry — ${name}`,
@@ -116,6 +164,7 @@ export async function POST(req: Request) {
     if (!res.ok) {
       const detail = await res.text();
       console.error('[contact] resend rejected the send', res.status, detail);
+      if (await sendViaFormspree(forward)) return NextResponse.json({ ok: true });
       return NextResponse.json(
         {
           ok: false,
@@ -128,6 +177,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error('[contact] send failed', err);
+    if (await sendViaFormspree(forward)) return NextResponse.json({ ok: true });
     return NextResponse.json(
       { ok: false, error: `We couldn't send that. Please email ${TO_EMAIL} directly.` },
       { status: 502 },
