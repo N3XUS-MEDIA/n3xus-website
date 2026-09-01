@@ -128,6 +128,7 @@ Not claims — straightforward errors to fix.
 | G6 | All three logo SVGs are base64 PNGs in an SVG wrapper (~2.9MB total); cannot inherit `currentColor` | `assets/` — needs a real vector redraw |
 | G7 | privacy §1 ended "Contact us at any time: info@n3xus.media •" — trailing separator where a phone number used to be | fixed in `src/content/privacy.ts` |
 | G8 | `/api/chat` was an open proxy to the Anthropic account: `Access-Control-Allow-Origin: *`, no validation beyond "messages exists", and the entire client body forwarded — so any origin could pick the model and `max_tokens` and bill it to N3XUS | fixed; also patched on the old static site in branch `fix/chat-proxy-hardening` |
+| G10 | Deploying a Next.js app into a Vercel project created for static HTML returns 404 site-wide until `framework: nextjs` is declared | fixed in `vercel.json`; the project's dashboard preset should also be set to Next.js |
 | G9 | `/api/contact` returned `200 {ok:true}` when `RESEND_API_KEY` was unset — enquiries would vanish while the sender saw success | fixed: returns 503, form shows a `mailto:` fallback |
 
 ---

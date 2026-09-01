@@ -1,7 +1,13 @@
 # n3xus.media
 
-The N3XUS Media marketing site. Next.js 15 + React 19 + Tailwind, deployed to
-Vercel from this repo.
+The N3XUS website. Next.js 15 + React 19 + Tailwind, deployed to Vercel from
+this repo.
+
+N3XUS is a business consultancy across strategy, technology and growth — the
+three disciplines the 3 in the name refers to. It was previously N3XUS Media, a
+marketing agency; the registered entity is still N3XUS Media (Pty) Ltd, which is
+why `site.legalName` exists separately from `site.name` and is used in the
+copyright line and the legal pages.
 
 > This is the repo that actually deploys to n3xus.media. The copy under
 > `apps/website` in the `n3xus` monorepo is a stale mirror and should be reduced
@@ -21,6 +27,11 @@ pnpm type-check            # tsc --noEmit
 ```
 
 Node 22+, pnpm 9+.
+
+`vercel.json` exists only to declare `framework: nextjs`. The Vercel project
+was created when this repo was static HTML, and its framework preset overrides
+auto-detection — without that declaration the deploy serves 404s. Do not delete
+it, and do not move headers back into it.
 
 Headers are set in `next.config.ts`, not `vercel.json` — Vercel's edge headers
 do not apply under `next start`, which meant they could never be checked
