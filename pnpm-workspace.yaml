@@ -1,0 +1,12 @@
+# Not a workspace — this repo is a single Next.js app. The file exists because
+# pnpm 11 reads build-approval settings from here rather than package.json.
+#
+# esbuild: vitest's bundler. unrs-resolver: eslint's module resolver.
+# Both are native binaries that need a postinstall to unpack.
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true
+
+onlyBuiltDependencies:
+  - esbuild
+  - unrs-resolver
