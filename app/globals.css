@@ -11,6 +11,10 @@
     /* The sticky mobile action bar is fixed. Pages reserve this at the end of
        the document so it can never sit on top of a submit button. */
     --action-bar-h: 4.5rem;
+
+    /* Knocked out of the filled hex mark. Matches whatever the mark sits on,
+       so the inner shape reads as a hole rather than a drawn line. */
+    --n3x-hex-void: #091518;
   }
 
   html {

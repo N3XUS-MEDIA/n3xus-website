@@ -25,26 +25,26 @@ export const CLAIMS = {
 
 export const aboutHero = {
   eyebrow: 'Who we are',
-  title: 'Built to own the joins.',
-  lede: 'N3XUS was founded on a single observation: strategy, technology and growth are sold as three separate professions, and almost every expensive business problem lives in the gaps between them. We built a firm that works across all three, and is accountable for the whole.',
+  title: 'We’re who you call when the business has outgrown how it’s run.',
+  lede: 'Most business owners we meet aren’t short of ideas or effort. They’re short of a straight answer about what to do next — because the advice comes from one place, the building from another, and the marketing from a third, and none of them can see the whole thing. We do all three, so someone can.',
 };
 
 export const mission = {
   eyebrow: 'Our mission',
-  title: 'One firm, accountable end to end.',
+  title: 'One team who can see the whole picture.',
   paragraphs: [
-    'Ambitious businesses deserve advice that survives contact with implementation. Not a consultancy that leaves after the deck, a development shop that builds whatever the deck said, and an agency buying traffic for a process that cannot convert it. N3XUS was built to be one partner across all three.',
+    'Advice is easy to give and expensive to act on badly. A consultancy hands you a deck and leaves. A developer builds exactly what the deck said, whether or not it was right. An agency sends traffic to a business that can’t handle it. Everyone did their job. Nothing got better.',
     // B1's "one of the few agencies in the world … at enterprise level" is cut
     // from this paragraph until confirmed; the sentence stands without it.
-    'We work across strategy, technology and growth — the three disciplines the name refers to — and run them as one engagement rather than three workstreams that report separately.',
-    'Each discipline makes the next one worth more. The diagnostic decides what gets built. What gets built decides what demand can convert. What converts tells the next diagnostic where to look. Run separately, each one caps the other two.',
+    'We work across all three — strategy, intelligence and growth, which is what the 3 in N3XUS stands for. Same team, same numbers, one person you can call.',
+    'It also means we can tell you not to spend money. If the honest answer is that your website is fine and the real problem is how quotes get sent, that’s what we’ll say — which is harder to do when you only sell websites.'
   ],
 };
 
 /** Structural statements about how N3XUS works — not performance metrics. */
 export const missionFacts = [
-  { value: 'Yours', label: 'Data and ad accounts, in your name' },
-  { value: 'Three', label: 'Disciplines, run as one engagement' },
+  { value: 'Yours', label: 'Your data and accounts stay in your name' },
+  { value: 'Three', label: 'Strategy, intelligence, growth — one team' },
 ] as const;
 
 /** Gated on CLAIMS.campaignCount / CLAIMS.zeroMarkup. */
@@ -65,29 +65,29 @@ export const differentiators: Differentiator[] = [
   {
     n: '01',
     title: 'Advice and implementation from one firm',
-    body: 'The people who diagnose the problem are accountable for what gets built to fix it. No handover between a strategy supplier and a delivery supplier, which is where most of the cost and all of the blame usually lives.',
+    body: 'The people who work out what’s wrong are the same people who fix it. Nothing gets lost in a handover, and there’s nobody to point at when something doesn’t work.',
     // Original opened "Only truly integrated full-service agency" (B3).
     // Rewritten to describe what is done, which needs no superlative.
   },
   {
     n: '02',
-    title: 'A proprietary platform, not a spreadsheet',
-    body: 'N3XUS Intelligence gives clients unified visibility across every channel, plus AI-driven recommendations. No spreadsheets, no switching dashboards.',
+    title: 'One screen instead of five logins',
+    body: 'Everything we run for you reports into one place, so you can answer “how did last month go?” without asking three people and rebuilding a spreadsheet.',
   },
   {
     n: '03',
-    title: 'Generative Engine Optimisation',
-    body: 'We work on how brands are found and recommended inside ChatGPT, Claude, Gemini and Perplexity — not just in search results.',
+    title: 'We get you found in AI, not just Google',
+    body: 'Your customers are starting to ask ChatGPT and Gemini who to use. We make sure those tools can read your business, and put your name in the answer.',
     // Original claimed "among the first agencies globally" (B2).
   },
   {
     n: '04',
-    title: 'Recommendations that carry a number',
-    body: 'Every finding is costed and sequenced against your own figures. A recommendation you cannot cost is an opinion, and opinions are why improvement lists never get actioned.',
+    title: 'You get numbers, not opinions',
+    body: 'Everything we suggest comes with what it costs and what it should bring back, worked out from your numbers. So you’re making a decision, not taking our word for it.'
   },
   {
     n: '05',
-    title: 'Deep market knowledge',
+    title: 'We know this market',
     body: 'Founded in South Africa, working internationally. We understand WhatsApp as a primary business channel, how local buyers actually transact, and where assumptions imported from US playbooks break.',
   },
   {
@@ -113,9 +113,9 @@ export const industries = [
 
 export const closing = {
   eyebrow: 'Work with us',
-  title: 'Start with a conversation.',
+  title: 'Tell us what’s bothering you.',
   /** Unconditional version. The "45 minutes, no pitch" framing is A4. */
-  lede: 'We map how the business runs today and what the first piece of work should be — and you keep the findings whether or not you continue with us.',
+  lede: 'One conversation, no deck, no pressure. We’ll tell you what we’d look at first and roughly what it would take — and you keep that whether or not you work with us.',
   ledeWithAudit:
-    '45 minutes. No pitch. We map how the business runs today and what the first piece of work should be — and you keep the findings whether or not you continue with us.',
+    '45 minutes, no pitch. We’ll tell you what we’d look at first and roughly what it would take — and you keep that whether or not you work with us.',
 };

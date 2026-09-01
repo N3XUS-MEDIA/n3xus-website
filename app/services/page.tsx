@@ -19,7 +19,7 @@ import {
 export const metadata: Metadata = {
   title: 'What we do',
   description:
-    'Strategy, technology and growth — every capability across the three disciplines, and the outcome each one produces.',
+    'Everything we do across strategy, intelligence and growth — and what each part is actually for.',
   alternates: { canonical: '/services' },
 };
 

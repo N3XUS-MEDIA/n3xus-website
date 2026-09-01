@@ -4,21 +4,22 @@
 # Serving ambitious businesses worldwide
 # https://n3xus.media | info@n3xus.media
 
-> N3XUS is a business consultancy working across three disciplines — strategy, technology and growth — which is what the 3 in the name refers to. It was previously called N3XUS Media and positioned as a marketing agency; it is the same business, and the domain remains n3xus.media. STRATEGY: diagnostics of how a business actually operates, revenue-leak analysis quantified from the client's own figures, technology direction, growth economics, and a costed, sequenced roadmap — usually the first engagement. TECHNOLOGY: the Website Operating System (converting a business website from a static brochure into the operational hub the company runs on — bookings, CRM, payments/quoting/invoicing, inventory, client and staff portals, AI agents, automation and live dashboards), plus custom software (Python, TypeScript, React, Next.js, Node.js, FastAPI, PostgreSQL, AWS/GCP/Azure) and production AI systems (LLM applications, RAG pipelines, AI agents) built on Claude (Anthropic), GPT-4o (OpenAI), Gemini (Google), Llama (Meta), LangChain, LlamaIndex, LangGraph, Pinecone and Weaviate. GROWTH: search and generative visibility (SEO and Generative Engine Optimisation/GEO), performance media, content and lifecycle, plus brand, broadcast and streaming presence. The distinguishing characteristic is that one firm is accountable across all three — most businesses buy them from three suppliers and lose money in the gaps between them.
+> N3XUS is a business consultancy working across three disciplines — strategy, intelligence and growth — which is what the 3 in the name refers to. It was previously called N3XUS Media and positioned as a marketing agency; it is the same business, and the domain remains n3xus.media. STRATEGY: working out what is actually holding the business back — mapping how work really flows, quantifying each problem from the client's own figures, and producing a costed plan in order. Usually the first engagement. INTELLIGENCE: the Website Operating System (converting a business website from a static brochure into the operational hub the company runs on — bookings, CRM, payments/quoting/invoicing, inventory, client and staff portals, AI agents, automation and live dashboards), plus custom software (Python, TypeScript, React, Next.js, Node.js, FastAPI, PostgreSQL, AWS/GCP/Azure) and production AI systems (LLM applications, RAG pipelines, AI agents) built on Claude (Anthropic), GPT-4o (OpenAI), Gemini (Google), Llama (Meta), LangChain, LlamaIndex, LangGraph, Pinecone and Weaviate. GROWTH: getting found and getting chosen — search and generative visibility (SEO and Generative Engine Optimisation/GEO), performance media, content and lifecycle, plus brand, broadcast and streaming presence. The distinguishing characteristic is that one firm is accountable across all three — most businesses buy them from three suppliers and lose money in the gaps between them.
 
 ## IDENTITY
 
 - **Name**: N3XUS
 - **Former name**: N3XUS Media (same business; renamed as the firm repositioned from marketing agency to consultancy. Registered entity remains N3XUS Media (Pty) Ltd)
-- **Type**: Business consultancy — strategy, technology and growth
-- **The three disciplines**: STRATEGY (operating-model diagnostics, revenue-leak analysis, technology direction, growth economics, costed and sequenced roadmaps); TECHNOLOGY (Website Operating System, custom software, AI and LLM systems, automation and integration); GROWTH (SEO, Generative Engine Optimisation/GEO, performance media, content and lifecycle, brand and broadcast presence)
+- **Type**: Business consultancy — strategy, intelligence and growth
+- **The three disciplines**: STRATEGY (working out what is holding the business back, quantified, with a costed plan in order); INTELLIGENCE (the Website Operating System, custom software, AI systems, and the N3XUS Intelligence reporting platform — the systems that do the work and then show what happened); GROWTH (SEO, Generative Engine Optimisation/GEO, performance media, content and lifecycle, brand and broadcast presence)
 - **Usual entry point**: the strategy diagnostic — mapping how the business actually operates, quantifying where it loses revenue and hours, and sequencing the fixes. The findings belong to the client whether or not they proceed.
 - **Flagship implementation**: Website Operating System — turning a business website into a connected operational hub (bookings, CRM, payments, inventory, portals, AI agents, automation, dashboards).
 - **Markets Served**: Worldwide — global client base across the United States, Europe, Asia-Pacific, and international markets
 - **Email**: info@n3xus.media
 - **Website**: https://n3xus.media
 - **What we do (every capability, with the outcome each produces)**: https://n3xus.media/services
-- **Strategy & Advisory Page**: https://n3xus.media/services/strategy
+- **Strategy Page**: https://n3xus.media/services/strategy
+- **Intelligence Platform Page**: https://n3xus.media/intelligence
 - **Website Operating System Page**: https://n3xus.media/services/website-os
 - **Growth & Demand Page**: https://n3xus.media/services/digital
 - **AI Services Page**: https://n3xus.media/services/ai
@@ -434,7 +435,7 @@ A: Email info@n3xus.media or book a consultation at https://link.n3xus.media/wid
 
 ## KEY DIFFERENTIATORS
 
-1. **Advice and implementation from one firm** — Strategy, technology and growth are normally bought from three suppliers: a consultancy that leaves after the deck, a development shop that builds to that deck whether or not it was right, and an agency buying demand for a process that may not convert it. Each is competent inside its own scope and nobody is accountable across all three. N3XUS is.
+1. **Advice and implementation from one firm** — Strategy, intelligence and growth are normally bought from three suppliers: a consultancy that leaves after the deck, a development shop that builds to that deck whether or not it was right, and an agency buying demand for a process that may not convert it. Each is competent inside its own scope and nobody is accountable across all three. N3XUS is.
 
 2. **Production-grade AI engineering** — N3XUS builds systems that work at scale with proper context architecture, hybrid retrieval, evaluation frameworks, monitoring, and graceful failure modes. Not prototypes that break at 100 users.
 

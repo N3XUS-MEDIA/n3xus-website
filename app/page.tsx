@@ -8,6 +8,7 @@ import { JsonLd } from '@/ui/seo/JsonLd';
 import { ctas, site } from '@/content/copy';
 import { CLAIMS } from '@/content/about';
 import {
+  audiences,
   closing,
   comparison,
   core3,
@@ -21,9 +22,9 @@ import {
 import { faqLd, organisationLd, visibleFaqs, websiteLd } from '@/content/structuredData';
 
 export const metadata: Metadata = {
-  title: 'N3XUS — Strategy, technology and growth',
+  title: 'N3XUS — Strategy, Intelligence, Growth',
   description:
-    'A consultancy working across strategy, technology and growth — the three disciplines most businesses buy separately and then struggle to connect.',
+    'We work out what’s holding your business back, build the systems to fix it, and bring you the customers. Strategy, intelligence and growth — from one team.',
   alternates: { canonical: '/' },
 };
 
@@ -82,6 +83,30 @@ export default function HomePage() {
           </div>
         </Container>
       </div>
+
+      {/* Two doors.
+          People decide in seconds whether a firm is "for them", and the fastest
+          way to lose someone is to make them translate your positioning into
+          their own situation. So: two situations, plainly described, and they
+          point at theirs. Both lead to the same first step. */}
+      <Section tone="mist" bordered size="sm">
+        <SectionHeading eyebrow={audiences.eyebrow} title={audiences.title} />
+        <ul className="mt-8 grid gap-px overflow-hidden rounded-lg bg-line md:grid-cols-2">
+          {audiences.doors.map((door) => (
+            <li key={door.label} className="flex flex-col bg-paper p-6 sm:p-8">
+              <h3 className="text-xl text-ink">“{door.label}”</h3>
+              <p className="mt-4 flex-1 leading-relaxed text-ink-muted">{door.body}</p>
+              <Link
+                href={door.href}
+                className="mt-6 inline-flex min-h-[44px] items-center gap-2 font-medium text-accent-ink underline underline-offset-4 hover:no-underline"
+              >
+                {door.cta}
+                <span aria-hidden>→</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
       {/* The one place the page raises its voice. */}
       <Section tone="carbon">

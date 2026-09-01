@@ -15,46 +15,46 @@ import type { ServicePageContent } from '../blocks';
  */
 export const strategyPage: ServicePageContent = {
   eyebrow: 'Strategy',
-  title: 'Work out what to fix first, and what it is worth.',
-  lede: 'Most businesses do not have a strategy problem in the abstract. They have three suppliers, six tools, no single view of what is working, and a list of improvements nobody has costed. We map how the business actually operates, quantify where it leaks, and sequence the fixes so the first one pays for the next.',
+  title: 'Work out what to fix first — before you spend anything.',
+  lede: 'Most people we meet already have a list of things they know they should sort out. What they don’t have is a way to tell which one is actually costing them the most, or what fixing it would be worth. We work that out with you, put real numbers against it, and tell you what to do first.',
 
   blocks: [
     {
       type: 'prose',
-      eyebrow: 'The problem with most advice',
-      title: 'A recommendation you cannot cost is an opinion.',
+      eyebrow: 'Why this comes first',
+      title: 'Advice is cheap. Knowing what it’s worth isn’t.',
       paragraphs: [
-        'Plenty of people will tell you to “invest in AI” or “fix your funnel”. Very few will tell you what it costs you today, what it would return, and which of the four things on the list to do first. Without that, every option looks equally plausible and the default is to do none of them.',
-        'Our diagnostic produces numbers, not adjectives. Where the revenue leaks, how much each leak is worth annually, what fixing it costs, and the order that makes each subsequent fix cheaper. If the honest answer is that you should spend the money elsewhere — or not at all this quarter — that is what the document says.',
+        'Plenty of people will tell you to invest in AI, or fix your funnel, or rebuild your website. Almost none of them will tell you what your current setup is costing you, what the fix would bring back, and which of the four things on the list to do first. So every option sounds equally sensible, and the easiest decision is to do none of them for another quarter.',
+        'We give you numbers instead. Where the money is going, roughly what each problem costs you over a year, what it would take to fix, and what order to do things in. If the honest answer is that you should spend the money somewhere else — or not spend it at all right now — that’s what we’ll tell you. We’d rather be useful than booked.'
       ],
       points: [
-        'Findings written down, and yours to keep either way',
-        'Every recommendation carries a cost and an expected return',
-        'A sequence, not a wish list',
-        'Explicit about what we would not do, and why',
+        'You get it in writing, and it’s yours either way',
+        'Every suggestion comes with what it costs and what it should return',
+        'A list in order, not a wish list',
+        'We tell you what we wouldn’t bother with, and why',
       ],
     },
 
     {
       type: 'features',
       eyebrow: 'What we advise on',
-      title: 'The three questions that decide the next two years.',
+      title: 'The three things we look at.',
       columns: 3,
       items: [
         {
-          title: 'Operating model',
-          body: 'How work actually moves through the business — who touches an enquiry, where it waits, what gets re-keyed, and which steps exist only because a tool cannot talk to another tool. Usually the cheapest capacity you own.',
-          outcome: 'Capacity found before anyone is hired',
+          title: 'How the work actually flows',
+          body: 'We follow a real enquiry through your business — who touches it, where it sits waiting, what gets typed in twice, and which steps only exist because two systems don’t talk. This is usually where the cheapest wins are hiding.',
+          outcome: 'You find hours you’re already losing, before hiring anyone'
         },
         {
-          title: 'Technology direction',
+          title: 'What to build, buy, or bin',
           body: 'What to build, what to buy, what to connect and what to retire. Which systems are load-bearing, which are habit, and where an AI capability genuinely changes the economics rather than adding a subscription.',
-          outcome: 'Spend directed at the constraint, not the trend',
+          outcome: 'You spend on what’s holding you back, not what’s fashionable'
         },
         {
-          title: 'Growth economics',
-          body: 'What a customer actually costs to acquire, which channels are carrying the others, and whether the constraint is demand at all — because frequently the pipeline is fine and the conversion of it is not.',
-          outcome: 'You stop buying traffic a broken process wastes',
+          title: 'What a customer really costs you',
+          body: 'What you’re really paying to win each customer, which channels are quietly carrying the rest, and whether you have a demand problem at all — because more often the enquiries are fine and what happens to them isn’t.',
+          outcome: 'You stop paying for enquiries that go nowhere'
         },
       ],
     },
@@ -63,38 +63,38 @@ export const strategyPage: ServicePageContent = {
       type: 'process',
       eyebrow: 'How an engagement runs',
       title: 'What exists at the end of each stage.',
-      lede: 'Short, scoped and documented. You should be able to act on the output whether or not we do the implementation.',
+      lede: 'Short, fixed scope, written down. You should be able to act on it whether we do the work or someone else does.',
       steps: [
         {
           n: '01',
           title: 'Diagnostic',
-          body: 'We map the operating model as it really is — interviews, systems, the actual path an enquiry takes — and quantify where revenue and hours are lost. You end up with a written map and a number against each leak.',
+          body: 'We talk to the people doing the work, look at the systems, and follow what really happens to an enquiry. You end up with a written picture of how the business runs and a number against each problem.',
         },
         {
           n: '02',
-          title: 'Options & sequence',
-          body: 'Each fix costed, with an expected return and a dependency order. You end up able to say what happens first, what it should produce, and how you will know if it did not.',
+          title: 'Options, in order',
+          body: 'Each fix priced, with what it should bring back and what has to happen before it. You end up able to say what’s first, what it’s worth, and how you’ll know if it didn’t work.'
         },
         {
           n: '03',
-          title: 'Decision support',
-          body: 'We take the plan through the conversation with whoever has to approve it — board, partners, a bank — and answer the hard version of the questions rather than the flattering one.',
+          title: 'Getting it approved',
+          body: 'If you have to get this past a board, a business partner or a bank, we’ll sit in that meeting and answer the difficult questions with you rather than leaving you to defend our work alone.',
         },
         {
           n: '04',
-          title: 'Implementation or handover',
-          body: 'We build it, your team builds it, or a third party does. The plan is written to survive either way, because a strategy that only works if we deliver it is a sales document.',
+          title: 'Building it, or handing it over',
+          body: 'We build it, your team builds it, or somebody else does. It’s written to work either way — a plan that only works if we deliver it isn’t a plan, it’s a sales document.'
         },
       ],
     },
 
     {
       type: 'prose',
-      eyebrow: 'Why it sits first',
-      title: 'The other two pillars are downstream of this one.',
+      eyebrow: 'Why it’s first',
+      title: 'Why we always start here.',
       paragraphs: [
-        'Technology built without a diagnostic automates whatever the business already does, including the parts it should stop doing. Growth spend without one buys traffic for a process that cannot convert it. Both are expensive ways to discover what an inexpensive piece of work would have told you.',
-        'That is the argument for doing this first — and it is also why we will say plainly when the answer is that you do not need us for the next part.',
+        'Build systems before you’ve worked out the problem and you just make the business do the wrong thing faster. Spend on marketing first and you pay to send people to a business that can’t handle them. Both are expensive ways of finding out what a much cheaper piece of work would have told you.',
+        'It’s also why we’ll happily tell you when you don’t need us for the next bit.'
       ],
     },
 
@@ -103,28 +103,28 @@ export const strategyPage: ServicePageContent = {
     {
       type: 'cta',
       eyebrow: 'Next step',
-      title: 'Start with the diagnostic.',
-      lede: 'A conversation about how the business actually runs, and what the first piece of work should be. You keep whatever we find.',
+      title: 'Start with a conversation.',
+      lede: 'Tell us what’s going wrong and we’ll tell you what we’d look at first. No deck, no pressure, and you keep whatever we work out.',
       secondary: { href: '/services', label: 'See all three pillars' },
     },
   ],
 
   faqs: [
     {
-      q: 'Is this just a sales process for the implementation work?',
-      a: 'It would be if the findings only made sense with us delivering them. They are written to be actionable by your own team or another supplier, and you keep them either way. We would rather lose the build and be right than win it and be wrong.',
+      q: 'Is this just a sales pitch for the bigger job?',
+      a: 'Fair question. It’s written so your own team or another supplier could act on it, and you keep it either way. We’d rather lose the build and have told you the truth than win it and be wrong.',
     },
     {
       q: 'How long does a diagnostic take?',
-      a: 'Weeks rather than months, and scoped up front. A diagnostic that takes a quarter has usually become the project rather than the thing that decides the project.',
+      a: 'Weeks, not months, and we agree the scope up front. If working out what to do takes a whole quarter, it has stopped being the thing that decides the project and become the project.',
     },
     {
       q: 'What do you need from us?',
-      a: 'Access to the people who actually do the work, and honest numbers. Not a data room. Most of what matters comes out of watching how an enquiry, a quote or an invoice really moves — which is rarely how the process document says it moves.',
+      a: 'Time with the people who actually do the work, and honest numbers. Not a data room. Most of what matters comes from watching how a quote or an invoice really moves through the business, which is rarely how the process document says it does.',
     },
     {
       q: 'What if the answer is that we should do nothing?',
-      a: 'Then that is the finding, and you have it in writing with the reasoning. That is a legitimate outcome and it happens. Spending is not the same as progress.',
+      a: 'Then that’s what we’ll tell you, in writing, with the reasoning. It happens. Spending money isn’t the same as making progress, and you’ll remember who told you that.',
     },
   ],
 };
