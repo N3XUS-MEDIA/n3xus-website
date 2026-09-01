@@ -4,6 +4,7 @@ import { SiteHeader } from '@/ui/layout/SiteHeader';
 import { SiteFooter } from '@/ui/layout/SiteFooter';
 import { THEME_INIT_SCRIPT } from '@/lib/theme';
 import { Analytics, AnalyticsNoScript } from '@/ui/Analytics';
+import { Aria } from '@/ui/aria/Aria';
 import { site } from '@/content/copy';
 import './globals.css';
 
@@ -31,7 +32,7 @@ const body = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: 'N3XUS — Strategy, technology and growth',
+    default: 'N3XUS — Strategy, Intelligence, Growth',
     template: '%s | N3XUS',
   },
   description: site.descriptor,
@@ -42,13 +43,9 @@ export const metadata: Metadata = {
     images: ['/assets/og-image.png'],
   },
   twitter: { card: 'summary_large_image' },
-  icons: {
-    icon: [
-      { url: '/assets/favicon-32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/assets/favicon-64.png', sizes: '64x64', type: 'image/png' },
-    ],
-    apple: '/assets/n3xus-icon.png',
-  },
+  // The favicon comes from app/icon.svg — same geometry as HexMark, drawn
+  // rather than the 11KB of rasters it replaces. Next wires it up on its own.
+  icons: { apple: '/assets/n3xus-icon.png' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -71,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <SiteFooter />
+        <Aria />
         <Analytics />
       </body>
     </html>

@@ -10,7 +10,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { PILLARS, primaryNav, serviceLinks, serviceNav, site } from './copy';
-import { core3, faqs, hero } from './home';
+import { audiences, core3, faqs, hero } from './home';
 import { layers } from './services';
 import { staticRoutes } from './routes';
 import { organisationLd } from './structuredData';
@@ -41,19 +41,19 @@ describe('brand naming', () => {
 });
 
 describe('the three disciplines', () => {
-  it('names strategy, technology and growth, in that order', () => {
-    expect(PILLARS.map((p) => p.name)).toEqual(['Strategy', 'Technology', 'Growth']);
+  it('names strategy, intelligence and growth, in that order', () => {
+    expect(PILLARS.map((p) => p.name)).toEqual(['Strategy', 'Intelligence', 'Growth']);
   });
 
   it('leads the homepage with them', () => {
-    expect(hero.eyebrow).toBe('Strategy · Technology · Growth');
+    expect(hero.eyebrow).toBe('Strategy · Intelligence · Growth');
   });
 
   it('explains what the 3 stands for', () => {
     expect(core3.eyebrow.toLowerCase()).toContain('3');
     const titles = core3.layers.map((l) => l.title.toLowerCase());
     expect(titles[0]).toContain('strategy');
-    expect(titles[1]).toContain('technology');
+    expect(titles[1]).toContain('intelligence');
     expect(titles[2]).toContain('growth');
   });
 
@@ -90,6 +90,10 @@ describe('routing', () => {
     expect(navHrefs).toContain('/services/dstv-stream');
   });
 
+  it('groups the service nav by the three pillars', () => {
+    expect(serviceNav.map((g) => g.pillar)).toEqual(['Strategy', 'Intelligence', 'Growth']);
+  });
+
   it('files brand and streaming under Growth, not their own pillar', () => {
     const growth = serviceNav.find((g) => g.pillar === 'Growth');
     expect(growth?.items.map((i) => i.href)).toEqual(
@@ -100,6 +104,19 @@ describe('routing', () => {
   it('does not label a primary nav item "Services"', () => {
     // "What we do" — a consultancy sells engagements, not a service menu.
     expect(primaryNav.find((i) => i.href === '/services')?.label).toBe('What we do');
+  });
+});
+
+describe('metadata and structured data', () => {
+  it('never says "technology and growth" anywhere in the app', () => {
+    for (const f of [
+      'app/layout.tsx',
+      'app/page.tsx',
+      'app/services/page.tsx',
+      'src/content/structuredData.ts',
+    ]) {
+      expect(readFileSync(f, 'utf-8').toLowerCase(), f).not.toContain('technology and growth');
+    }
   });
 });
 
@@ -125,7 +142,7 @@ describe('public files carry the repositioning', () => {
 
   it('llms.txt leads with the consultancy positioning', () => {
     expect(llms).toMatch(/N3XUS is a business consultancy/);
-    expect(llms).toMatch(/strategy, technology and growth/i);
+    expect(llms).toMatch(/strategy, intelligence and growth/i);
   });
 
   it('llms.txt explains the former name rather than pretending it never existed', () => {
@@ -134,6 +151,15 @@ describe('public files carry the repositioning', () => {
 
   it('llms.txt carries a strategy page reference', () => {
     expect(llms).toContain('https://n3xus.media/services/strategy');
+  });
+
+  it('llms.txt and ai-plugin.json name Intelligence, not Technology', () => {
+    for (const [name, text] of [['llms.txt', llms], ['ai-plugin.json', plugin]] as const) {
+      expect(text, name).toMatch(/strategy, intelligence and growth/i);
+      expect(text, `${name} still says "technology and growth"`).not.toMatch(
+        /technology and growth/i,
+      );
+    }
   });
 
   it('ai-plugin.json is valid JSON and repositioned', () => {
@@ -165,6 +191,77 @@ describe('site copy', () => {
   it('does not call the firm an agency in the homepage FAQ answers', () => {
     for (const f of faqs) {
       expect(f.a, f.q).not.toMatch(/\bwe are an agency\b|\bour agency\b/i);
+    }
+  });
+});
+
+/**
+ * The copy was rewritten in 2026 because it had drifted into aphorism —
+ * "Built to own the joins", "A recommendation you cannot cost is an opinion",
+ * "spend directed at the constraint". Sentences that sound clever and leave the
+ * reader no better informed about whether we understand their situation.
+ *
+ * These tests are a smoke alarm, not a style guide. They catch the specific
+ * vocabulary that register runs on, because it comes back one word at a time.
+ */
+describe('plain language', () => {
+  const files = [
+    'src/content/home.ts',
+    'src/content/about.ts',
+    'src/content/services.ts',
+    'src/content/contact.ts',
+    'src/content/intelligence.ts',
+    'src/content/services/strategy.ts',
+  ];
+
+  const corpus = files.map((f) => ({ f, text: readFileSync(f, 'utf-8') }));
+
+  /** Consultant-register words that almost always replace a concrete noun. */
+  const BANNED = [
+    'downstream of',
+    'the joins',
+    'is an opinion',
+    'the constraint,',
+    'caps the other',
+    'survives the room',
+    'a line on an invoice',
+    'compounding growth engine',
+    'operational efficiencies',
+    'best-in-class',
+    'leverage',
+    'synergies',
+    'holistic',
+  ];
+
+  it('avoids the consultant register', () => {
+    for (const { f, text } of corpus) {
+      for (const phrase of BANNED) {
+        expect(text.toLowerCase(), `${f} contains "${phrase}"`).not.toContain(phrase.toLowerCase());
+      }
+    }
+  });
+
+  /**
+   * The homepage has to open on the reader's situation, not ours. "You" in the
+   * first heading is a crude proxy for that, but a reliable one.
+   */
+  it('opens the homepage by talking to the reader', () => {
+    expect(hero.title.toLowerCase()).toMatch(/\byou\b|\byour\b/);
+  });
+
+  it('offers both audiences a door', () => {
+    const labels = audiences.doors.map((d) => d.label.toLowerCase());
+    expect(labels.some((l) => l.includes('starting'))).toBe(true);
+    expect(labels.some((l) => l.includes('outgrown'))).toBe(true);
+    // Both routes lead somewhere, so neither is a dead end.
+    for (const d of audiences.doors) expect(d.href).toMatch(/^\//);
+  });
+
+  it('keeps sentences in the hero readable', () => {
+    // Not a hard rule elsewhere, but the first thing anyone reads should not be
+    // a 40-word sentence.
+    for (const sentence of hero.title.split(/(?<=[.?!])\s+/)) {
+      expect(sentence.split(/\s+/).length, sentence).toBeLessThanOrEqual(16);
     }
   });
 });

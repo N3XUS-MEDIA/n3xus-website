@@ -9,8 +9,8 @@
 
 export const servicesHero = {
   eyebrow: 'What we do',
-  title: 'Every problem we can solve, and what solving it is worth.',
-  lede: 'Most firms list services. This lists outcomes. Start from whatever is actually costing you money — no clear picture of what is working, leads going cold, work done by hand, or customers who cannot find you — and follow it to the discipline that addresses it.',
+  title: 'Start with whatever is annoying you most.',
+  lede: 'You don’t need to know what the solution is called. Find the sentence below that sounds like your week, and follow it — that’s genuinely how most people end up working with us.',
 };
 
 export interface PainPoint {
@@ -85,47 +85,47 @@ export const layers: ServiceLayer[] = [
   {
     id: 'strategy',
     label: 'Pillar 01',
-    name: 'Strategy — what to fix, and what it is worth',
-    lede: 'The diagnostic. Where the business leaks revenue and hours today, what each fix returns, and the order that makes each subsequent one cheaper. Everything below is downstream of this.',
+    name: 'Strategy — what to fix first',
+    lede: 'Where the money and the hours are actually going, what each fix is worth, and what to do first. Everything else on this page follows from it.',
     links: [{ href: '/services/strategy', label: 'Strategy & advisory' }],
     items: [
       {
         title: 'Operating model diagnostic',
         body: 'How work actually moves: who touches an enquiry, where it waits, what gets re-keyed, and which steps exist only because two tools cannot talk to each other.',
-        outcome: 'Capacity found before anyone is hired',
+        outcome: 'You find the hours you’re already losing, before hiring someone'
       },
       {
         title: 'Revenue leak analysis',
         body: 'Each loss quantified from your own numbers — enquiries that go cold, admin costed at staff time, quotes that arrive too late to win.',
-        outcome: 'A number against every problem, not an adjective',
+        outcome: 'Every problem gets a number, not an adjective'
       },
       {
         title: 'Technology direction',
         body: 'What to build, buy, connect or retire. Which systems are load-bearing, which are habit, and where AI changes the economics rather than adding a subscription.',
-        outcome: 'Spend directed at the constraint, not the trend',
+        outcome: 'You spend on what’s holding you back, not what’s fashionable'
       },
       {
         title: 'Growth economics',
         body: 'What a customer really costs to acquire, which channels carry the others, and whether the constraint is demand at all — often the pipeline is fine and the conversion is not.',
-        outcome: 'You stop buying traffic a broken process wastes',
+        outcome: 'You stop paying for visitors the business can’t handle'
       },
       {
         title: 'Sequenced roadmap',
         body: 'Costed options in dependency order, with what each should return and how you will know if it did not. No open-ended scope.',
-        outcome: 'A first move you can defend to whoever signs it off',
+        outcome: 'A first move you can defend to whoever signs it off'
       },
       {
         title: 'Decision support',
         body: 'Taking the plan through the approval conversation — board, partners, a lender — and answering the hard version of the questions.',
-        outcome: 'The plan survives the room it has to get through',
+        outcome: 'We’ll sit in the meeting where you have to defend it'
       },
     ],
   },
   {
     id: 'build',
     label: 'Pillar 02',
-    name: 'Technology — the systems the work runs on',
-    lede: 'The engine. Everything that turns interest into booked, paid, delivered work without a person doing it by hand.',
+    name: 'Intelligence — systems that do the work, and show you what happened',
+    lede: 'Everything that turns an enquiry into booked, paid, finished work without someone doing it by hand — and the one screen that tells you how it’s going.',
     links: [
       { href: '/services/website-os', label: 'Explore Website OS' },
       { href: '/services/software', label: 'Software & AI' },
@@ -134,7 +134,7 @@ export const layers: ServiceLayer[] = [
       {
         title: 'Website Operating System',
         body: 'Your site converted from a brochure into the system the business runs on — bookings, quotes, payments, CRM, portals and reporting behind one front door.',
-        outcome: 'Your website starts earning instead of just existing',
+        outcome: 'The website starts doing actual work'
       },
       {
         title: 'Bookings & scheduling',
@@ -149,12 +149,12 @@ export const layers: ServiceLayer[] = [
       {
         title: 'CRM & sales pipeline',
         body: 'Every enquiry becomes a tracked, scored record routed to the right person, with the full history attached and nothing sitting forgotten.',
-        outcome: 'You stop paying for leads you never follow up',
+        outcome: 'You stop paying for leads nobody follows up'
       },
       {
         title: 'AI agents & assistants',
         body: 'An assistant that knows your business, answers real questions, qualifies and books, and hands to a human at the right moment — on site and on WhatsApp.',
-        outcome: 'Enquiries that land after hours are answered, not queued',
+        outcome: 'Someone answers at 9pm, even though nobody is there'
       },
       {
         title: 'Workflow automation',
@@ -179,21 +179,21 @@ export const layers: ServiceLayer[] = [
       {
         title: 'Inventory & operations',
         body: 'Stock, orders, job progress and fulfilment connected to the same system your customers and staff already use, with no double-capturing.',
-        outcome: 'One version of the truth, so decisions stop waiting',
+        outcome: 'One set of numbers everyone actually trusts'
       },
     ],
   },
   {
     id: 'grow',
     label: 'Pillar 03',
-    name: 'Growth — demand & visibility',
-    lede: 'Getting found, and getting chosen. Rankings are now the floor — buyers increasingly ask an AI assistant who to use, and the answer is decided by how your site is built.',
+    name: 'Growth — getting found, and getting chosen',
+    lede: 'Ranking on Google is now the minimum. Your customers are also asking ChatGPT and Gemini who to use, and those tools only recommend businesses whose sites they can read.',
     links: [{ href: '/services/digital', label: 'Explore growth services' }],
     items: [
       {
         title: 'GEO & AI discoverability',
         body: 'Structured data, semantic architecture and llms.txt so ChatGPT, Claude, Gemini and Perplexity can read, trust and cite you when buyers ask for a recommendation.',
-        outcome: 'You become the answer, not the tenth blue link',
+        outcome: 'When someone asks an AI who to use, your name comes up'
       },
       {
         title: 'SEO & technical search',
@@ -300,9 +300,9 @@ export const intelligenceLayer: ServiceLayer = {
 };
 
 export const compounding = {
-  eyebrow: 'Why one firm',
-  title: 'Each discipline makes the next one worth more.',
-  body: 'A diagnosis nobody implements changes nothing. A system built without one automates whatever the business already does, including the parts it should stop doing. Demand poured into a process that leaks is the most expensive of the three. Run separately, each discipline caps the other two — which is why most businesses end up paying three suppliers to underperform in parallel. You do not have to buy all of it, and most engagements start with the diagnostic — but what follows gets built to connect.',
+  eyebrow: 'Why one team',
+  title: 'Why we do all three.',
+  body: 'Advice nobody acts on changes nothing. A system built without working out the problem first just makes the business do the wrong thing faster. And sending more customers to a business that can’t cope with the ones it has is the most expensive of the three. That’s why we do all three — not to sell you more, but because doing one properly usually means touching the other two. Most people start with one part, and that’s fine. It just gets built so the next part fits.',
 };
 
 /**
@@ -332,6 +332,6 @@ export const principles = [
 
 export const servicesClosing = {
   eyebrow: 'Not sure which of these you need?',
-  title: 'That’s what the audit is for.',
-  lede: 'We map how your business actually operates today, show you where revenue is leaking and what each fix is worth, and give you the findings whether or not you work with us.',
+  title: 'That’s what the first conversation is for.',
+  lede: 'Tell us what’s going wrong. We’ll work out what it’s costing and what we’d do about it — and you keep that whether or not you work with us.',
 };

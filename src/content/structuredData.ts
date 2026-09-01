@@ -51,7 +51,7 @@ export function organisationLd() {
     url: site.url,
     email: site.email,
     description: site.descriptor,
-    slogan: 'Strategy, technology and growth, run as one engagement.',
+    slogan: 'Strategy, intelligence and growth — one team, not three suppliers.',
     knowsAbout: [
       'Business strategy consulting',
       'Operating model design',

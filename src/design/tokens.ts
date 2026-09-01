@@ -4,22 +4,26 @@
  * Everything visual consumes this file. Do not introduce a second palette.
  *
  * ── Why these values ────────────────────────────────────────────────────────
- * The previous site ran a single teal (#00c8a3) as its only accent, on white,
- * for links and body-sized text. That measures ~1.9:1 contrast — it fails
- * WCAG AA for anything smaller than a large heading. The teal is the brand and
- * is worth keeping, so it is split in two rather than dropped:
+ * These ARE the original N3XUS colours, recovered from the pre-rebuild
+ * stylesheet (see git tag `pre-nextjs-rebuild`, assets/styles.css). An earlier
+ * pass rebuilt on blue-graphite neutrals, which quietly turned the site into a
+ * different brand: every off-white and near-black here is pulled toward the
+ * teal, and that tint is most of what made the original look like itself.
  *
- *   accent     #00C8A3  the brand teal, unchanged. Large fills, the logomark,
- *                       and anything sitting on a dark ground, where it reads.
- *   accentInk  #06705E  the same hue darkened to ~5.6:1 on paper. Links, small
- *                       text, icons — anywhere the teal has to be legible.
+ * The teal cannot carry small text — #00c8a3 measures 2.01:1 on paper, which
+ * fails WCAG AA for anything but large headings. The original had already
+ * solved this with a darker teal for text, and that exact value is reused:
  *
- * In dark mode that inverts: `accent` is legible on carbon, so it becomes the
- * link colour and `accentInk` is retired to a hover state.
+ *   accent      #00c8a3  the brand teal. Large fills, the mark, dark grounds.
+ *   accentInk   #047a64  the original's own text teal — 4.95:1 on paper.
+ *   accentDeep  #00977b  hover and pressed states.
  *
- * The neutrals are cool and rotated off navy toward graphite, so the teal has
- * nothing blue to fight with. Execuneed anchors on navy; using the same navy
- * here would make two separate businesses look like one product family.
+ * In dark mode this inverts: the teal reads at 9.22:1 on #030c0d, so `accent`
+ * carries links there and `accentInk` points at the same value.
+ *
+ * What is deliberately NOT restored: the neon glow tokens, the gradient text
+ * and the 100px pill radii. Restoring the brand's hues is not the same as
+ * restoring its maximalism.
  */
 
 export type ThemeName = 'light' | 'dark';
@@ -36,6 +40,7 @@ export type ColorRole =
   | 'line'
   | 'accent'
   | 'accentInk'
+  | 'accentDeep'
   | 'danger'
   | 'warn'
   | 'ok';
@@ -43,26 +48,28 @@ export type ColorRole =
 export const palette: Record<ThemeName, Record<ColorRole, string>> = {
   light: {
     /** The dark band surface: header, footer, closing CTA panels. */
-    carbon: '#0B1220',
+    carbon: '#091518',
     /** A lift of carbon, for hovers and secondary surfaces on that band. */
-    carbonLight: '#16202F',
+    carbonLight: '#0e1c20',
     /** Text and icons sitting ON carbon. Near-white in BOTH themes. */
-    onCarbon: '#E8ECF2',
+    onCarbon: '#e6efef',
 
-    /** Page background. Cool off-white so it sits under carbon without muddying. */
-    paper: '#F7F9FB',
-    /** Body text. Carbon-derived rather than a separate black. */
-    ink: '#111A26',
-    inkMuted: '#55637A',
+    /** Page background — the original's teal-tinted off-white, not a grey. */
+    paper: '#f5f8f8',
+    /** Headings and body. Near-black, tinted toward the teal. 17.32:1. */
+    ink: '#0c1517',
+    /** Secondary text. 5.67:1 on paper. */
+    inkMuted: '#51666c',
 
     /** Quiet surfaces: cards on paper, section bands. */
-    mist: '#E8ECF2',
-    line: '#D5DDE7',
+    mist: '#eef3f3',
+    line: '#dfe6e7',
 
-    accent: '#00C8A3',
-    accentInk: '#06705E',
+    accent: '#00c8a3',
+    accentInk: '#047a64',
+    accentDeep: '#00977b',
 
-    danger: '#9B2C2C',
+    danger: '#a02b2f',
     warn: '#8A5A12',
     ok: '#2F6B45',
   },
@@ -70,26 +77,27 @@ export const palette: Record<ThemeName, Record<ColorRole, string>> = {
   dark: {
     /* Carbon must stay visible as a distinct band. In light mode it drops away
        from the page; in dark mode it has to LIFT, or the header and footer
-       disappear into the background — which is exactly what happened when
-       carbon and paper were both #0B1220 here. */
-    carbon: '#151E30',
-    carbonLight: '#1F2B40',
+       disappear into the background. */
+    carbon: '#0e1c20',
+    carbonLight: '#16282b',
     /* Unchanged across themes: this is "text on a dark band" in both. */
-    onCarbon: '#E8ECF2',
+    onCarbon: '#e6efef',
 
-    paper: '#0A101C',
-    ink: '#E8ECF2',
-    inkMuted: '#94A3B8',
+    /** The original's dark ground. */
+    paper: '#030c0d',
+    ink: '#e6efef',
+    inkMuted: '#8ea3a3',
 
-    mist: '#131C2C',
-    line: '#26314A',
+    mist: '#091518',
+    line: '#16282b',
 
-    /* Teal reads well on a dark ground, so the brand colour carries links here
-       and the darkened variant is retired to a hover/pressed state. */
-    accent: '#00C8A3',
-    accentInk: '#4FE3C6',
+    /* The teal reads at 9.22:1 here, so the brand colour itself carries links
+       and accentInk points at the same value rather than a darker one. */
+    accent: '#00c8a3',
+    accentInk: '#00c8a3',
+    accentDeep: '#00977b',
 
-    danger: '#F1918E',
+    danger: '#f1918e',
     warn: '#E0B36A',
     ok: '#7FC79B',
   },

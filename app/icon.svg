@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <!-- Same geometry as src/ui/brand/HexMark.tsx. Kept in sync by hand; the
+       shape is six points and has not changed since it was drawn. -->
+  <rect width="24" height="24" rx="4" fill="#091518"/>
+  <polygon points="12,3.2 19.6,7.6 19.6,16.4 12,20.8 4.4,16.4 4.4,7.6"
+           fill="#00c8a3"/>
+  <polygon points="12,7.6 15.8,9.8 15.8,14.2 12,16.4 8.2,14.2 8.2,9.8"
+           fill="none" stroke="#091518" stroke-width="1.5"/>
+</svg>

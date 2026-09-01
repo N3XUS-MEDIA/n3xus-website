@@ -1,32 +1,31 @@
 import { cn } from '@/lib/cn';
+import { HexMark } from './HexMark';
 
 /**
- * The N3XUS wordmark, set in the heading face.
+ * The hex mark plus the N3XUS wordmark.
  *
- * NOT the brand logo file. assets/n3xus-logo.svg is an 856KB SVG wrapping a
- * base64 PNG — a logo-maker export, not a vector. It cannot inherit
- * currentColor, so it cannot sit on both a light and a dark header, and it
- * would be the heaviest asset on every page.
+ * The 3 is set apart from the letters around it, which is the one piece of
+ * detail worth keeping from the original logo — it is what makes the name read
+ * as N3XUS rather than "Nexus" spelled oddly.
  *
- * A type-set wordmark is honest, weighs nothing, and themes correctly. When a
- * real vector mark exists, replace this component — nothing else should need
- * to change.
- *
- * There is no hidden " Media" suffix any more. It used to be here as sr-only
- * text, which meant screen-reader users still heard the old company name on
- * every page long after the rename.
- *
- * TODO: swap for the vector logomark once it's redrawn (see docs/brand).
+ * TODO: if a true vector of the original artwork ever arrives, swap HexMark's
+ * geometry for it. Nothing else should need to change.
  */
-export function Wordmark({ className }: { className?: string }) {
+export function Wordmark({
+  className,
+  markClassName,
+  showMark = true,
+}: {
+  className?: string;
+  markClassName?: string;
+  showMark?: boolean;
+}) {
   return (
-    <span
-      className={cn(
-        'font-heading text-xl font-bold tracking-tight',
-        className,
-      )}
-    >
-      N3XUS
+    <span className={cn('inline-flex items-center gap-2.5', className)}>
+      {showMark ? <HexMark className={cn('size-6 text-accent', markClassName)} /> : null}
+      <span className="font-heading text-xl font-bold tracking-tight">
+        N<span className="text-accent">3</span>XUS
+      </span>
     </span>
   );
 }

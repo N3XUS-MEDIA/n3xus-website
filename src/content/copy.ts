@@ -23,10 +23,10 @@ export const site = {
   email: 'info@n3xus.media',
   retainersEmail: 'retainers@n3xus.media',
   bookingUrl: 'https://link.n3xus.media/widget/bookings/jared-sinclair-calendar',
-  tagline: 'Strategy, technology and growth for businesses that have outgrown their systems.',
+  tagline: 'Strategy, intelligence and growth — for businesses that have outgrown how they work.',
   /** One line, used in metadata and structured data. */
   descriptor:
-    'A business consultancy working across strategy, technology and growth — the three disciplines most businesses buy separately and then struggle to connect.',
+    'A consultancy that works out what is holding your business back, builds the systems to fix it, and brings you the customers. Strategy, intelligence and growth, from one team.',
 } as const;
 
 /**
@@ -41,21 +41,21 @@ export const PILLARS = [
     id: 'strategy',
     name: 'Strategy',
     href: '/services/strategy',
-    summary: 'Where the business actually loses money, and what to do first.',
+    summary: 'Working out what is actually costing you, and what to fix first.',
   },
   {
     n: '02',
-    id: 'technology',
-    name: 'Technology',
-    href: '/services/website-os',
-    summary: 'The systems the work runs on, built and connected.',
+    id: 'intelligence',
+    name: 'Intelligence',
+    href: '/intelligence',
+    summary: 'The systems that run the work, and show you what is happening.',
   },
   {
     n: '03',
     id: 'growth',
     name: 'Growth',
     href: '/services/digital',
-    summary: 'Demand, visibility and the brand that makes both cheaper.',
+    summary: 'Getting you found, and getting people to choose you.',
   },
 ] as const;
 
@@ -88,22 +88,23 @@ export interface ServiceGroup {
 export const serviceNav: ServiceGroup[] = [
   {
     pillar: 'Strategy',
-    items: [{ href: '/services/strategy', label: 'Advisory & operating strategy' }],
+    items: [{ href: '/services/strategy', label: 'Where to start' }],
   },
   {
-    pillar: 'Technology',
+    pillar: 'Intelligence',
     items: [
+      { href: '/intelligence', label: 'The N3XUS Intelligence platform' },
       { href: '/services/website-os', label: 'Website Operating System' },
-      { href: '/services/ai', label: 'AI & LLM systems' },
+      { href: '/services/ai', label: 'AI systems & assistants' },
       { href: '/services/software', label: 'Custom software' },
     ],
   },
   {
     pillar: 'Growth',
     items: [
-      { href: '/services/digital', label: 'Demand & visibility' },
-      { href: '/services/brand', label: 'Brand & market presence' },
-      { href: '/services/dstv-stream', label: 'Streaming advertising' },
+      { href: '/services/digital', label: 'Getting found & getting chosen' },
+      { href: '/services/brand', label: 'Brand, TV & events' },
+      { href: '/services/dstv-stream', label: 'Streaming ads (DStv)' },
     ],
   },
 ];
@@ -117,7 +118,8 @@ export const legalNav = [
 ] as const;
 
 export const ctas = {
-  book: 'Book a consultation',
+  /** Low commitment on purpose — "consultation" sounds like an invoice. */
+  book: 'Book a free call',
   contact: 'Get in touch',
-  buildRetainer: 'Build your retainer',
+  buildRetainer: 'Price it up',
 } as const;
