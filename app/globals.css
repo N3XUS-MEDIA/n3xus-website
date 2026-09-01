@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colour custom properties (--n3x-*) are emitted by the Tailwind plugin in
+   src/design/tailwind-preset.ts, generated from src/design/tokens.ts. They are
+   deliberately not written here — one palette, one source. */
+
+@layer base {
+  :root {
+    /* The sticky mobile action bar is fixed. Pages reserve this at the end of
+       the document so it can never sit on top of a submit button. */
+    --action-bar-h: 4.5rem;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-paper font-body text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    /* Space Grotesk is loaded at 600/700 only — an unset weight would leave the
+       browser synthesising 400 from the 600 face. */
+    @apply font-heading font-semibold tracking-tight text-balance;
+    line-height: 1.15;
+  }
+
+  p {
+    @apply text-pretty;
+  }
+
+  ::selection {
+    @apply bg-accent/25 text-ink;
+  }
+
+  /* Visible focus, always. The old site suppressed outlines on several
+     controls; anything keyboard-reachable needs to show where it is. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-ink;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* One hairline rule, used for section seams and small flourishes. */
+  .rule {
+    @apply h-px w-full border-0 bg-line;
+  }
+
+  /* The small-caps label that opens a section. Sets the vertical rhythm of
+     every section on the site: eyebrow, heading, lede. */
+  .eyebrow {
+    @apply font-body text-xs font-semibold uppercase tracking-[0.18em] text-ink-muted;
+  }
+
+  .eyebrow-on-carbon {
+    @apply font-body text-xs font-semibold uppercase tracking-[0.18em] text-on-carbon/60;
+  }
+
+  /* Long-form editorial and legal copy — the blog articles, /privacy, /terms.
+     Written out rather than pulling in @tailwindcss/typography, which would
+     bring a second type scale with it. */
+  .longform > * + * {
+    @apply mt-5;
+  }
+
+  /* Articles wrap each heading and its paragraphs in a <section>, so the child
+     combinator above only ever sees the sections. Without this, consecutive
+     paragraphs inside one section run together. */
+  .longform section > * + * {
+    @apply mt-5;
+  }
+
+  .longform section + section {
+    @apply mt-12;
+  }
+
+  .longform h2 {
+    @apply mt-12 text-2xl text-ink sm:text-3xl;
+  }
+
+  .longform section > h2:first-child {
+    @apply mt-0;
+  }
+
+  .longform h3 {
+    @apply mt-10 text-xl text-ink sm:text-2xl;
+  }
+
+  .longform p,
+  .longform li {
+    @apply text-lg leading-relaxed text-ink-muted;
+  }
+
+  .longform ul {
+    @apply list-disc space-y-3 pl-6;
+  }
+
+  .longform ol {
+    @apply list-decimal space-y-3 pl-6;
+  }
+
+  .longform a {
+    @apply text-accent-ink underline underline-offset-4;
+  }
+
+  .longform blockquote {
+    @apply border-l-2 border-accent/40 pl-6 text-lg italic leading-relaxed text-ink;
+  }
+}
