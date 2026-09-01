@@ -21,6 +21,9 @@ Amended column), or `CUT` (does not ship).
 | A2 | "0% media markup" / "Zero media markup" | `index.html:188` (JSON-LD FAQ), `:658`; `about.html` differentiator 06 | | |
 | A3 | "1 screen instead of six logins" | `index.html`, `services/website-os.html` | | |
 | A4 | "Free 45-minute website audit" / "45 minutes. No pitch." | `index.html:259`, `:391`, `:548`; `about.html` CTA; `.well-known/ai-plugin.json` | | |
+| A5 | "Limited strategy call slots available this month" | `index.html` closing CTA | **CUT** (not ported) | Manufactured scarcity, unverifiable |
+| A6 | Fabricated "live dashboard" — 247 leads, 1,840 AI responses today, "#1" ranking, 38/21/12/0 pipeline strip | `index.html` hero | **CUT** (not ported) | Invented figures shown as a real product screenshot |
+| A7 | Fabricated Intelligence dashboard — 38 enquiries, 21 quotes, 12 booked, channel scores 78/92/66/71/55, "Updated just now" | `intelligence.html` hero | **CUT** (not ported) | As above. Replace with a real screenshot once `apps/intelligence` boots — see `docs/context/STATE.md` |
 
 **Note on A2:** this is a billing *policy*, not a performance statistic — N3XUS
 can confirm it from its own contracts. It is listed here because it is stated as
@@ -52,9 +55,19 @@ old figures are not reintroduced from an unported page.
 | C4 | AI Chatbot $1,500 vs $500/$1,160/$2,370 | `index.html:99` vs `blog/index.html:432` | **Open** — one-off project pricing, not covered by the retainer matrix |
 | C5 | "Individual services from $135/mo" but table floor is $160/mo | `index.html:188,208` vs `pricing.html:302-333` | **Open** — one-off/à-la-carte pricing |
 
+| C6 | "Retainer plans start at $500/mo with a 3-month minimum" | `contact.html` FAQ | Contradicted the configurator twice: base is $450 / R6,500, and the terms specify 30 days notice with no minimum term. Rewritten to match the terms |
+| C7 | Rate card: SEO $185/$345/$630, ads management $160/$290/$500, social $240/$395/$630, LLM marketing $345/$630/$950 | `services/digital.html` | Superseded by the retainer builder; removed |
+| C8 | Website OS "monthly retainer from $950" | `index.html` Website OS section | Superseded; now "from the modules you pick" |
+
 **C4 and C5 still need a decision.** The retainer builder replaced monthly
-pricing only; one-off project figures are still live on the old pages and still
-contradict each other.
+pricing only; one-off project figures still contradict each other. C4 in
+particular is blocking: the AI chatbot is currently quoted "per build" on both
+`/services/ai` and the ported blog article because there is no single agreed
+price to publish.
+
+**One-off project pricing that IS live** (unchanged, not superseded): LLM
+application development from $3,500, RAG systems from $5,500, AI agents from
+$6,000, custom AI software from $8,000. Confirm these are still current.
 
 ## D. Configurator PDF errors
 
@@ -113,3 +126,23 @@ Not claims — straightforward errors to fix.
 | G4 | GTM container `GT-57S4GH8K` **and** standalone gtag `G-223R7S2381` both load on every page — pageviews may be double-counted | every page |
 | G5 | `n3xus-img-1.svg` is byte-identical to `n3xus-icon.svg` (sha256 `93da379a…`) | `assets/` — duplicate dropped in rebuild |
 | G6 | All three logo SVGs are base64 PNGs in an SVG wrapper (~2.9MB total); cannot inherit `currentColor` | `assets/` — needs a real vector redraw |
+| G7 | privacy §1 ended "Contact us at any time: info@n3xus.media •" — trailing separator where a phone number used to be | fixed in `src/content/privacy.ts` |
+| G8 | `/api/chat` was an open proxy to the Anthropic account: `Access-Control-Allow-Origin: *`, no validation beyond "messages exists", and the entire client body forwarded — so any origin could pick the model and `max_tokens` and bill it to N3XUS | fixed; also patched on the old static site in branch `fix/chat-proxy-hardening` |
+| G9 | `/api/contact` returned `200 {ok:true}` when `RESEND_API_KEY` was unset — enquiries would vanish while the sender saw success | fixed: returns 503, form shows a `mailto:` fallback |
+
+---
+
+## H. How claims are enforced in the rebuild
+
+Not a checklist item — worth knowing where the guard rails actually are, so
+they are not removed by accident.
+
+| Guard | Where |
+|---|---|
+| Each gated claim is a single boolean; flipping it publishes the claim everywhere at once | `CLAIMS` in `src/content/about.ts` |
+| A `stats` block refuses to render without a `source` string | `src/ui/marketing/Blocks.tsx` |
+| The Aria system prompt is generated from `pricing.ts`, so the assistant cannot quote a price the site disagrees with; it also carries the brand-separation rule and a no-invented-statistics instruction | `src/server/aria/systemPrompt.ts`, tested |
+| The configurator PDF's wrong figures are pinned by tests so they cannot reappear in the product | `src/lib/retainer.test.ts` |
+| The contested chatbot tiers cannot return via the blog | `src/content/routes.test.ts` |
+| The leak calculator is asserted to be pure arithmetic on visitor input, with no multiplier | `src/lib/leakCalc.test.ts` |
+| FAQ structured data is generated from the same array the page renders, so JSON-LD cannot describe an answer nobody can see | `src/content/structuredData.ts` |

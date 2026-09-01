@@ -57,13 +57,13 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-4 border-t border-on-carbon/10 py-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-on-carbon/50">
+          <p className="text-sm text-on-carbon/65">
             © {year} {site.legalName}. All rights reserved.
           </p>
           <ul className="flex gap-6">
             {legalNav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-sm text-on-carbon/50 hover:text-on-carbon">
+                <Link href={item.href} className="text-sm text-on-carbon/65 hover:text-on-carbon">
                   {item.label}
                 </Link>
               </li>

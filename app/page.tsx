@@ -102,7 +102,7 @@ export default function HomePage() {
               {comparison.before.rows.map(([label, note]) => (
                 <li key={label} className="text-on-carbon/70">
                   <span className="text-on-carbon">{label}</span>
-                  {note ? <span className="text-on-carbon/50"> — {note}</span> : null}
+                  {note ? <span className="text-on-carbon/65"> — {note}</span> : null}
                 </li>
               ))}
             </ul>

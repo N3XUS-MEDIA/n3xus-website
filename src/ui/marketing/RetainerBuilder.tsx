@@ -65,7 +65,10 @@ export function RetainerBuilder() {
                   )}
                 >
                   {CURRENCIES[code].symbol} {code}
-                  <span className="ml-1.5 hidden text-xs opacity-70 sm:inline">
+                  {/* No extra opacity here: stacked on an already-muted
+                      foreground it measured 4.19:1. The smaller size is
+                      enough to mark it as secondary. */}
+                  <span className="ml-1.5 hidden text-xs sm:inline">
                     {CURRENCIES[code].label}
                   </span>
                 </button>
