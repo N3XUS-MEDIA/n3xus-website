@@ -8,9 +8,9 @@
  */
 
 export const servicesHero = {
-  eyebrow: 'Everything we do',
+  eyebrow: 'What we do',
   title: 'Every problem we can solve, and what solving it is worth.',
-  lede: 'Most agency sites list services. This one lists outcomes. Start with whatever is actually costing you money right now — customers who can’t find you, leads going cold, work being done by hand, or no idea what’s working — and follow it to the system that fixes it.',
+  lede: 'Most firms list services. This lists outcomes. Start from whatever is actually costing you money — no clear picture of what is working, leads going cold, work done by hand, or customers who cannot find you — and follow it to the discipline that addresses it.',
 };
 
 export interface PainPoint {
@@ -21,6 +21,12 @@ export interface PainPoint {
 }
 
 export const painPoints: PainPoint[] = [
+  {
+    quote: 'We don’t know what to fix first.',
+    body: 'Four plausible priorities, no way to compare them, and every supplier recommending the thing they happen to sell.',
+    href: '/services/strategy',
+    linkLabel: 'Strategy & advisory',
+  },
   {
     quote: 'Customers can’t find us.',
     body: 'You’re invisible in search, absent from the AI assistants buyers now ask, or spending on ads that don’t return.',
@@ -77,9 +83,48 @@ export interface ServiceLayer {
 
 export const layers: ServiceLayer[] = [
   {
+    id: 'strategy',
+    label: 'Pillar 01',
+    name: 'Strategy — what to fix, and what it is worth',
+    lede: 'The diagnostic. Where the business leaks revenue and hours today, what each fix returns, and the order that makes each subsequent one cheaper. Everything below is downstream of this.',
+    links: [{ href: '/services/strategy', label: 'Strategy & advisory' }],
+    items: [
+      {
+        title: 'Operating model diagnostic',
+        body: 'How work actually moves: who touches an enquiry, where it waits, what gets re-keyed, and which steps exist only because two tools cannot talk to each other.',
+        outcome: 'Capacity found before anyone is hired',
+      },
+      {
+        title: 'Revenue leak analysis',
+        body: 'Each loss quantified from your own numbers — enquiries that go cold, admin costed at staff time, quotes that arrive too late to win.',
+        outcome: 'A number against every problem, not an adjective',
+      },
+      {
+        title: 'Technology direction',
+        body: 'What to build, buy, connect or retire. Which systems are load-bearing, which are habit, and where AI changes the economics rather than adding a subscription.',
+        outcome: 'Spend directed at the constraint, not the trend',
+      },
+      {
+        title: 'Growth economics',
+        body: 'What a customer really costs to acquire, which channels carry the others, and whether the constraint is demand at all — often the pipeline is fine and the conversion is not.',
+        outcome: 'You stop buying traffic a broken process wastes',
+      },
+      {
+        title: 'Sequenced roadmap',
+        body: 'Costed options in dependency order, with what each should return and how you will know if it did not. No open-ended scope.',
+        outcome: 'A first move you can defend to whoever signs it off',
+      },
+      {
+        title: 'Decision support',
+        body: 'Taking the plan through the approval conversation — board, partners, a lender — and answering the hard version of the questions.',
+        outcome: 'The plan survives the room it has to get through',
+      },
+    ],
+  },
+  {
     id: 'build',
-    label: 'Layer 01',
-    name: 'Build — systems & development',
+    label: 'Pillar 02',
+    name: 'Technology — the systems the work runs on',
     lede: 'The engine. Everything that turns interest into booked, paid, delivered work without a person doing it by hand.',
     links: [
       { href: '/services/website-os', label: 'Explore Website OS' },
@@ -140,8 +185,8 @@ export const layers: ServiceLayer[] = [
   },
   {
     id: 'grow',
-    label: 'Layer 02',
-    name: 'Grow — demand & visibility',
+    label: 'Pillar 03',
+    name: 'Growth — demand & visibility',
     lede: 'Getting found, and getting chosen. Rankings are now the floor — buyers increasingly ask an AI assistant who to use, and the answer is decided by how your site is built.',
     links: [{ href: '/services/digital', label: 'Explore growth services' }],
     items: [
@@ -192,9 +237,9 @@ export const layers: ServiceLayer[] = [
   },
   {
     id: 'amplify',
-    label: 'Layer 03',
-    name: 'Amplify — brand & market presence',
-    lede: 'For businesses ready to scale reach and be taken seriously at a larger size. Broadcast and physical presence still carry an authority signal digital alone can’t replicate.',
+    label: 'Within growth',
+    name: 'Brand & market presence',
+    lede: 'A delivery capability within growth rather than a pillar of its own. Broadcast and physical presence carry an authority signal performance media cannot buy — for businesses at the point where that is the constraint.',
     links: [
       { href: '/services/brand', label: 'Explore brand services' },
       { href: '/services/dstv-stream', label: 'Streaming advertising' },
@@ -226,9 +271,9 @@ export const layers: ServiceLayer[] = [
 
 export const intelligenceLayer: ServiceLayer = {
   id: 'intelligence',
-  label: 'The layer underneath',
+  label: 'Underneath all three',
   name: 'Intelligence — see all of it, live',
-  lede: 'Every layer above reports into one platform. Without this, you are running three programmes and guessing which one produced the revenue.',
+  lede: 'All three disciplines report into one platform. Without it you are running three programmes and guessing which produced the revenue — which is the problem this firm exists to remove.',
   links: [{ href: '/intelligence', label: 'Explore N3XUS Intelligence' }],
   items: [
     {
@@ -255,9 +300,9 @@ export const intelligenceLayer: ServiceLayer = {
 };
 
 export const compounding = {
-  eyebrow: 'Why it’s one system',
-  title: 'Each layer makes the next one worth more.',
-  body: 'Demand poured into a brochure leaks. A brilliant system nobody can find sits idle. A strong brand driving traffic to a site that can’t book or quote gives most of its value away. Run separately, each one caps the others — which is why most businesses end up paying three suppliers to underperform in parallel. Built together, the same spend produces compounding returns instead of three isolated line items. You don’t have to buy all of it, and most clients start with one layer. But they get built to connect.',
+  eyebrow: 'Why one firm',
+  title: 'Each discipline makes the next one worth more.',
+  body: 'A diagnosis nobody implements changes nothing. A system built without one automates whatever the business already does, including the parts it should stop doing. Demand poured into a process that leaks is the most expensive of the three. Run separately, each discipline caps the other two — which is why most businesses end up paying three suppliers to underperform in parallel. You do not have to buy all of it, and most engagements start with the diagnostic — but what follows gets built to connect.',
 };
 
 /**

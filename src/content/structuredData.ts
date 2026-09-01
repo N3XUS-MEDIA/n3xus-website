@@ -38,16 +38,30 @@ export const WEBSITE_ID = `${site.url}/#website`;
 export function organisationLd() {
   return compact({
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    // ProfessionalService rather than a bare Organization: it is a subtype of
+    // LocalBusiness and lets search and AI assistants classify the firm as a
+    // consultancy rather than guessing from copy.
+    '@type': ['Organization', 'ProfessionalService'],
     '@id': ORG_ID,
     name: site.name,
     legalName: site.legalName,
-    alternateName: ['N3XUS', 'N3XUS Media'],
+    // The former trading name. Kept so the rename does not break entity
+    // matching for anyone who already knows the business as N3XUS Media.
+    alternateName: ['N3XUS Media'],
     url: site.url,
     email: site.email,
-    description:
-      'N3XUS Media combines AI engineering, software development and marketing under one framework, delivering compounding growth for ambitious businesses.',
-    slogan: 'Stop letting scattered systems limit your growth.',
+    description: site.descriptor,
+    slogan: 'Strategy, technology and growth, run as one engagement.',
+    knowsAbout: [
+      'Business strategy consulting',
+      'Operating model design',
+      'Technology strategy',
+      'Custom software development',
+      'AI and LLM systems',
+      'Generative Engine Optimisation',
+      'Search engine optimisation',
+      'Performance marketing',
+    ],
     image: `${site.url}/assets/og-image.png`,
     areaServed: 'Worldwide',
 

@@ -3,7 +3,7 @@ import type { Faq } from './home';
 export const contactHero = {
   eyebrow: 'Contact',
   title: 'Get in touch.',
-  lede: 'Book a strategy call, send a message, or just say hello. We respond within one business day.',
+  lede: 'Book a consultation, send a message, or just say hello. We respond within one business day.',
 };
 
 export const contactDetails = [
@@ -18,7 +18,16 @@ export const contactDetails = [
  */
 export const serviceOptions: { group: string; options: string[] }[] = [
   {
-    group: 'Website Operating System',
+    group: 'Strategy',
+    options: [
+      'Not sure what to fix first — start with a diagnostic',
+      'Operating model review',
+      'Technology direction',
+      'Growth economics review',
+    ],
+  },
+  {
+    group: 'Technology — Website Operating System',
     options: [
       'Turn my website into a business system',
       'Website audit',
@@ -31,7 +40,7 @@ export const serviceOptions: { group: string; options: string[] }[] = [
     ],
   },
   {
-    group: 'Growth & Demand',
+    group: 'Growth — demand & visibility',
     options: [
       'SEO & LLM Marketing / GEO',
       'Google Ads / Meta Ads',
@@ -39,7 +48,7 @@ export const serviceOptions: { group: string; options: string[] }[] = [
     ],
   },
   {
-    group: 'AI & Software Development',
+    group: 'Technology — AI & software',
     options: [
       'AI agents & assistants',
       'AI chatbot (web / WhatsApp / voice)',
@@ -50,7 +59,7 @@ export const serviceOptions: { group: string; options: string[] }[] = [
     ],
   },
   {
-    group: 'Brand & Traditional',
+    group: 'Growth — brand & broadcast',
     options: ['Brand & market presence', 'TV & broadcast marketing'],
   },
   {

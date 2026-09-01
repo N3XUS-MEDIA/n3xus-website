@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Container } from './Container';
 import { Wordmark } from '@/ui/brand/Wordmark';
-import { legalNav, primaryNav, serviceNav, site } from '@/content/copy';
+import { legalNav, primaryNav, serviceLinks, site } from '@/content/copy';
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -40,9 +40,9 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <p className="eyebrow-on-carbon">Services</p>
+            <p className="eyebrow-on-carbon">What we do</p>
             <ul className="mt-4 space-y-1">
-              {serviceNav.map((item) => (
+              {serviceLinks.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}

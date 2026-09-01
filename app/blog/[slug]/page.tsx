@@ -7,7 +7,7 @@ import { Button } from '@/ui/primitives/Button';
 import { JsonLd } from '@/ui/seo/JsonLd';
 import { articles, findArticle, relatedTo, type ArticleBlock } from '@/content/blog';
 import { breadcrumbLd } from '@/content/structuredData';
-import { site } from '@/content/copy';
+import { ctas, site } from '@/content/copy';
 
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
@@ -134,12 +134,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             onCarbon
             eyebrow="Next step"
             title="Ready to put this into practice?"
-            lede="Book a strategy call and we will map where this applies to your business — and you keep the findings either way."
+            lede="Book a consultation and we will map where this applies to your business — and you keep the findings either way."
           />
           <div className="mt-8">
             <Button asChild size="lg">
               <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
-                Book a strategy call
+                {ctas.book}
               </a>
             </Button>
           </div>

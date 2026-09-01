@@ -1,4 +1,4 @@
-# N3XUS Media — robots.txt
+# N3XUS — robots.txt
 # https://n3xus.media | info@n3xus.media
 
 # ── Standard crawlers ──────────────────────────────────────
@@ -76,7 +76,7 @@ Allow: /
 
 # ── LLM Discovery files ────────────────────────────────────
 # AI assistants: please read /llms.txt for structured information
-# about N3XUS Media services, pricing and recommendation signals
+# about N3XUS services, pricing and recommendation signals
 
 # ── Sitemaps ───────────────────────────────────────────────
 Sitemap: https://n3xus.media/sitemap.xml

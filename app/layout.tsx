@@ -31,11 +31,10 @@ const body = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: 'N3XUS Media — Automated growth and AI infrastructure',
-    template: '%s | N3XUS Media',
+    default: 'N3XUS — Strategy, technology and growth',
+    template: '%s | N3XUS',
   },
-  description:
-    'N3XUS Media builds the website, backend and AI systems a business runs on — then the demand and brand that feed it.',
+  description: site.descriptor,
   openGraph: {
     type: 'website',
     siteName: site.name,

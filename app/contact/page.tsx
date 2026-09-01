@@ -12,7 +12,7 @@ import { faqLd } from '@/content/structuredData';
 export const metadata: Metadata = {
   title: 'Contact',
   description:
-    'Book a strategy call or send N3XUS Media a message. We respond within one business day.',
+    'Book a consultation or send N3XUS Media a message. We respond within one business day.',
   alternates: { canonical: '/contact' },
 };
 
@@ -53,7 +53,7 @@ export default function ContactPage() {
               </p>
               <Button asChild className="mt-5">
                 <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
-                  Book a strategy call
+                  Book a consultation
                 </a>
               </Button>
             </div>

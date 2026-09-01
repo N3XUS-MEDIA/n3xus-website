@@ -25,26 +25,26 @@ export const CLAIMS = {
 
 export const aboutHero = {
   eyebrow: 'Who we are',
-  title: 'Built to connect what other agencies separate.',
-  lede: 'N3XUS Media was founded on a single observation: the most impactful marketing happens when traditional, digital and AI work as one system. Most agencies do one. We built the infrastructure to do all three — genuinely integrated.',
+  title: 'Built to own the joins.',
+  lede: 'N3XUS was founded on a single observation: strategy, technology and growth are sold as three separate professions, and almost every expensive business problem lives in the gaps between them. We built a firm that works across all three, and is accountable for the whole.',
 };
 
 export const mission = {
   eyebrow: 'Our mission',
-  title: 'Growth without fragmentation.',
+  title: 'One firm, accountable end to end.',
   paragraphs: [
-    'Ambitious businesses deserve marketing that actually works as a system. Not a TV agency here, a digital agency there, and an AI consultant bolted on separately. N3XUS Media was built to be the single partner that connects all three.',
+    'Ambitious businesses deserve advice that survives contact with implementation. Not a consultancy that leaves after the deck, a development shop that builds whatever the deck said, and an agency buying traffic for a process that cannot convert it. N3XUS was built to be one partner across all three.',
     // B1's "one of the few agencies in the world … at enterprise level" is cut
     // from this paragraph until confirmed; the sentence stands without it.
-    'We operate across traditional marketing, digital marketing and AI solutions, and connect them through the Core3 framework into a compounding growth engine.',
-    'Every service we deliver is designed to amplify the others. Your TV campaign feeds your digital retargeting. Your digital performance data informs your AI chatbot. Your AI systems capture the leads your brand campaigns create. That is the Core3 difference.',
+    'We work across strategy, technology and growth — the three disciplines the name refers to — and run them as one engagement rather than three workstreams that report separately.',
+    'Each discipline makes the next one worth more. The diagnostic decides what gets built. What gets built decides what demand can convert. What converts tells the next diagnostic where to look. Run separately, each one caps the other two.',
   ],
 };
 
 /** Structural statements about how N3XUS works — not performance metrics. */
 export const missionFacts = [
   { value: 'Yours', label: 'Data and ad accounts, in your name' },
-  { value: 'Three', label: 'Pillars, run as one system' },
+  { value: 'Three', label: 'Disciplines, run as one engagement' },
 ] as const;
 
 /** Gated on CLAIMS.campaignCount / CLAIMS.zeroMarkup. */
@@ -64,8 +64,8 @@ export interface Differentiator {
 export const differentiators: Differentiator[] = [
   {
     n: '01',
-    title: 'Traditional, digital and AI under one roof',
-    body: 'TV marketing, digital marketing and AI solutions, delivered by one team and connected rather than handed between agencies.',
+    title: 'Advice and implementation from one firm',
+    body: 'The people who diagnose the problem are accountable for what gets built to fix it. No handover between a strategy supplier and a delivery supplier, which is where most of the cost and all of the blame usually lives.',
     // Original opened "Only truly integrated full-service agency" (B3).
     // Rewritten to describe what is done, which needs no superlative.
   },
@@ -82,13 +82,13 @@ export const differentiators: Differentiator[] = [
   },
   {
     n: '04',
-    title: 'TV and digital, measured together',
-    body: 'We can run a national TV campaign and the digital acquisition strategy simultaneously, and measure the halo effect between them.',
+    title: 'Recommendations that carry a number',
+    body: 'Every finding is costed and sequenced against your own figures. A recommendation you cannot cost is an opinion, and opinions are why improvement lists never get actioned.',
   },
   {
     n: '05',
     title: 'Deep market knowledge',
-    body: 'Founded in South Africa with global reach. We understand TV broadcast, WhatsApp as a primary engagement channel, and what actually drives conversion in both local and international markets.',
+    body: 'Founded in South Africa, working internationally. We understand WhatsApp as a primary business channel, how local buyers actually transact, and where assumptions imported from US playbooks break.',
   },
   {
     n: '06',
@@ -113,9 +113,9 @@ export const industries = [
 
 export const closing = {
   eyebrow: 'Work with us',
-  title: 'Book a strategy call.',
+  title: 'Start with a conversation.',
   /** Unconditional version. The "45 minutes, no pitch" framing is A4. */
-  lede: 'We map your Core3 growth opportunity and give you a clear plan — whether you work with us or not.',
+  lede: 'We map how the business runs today and what the first piece of work should be — and you keep the findings whether or not you continue with us.',
   ledeWithAudit:
-    '45 minutes. No pitch. We map your Core3 growth opportunity and give you a clear plan — whether you work with us or not.',
+    '45 minutes. No pitch. We map how the business runs today and what the first piece of work should be — and you keep the findings whether or not you continue with us.',
 };

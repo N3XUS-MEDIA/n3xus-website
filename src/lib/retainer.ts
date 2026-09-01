@@ -84,7 +84,12 @@ export function buildQuote(selectedIds: Iterable<string>, currency: CurrencyCode
 
 export function formatPrice(amount: number, currency: CurrencyCode): string {
   const { symbol } = CURRENCIES[currency];
-  return `${symbol}${amount.toLocaleString('en-ZA').replace(/ /g, ',')}`;
+  // en-ZA groups thousands with a NON-BREAKING space (U+00A0), not a plain
+  // one. Written as an escape because the literal character is invisible in an
+  // editor, and anyone "tidying" it into a normal space would silently produce
+  // "R25 200" instead of "R25,200". A plain space is matched too, in case an
+  // engine ever changes its mind.
+  return `${symbol}${amount.toLocaleString('en-ZA').replace(/[\u00a0 ]/g, ',')}`;
 }
 
 export function formatMonthly(amount: number, currency: CurrencyCode): string {

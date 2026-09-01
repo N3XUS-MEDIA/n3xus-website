@@ -52,7 +52,7 @@ export function ContactForm() {
         </p>
         <Button asChild className="mt-6">
           <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
-            Book a strategy call
+            Book a consultation
           </a>
         </Button>
       </div>

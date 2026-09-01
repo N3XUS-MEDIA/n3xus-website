@@ -334,7 +334,7 @@ export function BlockRenderer({
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg">
                 <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
-                  Book a strategy call
+                  Book a consultation
                 </a>
               </Button>
               <Button

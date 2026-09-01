@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useId, useState } from 'react';
 import { cn } from '@/lib/cn';
-import { ctas, primaryNav, serviceNav, site } from '@/content/copy';
+import { ctas, primaryNav, serviceLinks, serviceNav, site } from '@/content/copy';
 import { Container } from './Container';
 import { Wordmark } from '@/ui/brand/Wordmark';
 import { Button } from '@/ui/primitives/Button';
@@ -105,24 +105,31 @@ export function SiteHeader() {
                     {servicesOpen ? (
                       <div
                         id={servicesId}
-                        className="absolute left-0 top-full w-72 rounded-md border border-on-carbon/15 bg-carbon-light p-2 shadow-lg"
+                        className="absolute left-0 top-full w-80 rounded-md border border-on-carbon/15 bg-carbon-light p-3 shadow-lg"
                       >
                         <Link
                           href="/services"
                           className="block rounded-sm px-3 py-2.5 text-sm text-on-carbon hover:bg-on-carbon/10"
                         >
-                          All services
+                          Everything we do
                         </Link>
-                        <hr className="my-2 border-on-carbon/10" />
-                        {serviceNav.map((s) => (
-                          <Link
-                            key={s.href}
-                            href={s.href}
-                            aria-current={pathname === s.href ? 'page' : undefined}
-                            className="block rounded-sm px-3 py-2.5 text-sm text-on-carbon/75 hover:bg-on-carbon/10 hover:text-on-carbon"
-                          >
-                            {s.label}
-                          </Link>
+
+                        {/* Grouped by pillar — the menu is where the three
+                            disciplines are most often read for the first time. */}
+                        {serviceNav.map((group) => (
+                          <div key={group.pillar} className="mt-3 border-t border-on-carbon/10 pt-3">
+                            <p className="eyebrow-on-carbon px-3">{group.pillar}</p>
+                            {group.items.map((s) => (
+                              <Link
+                                key={s.href}
+                                href={s.href}
+                                aria-current={pathname === s.href ? 'page' : undefined}
+                                className="mt-1 block rounded-sm px-3 py-2.5 text-sm text-on-carbon/75 hover:bg-on-carbon/10 hover:text-on-carbon"
+                              >
+                                {s.label}
+                              </Link>
+                            ))}
+                          </div>
                         ))}
                       </div>
                     ) : null}
@@ -184,7 +191,7 @@ export function SiteHeader() {
                     </Link>
                   </li>
                 ))}
-                {serviceNav.map((s) => (
+                {serviceLinks.map((s) => (
                   <li key={s.href}>
                     <Link
                       href={s.href}

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { PageHero } from '@/ui/layout/PageHero';
 import { Section, SectionHeading } from '@/ui/layout/Section';
 import { Button } from '@/ui/primitives/Button';
-import { site } from '@/content/copy';
+import { ctas, site } from '@/content/copy';
 import {
   CLAIMS,
   aboutHero,
@@ -17,7 +17,7 @@ import {
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'N3XUS Media connects traditional marketing, digital marketing and AI into one system through the Core3 framework.',
+    'N3XUS is a business consultancy working across strategy, technology and growth — one firm accountable across all three, rather than three suppliers accountable for none.',
   alternates: { canonical: '/about' },
 };
 
@@ -77,7 +77,7 @@ export default function AboutPage() {
         <SectionHeading
           eyebrow="Who we serve"
           title="Clients across industries, worldwide."
-          lede="N3XUS Media serves businesses from startups to enterprise, locally and internationally."
+          lede="We serve businesses from owner-managed through to enterprise, locally and internationally."
         />
         <ul className="mt-8 flex flex-wrap gap-2">
           {industries.map((industry) => (
@@ -102,7 +102,7 @@ export default function AboutPage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg">
               <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
-                Book a strategy call
+                {ctas.book}
               </a>
             </Button>
             <Button

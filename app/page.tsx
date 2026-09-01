@@ -21,9 +21,9 @@ import {
 import { faqLd, organisationLd, visibleFaqs, websiteLd } from '@/content/structuredData';
 
 export const metadata: Metadata = {
-  title: 'N3XUS Media — Automated growth and AI infrastructure',
+  title: 'N3XUS — Strategy, technology and growth',
   description:
-    'We connect the systems your business runs on — bookings, quotes, payments, CRM and AI agents — then build the demand and brand that feed them.',
+    'A consultancy working across strategy, technology and growth — the three disciplines most businesses buy separately and then struggle to connect.',
   alternates: { canonical: '/' },
 };
 

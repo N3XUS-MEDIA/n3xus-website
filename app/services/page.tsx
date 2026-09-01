@@ -5,7 +5,7 @@ import { Section, SectionHeading } from '@/ui/layout/Section';
 import { Button } from '@/ui/primitives/Button';
 import { CapabilityGrid } from '@/ui/marketing/CapabilityGrid';
 import { CLAIMS } from '@/content/about';
-import { site } from '@/content/copy';
+import { ctas, site } from '@/content/copy';
 import {
   compounding,
   intelligenceLayer,
@@ -17,9 +17,9 @@ import {
 } from '@/content/services';
 
 export const metadata: Metadata = {
-  title: 'Services',
+  title: 'What we do',
   description:
-    'Everything N3XUS Media can build, grow and amplify — and the outcome each capability produces. Three layers of one system.',
+    'Strategy, technology and growth — every capability across the three disciplines, and the outcome each one produces.',
   alternates: { canonical: '/services' },
 };
 
@@ -36,11 +36,11 @@ export default function ServicesPage() {
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg">
             <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
-              Book a strategy call
+              Book a consultation
             </a>
           </Button>
           <Button asChild size="lg" variant="secondary">
-            <Link href="#build">See every solution</Link>
+            <Link href="#strategy">See all three pillars</Link>
           </Button>
         </div>
       </PageHero>
@@ -72,8 +72,8 @@ export default function ServicesPage() {
       <Section size="sm">
         <SectionHeading
           eyebrow="The full catalogue"
-          title="Everything we can build, grow and amplify."
-          lede="Three layers of one system. We build the engine, drive demand into it, then amplify the brand behind it — and each layer makes the next one worth more. Every item below carries the outcome it produces, because a capability nobody can value is just a line on an invoice."
+          title="Everything across the three disciplines."
+          lede="Strategy decides what to fix. Technology builds it. Growth feeds it. Every item below carries the outcome it produces, because a capability nobody can value is just a line on an invoice."
         />
       </Section>
 
@@ -119,7 +119,7 @@ export default function ServicesPage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg">
               <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
-                Book a strategy call
+                {ctas.book}
               </a>
             </Button>
             <Button

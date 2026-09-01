@@ -17,76 +17,86 @@
  */
 
 export const hero = {
-  eyebrow: 'AI development · Software · Marketing',
-  title: 'Stop letting scattered systems limit your growth.',
-  lede: 'Growth stalls when the tools you run on don’t talk to each other — enquiries sit unanswered, quotes go out late, and nobody can prove what is working. We connect them into one system, then build the demand and the brand that feed it.',
-  sub: 'Most clients start by turning their website into something that actually runs the work.',
+  eyebrow: 'Strategy · Technology · Growth',
+  title: 'The three things most businesses buy separately, and then cannot connect.',
+  lede: 'Strategy that names what to fix first. Technology that actually runs the work. Growth that feeds it. Bought from three suppliers these cap each other; run as one system they compound.',
+  sub: 'Most engagements start with a diagnostic — what the business loses today, and what each fix is worth.',
 };
 
 export const problem = {
   eyebrow: 'Sound familiar?',
-  title: 'Your systems are scattered and disconnected.',
+  title: 'Three suppliers, three invoices, and nobody accountable for the whole.',
   paragraphs: [
-    'Three agencies. Three invoices. Three strategies that don’t talk to each other — sitting on top of a website that does none of the work, and tools that don’t share a single record between them.',
-    'While competitors compound their results, you’re getting fragmented reports and no clear picture of what’s actually working.',
+    'A consultancy that hands you a deck and leaves. A development shop that builds what the deck said, whether or not it was right. An agency buying traffic for a process that cannot convert it. Each is competent inside its own scope and nobody owns the outcome across all three.',
+    'The gaps between them are where the money goes — and they are invisible on every individual report you receive.',
   ],
 };
 
 /** The old-way / Core3 comparison. Kept — it does real explanatory work. */
 export const comparison = {
   before: {
-    label: 'The old way',
+    label: 'Bought separately',
     rows: [
-      ['Website', 'a brochure, does nothing'],
-      ['SEO agency', 'no AI'],
-      ['Dev agency', 'no marketing'],
-      ['Ad agency', 'no transparency'],
-      ['CRM tool', 'disconnected'],
+      ['Strategy', 'a deck, no implementation'],
+      ['Technology', 'built to a brief nobody validated'],
+      ['Growth', 'traffic into a process that leaks'],
+      ['Reporting', 'three versions of the truth'],
+      ['Accountability', 'ends at each supplier’s scope'],
     ],
   },
   after: {
-    label: 'N3XUS Core3',
+    label: 'Run as one',
     rows: [
-      ['A website that runs the business', ''],
-      ['One connected system', ''],
-      ['A single live dashboard', ''],
-      ['Transparent billing', ''],
-      ['Results that compound monthly', ''],
+      ['Recommendations that carry a cost and a return', ''],
+      ['Systems built against a validated diagnosis', ''],
+      ['Demand pointed at a process that converts', ''],
+      ['One set of numbers, live', ''],
+      ['One party accountable end to end', ''],
     ],
   },
 } as const;
 
+/**
+ * The three disciplines the name refers to.
+ *
+ * Replaces the previous "Core3 — Build / Grow / Amplify" framing. That model
+ * described an agency service menu and never explained what the 3 stood for;
+ * Amplify in particular (television, activations, sponsorship) is precisely the
+ * traditional-agency work the business is moving away from leading with. Those
+ * capabilities still exist and their pages are still live — they sit under
+ * Growth now rather than being a headline pillar.
+ */
 export const core3 = {
-  eyebrow: 'Our framework',
-  title: 'The Core3 system.',
-  lede: 'Not three services sold separately — three layers of one system. We build the engine, drive demand into it, then amplify the brand behind it. Each layer makes the next one worth more.',
+  eyebrow: 'What the 3 stands for',
+  title: 'Strategy, technology and growth.',
+  lede: 'Three disciplines, run as one engagement. Each is a legitimate business on its own — which is why most companies end up buying all three separately, and why the gaps between them are where the money goes.',
   layers: [
     {
       n: '01',
-      title: 'Build — systems & development',
-      body: 'LLM applications, RAG knowledge bases, AI agents and custom software. Most engagements start with our Website Operating System — making your site run bookings, quotes, payments and CRM instead of just describing you.',
-      href: '/services/website-os',
-      linkLabel: 'Explore Website OS',
+      title: 'Strategy — what to fix, and what it is worth',
+      body: 'A diagnostic of how the business actually operates: where enquiries wait, what gets re-keyed, which spend is carrying the rest. Every recommendation carries a cost, an expected return and a position in the sequence.',
+      href: '/services/strategy',
+      linkLabel: 'Strategy & advisory',
     },
     {
       n: '02',
-      title: 'Grow — demand & visibility',
-      body: 'SEO, GEO, Google Ads, Meta Ads, social and email. Traditional rankings are now the floor — we also make you the answer AI assistants give when buyers ask who to use.',
-      href: '/services/digital',
-      linkLabel: 'Explore growth services',
+      title: 'Technology — the systems the work runs on',
+      body: 'The Website Operating System, custom software, AI and LLM systems, and the automation underneath. Built against a validated diagnosis rather than a brief, so you are not automating a process that should have been removed.',
+      href: '/services/website-os',
+      linkLabel: 'Technology',
     },
     {
       n: '03',
-      title: 'Amplify — brand & market presence',
-      body: 'Television, brand activations, sponsorship and OOH. For businesses ready to scale reach, broadcast still carries an authority signal digital alone can’t replicate.',
-      href: '/services/brand',
-      linkLabel: 'Explore brand services',
+      title: 'Growth — demand pointed at something that converts',
+      body: 'Search and generative visibility, performance media, content, lifecycle, and the brand presence that makes all of it cheaper. Deliberately last: demand poured into a leaking process is the most expensive mistake on this page.',
+      href: '/services/digital',
+      linkLabel: 'Growth',
     },
   ],
 };
 
 export const websiteOs = {
-  eyebrow: 'Where most clients start',
+  eyebrow: 'The technology pillar, in practice',
   title: 'The Website Operating System.',
   paragraphs: [
     'Most business websites are brochures — they describe the company and do none of its work. Your team still books by phone, types quotes by hand, keeps customers in spreadsheets and chases payments over email.',
@@ -112,9 +122,9 @@ export interface ServiceCard {
 }
 
 export const whatWeDo: { eyebrow: string; title: string; lede: string; cards: ServiceCard[] } = {
-  eyebrow: 'What we do',
-  title: 'Everything your business runs on, built to connect.',
-  lede: 'Not a menu of separate services. Three layers of one system — we build the engine, drive demand into it, then amplify the brand behind it — with one platform showing you what actually worked.',
+  eyebrow: 'Capabilities',
+  title: 'What the three disciplines actually deliver.',
+  lede: 'Not a menu bought line by line. These are the capabilities the diagnostic draws on once it has established which of them you actually need — and in what order.',
   cards: [
     {
       title: 'Website Operating System',
@@ -217,10 +227,10 @@ export interface Faq {
 
 export const faqs: Faq[] = [
   {
-    q: 'What makes N3XUS different from other agencies?',
+    q: 'What kind of firm is N3XUS?',
     // Original opened "N3XUS is the only agency that genuinely operates
     // across..." — see docs/CLAIMS-REGISTER.md B3. Restated as what is done.
-    a: 'We operate across traditional marketing (TV, activations, sponsorship), digital marketing (SEO, ads, web, LLM marketing) and AI solutions (assistants, custom AI software, automation), connected through the Core3 framework. Most agencies do one of those. Running them together is what lets each one compound the others rather than sit in its own report.',
+    a: 'A business consultancy working across three disciplines: strategy, technology and growth. We diagnose how a business actually operates, build the systems it runs on, and drive the demand into them. Most firms do one of the three; the value is in owning the joins, because that is where the losses usually are.',
   },
   {
     q: 'How quickly will I see results?',
@@ -235,7 +245,7 @@ export const faqs: Faq[] = [
     a: 'Yes — national broadcast campaigns, including commercial production (concept, script, shoot, post), media buying, broadcast delivery and post-campaign brand recall measurement. TV work is integrated with your digital and AI strategy so the halo effect is measurable rather than assumed.',
   },
   {
-    q: 'Do you work with small businesses and startups?',
+    q: 'How small a business do you work with?',
     // Original quoted the retired Launch $500/mo retainer.
     a: 'Yes. The retainer starts with the Website OS base and everything above it is modular, so a two-person business and a fifty-person business are not being sold the same package. Build the stack on the pricing page to see what your version actually costs.',
   },
@@ -258,6 +268,6 @@ export const faqs: Faq[] = [
 
 export const closing = {
   eyebrow: 'Ready to grow?',
-  title: 'Book a strategy call.',
+  title: 'Start with a conversation.',
   lede: 'We map your Core3 growth opportunity and show you exactly what to do — whether you work with us or not. A clear, prioritised growth plan, and you keep it either way.',
 };

@@ -3,20 +3,18 @@ import { PageHero } from '@/ui/layout/PageHero';
 import { Button } from '@/ui/primitives/Button';
 import { Blocks } from '@/ui/marketing/Blocks';
 import { JsonLd } from '@/ui/seo/JsonLd';
-import { brandPage as page } from '@/content/services/brand';
+import { strategyPage as page } from '@/content/services/strategy';
 import { breadcrumbLd, faqLd } from '@/content/structuredData';
 import { site } from '@/content/copy';
 
 export const metadata: Metadata = {
-  title: 'Brand & Market Presence',
+  title: 'Strategy & advisory',
   description:
-    'Brand identity, television and streaming campaigns, video production, activations and sponsorship — planned to connect to your digital acquisition, not run beside it.',
-  alternates: { canonical: '/services/brand' },
+    'A diagnostic that maps how your business actually operates, quantifies where it leaks revenue, and sequences the fixes — with every recommendation costed.',
+  alternates: { canonical: '/services/strategy' },
 };
 
-export default function Page() {
-  // The FAQ block is declared empty in the content file so the questions live
-  // in one place and also feed the JSON-LD.
+export default function StrategyPage() {
   const blocks = page.blocks.map((b) =>
     b.type === 'faq' ? { ...b, items: page.faqs ?? [] } : b,
   );
@@ -27,8 +25,8 @@ export default function Page() {
       <JsonLd
         data={breadcrumbLd([
           { name: 'Home', path: '/' },
-          { name: 'Services', path: '/services' },
-          { name: 'Brand & Market Presence', path: '/services/brand' },
+          { name: 'What we do', path: '/services' },
+          { name: 'Strategy', path: '/services/strategy' },
         ])}
       />
 

@@ -41,6 +41,7 @@ describe('routes', () => {
       '/pricing',
       '/intelligence',
       '/services',
+      '/services/strategy',
       '/services/website-os',
       '/services/ai',
       '/services/software',

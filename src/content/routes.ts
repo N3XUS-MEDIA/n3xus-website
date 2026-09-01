@@ -19,6 +19,7 @@ export interface RouteDef {
 export const staticRoutes: RouteDef[] = [
   { path: '/', priority: 1.0, changeFrequency: 'weekly' },
   { path: '/services', priority: 0.9, changeFrequency: 'monthly' },
+  { path: '/services/strategy', priority: 0.9, changeFrequency: 'monthly' },
   { path: '/services/website-os', priority: 0.9, changeFrequency: 'monthly' },
   { path: '/services/ai', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/services/software', priority: 0.8, changeFrequency: 'monthly' },

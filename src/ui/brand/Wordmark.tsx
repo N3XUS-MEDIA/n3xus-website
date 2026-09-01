@@ -12,6 +12,10 @@ import { cn } from '@/lib/cn';
  * real vector mark exists, replace this component — nothing else should need
  * to change.
  *
+ * There is no hidden " Media" suffix any more. It used to be here as sr-only
+ * text, which meant screen-reader users still heard the old company name on
+ * every page long after the rename.
+ *
  * TODO: swap for the vector logomark once it's redrawn (see docs/brand).
  */
 export function Wordmark({ className }: { className?: string }) {
@@ -23,7 +27,6 @@ export function Wordmark({ className }: { className?: string }) {
       )}
     >
       N3XUS
-      <span className="sr-only"> Media</span>
     </span>
   );
 }
