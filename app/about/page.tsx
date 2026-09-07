@@ -6,6 +6,7 @@ import { ctas, site } from '@/content/copy';
 import {
   CLAIMS,
   aboutHero,
+  businessDetails,
   closing,
   differentiators,
   industries,
@@ -91,7 +92,23 @@ export default function AboutPage() {
         </ul>
       </Section>
 
+      {/* Plain business details. For visitors who want to know who they are
+          dealing with — and for the Google Business Profile review, which
+          checks the site for the name and category before approving a change
+          to either. */}
       <Section tone="mist" bordered>
+        <SectionHeading eyebrow="Business details" title="Who you’re dealing with." />
+        <dl className="mt-8 divide-y divide-line border-y border-line">
+          {businessDetails.map((d) => (
+            <div key={d.label} className="grid gap-1 py-5 sm:grid-cols-3 sm:gap-6">
+              <dt className="text-sm text-ink-muted">{d.label}</dt>
+              <dd className="text-ink sm:col-span-2">{d.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </Section>
+
+      <Section>
         <div className="rounded-lg bg-carbon p-8 sm:p-12">
           <SectionHeading
             onCarbon

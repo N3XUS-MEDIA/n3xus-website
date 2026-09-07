@@ -57,8 +57,11 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-4 border-t border-on-carbon/10 py-8 sm:flex-row sm:items-center sm:justify-between">
+          {/* States the relationship rather than leaving a reader — or a
+              Google reviewer — to reconcile "N3XUS" with "N3XUS Media (Pty)
+              Ltd" on their own. */}
           <p className="text-sm text-on-carbon/65">
-            © {year} {site.legalName}. All rights reserved.
+            © {year} {site.name} — {site.legalName}. All rights reserved.
           </p>
           <ul className="flex gap-6">
             {legalNav.map((item) => (

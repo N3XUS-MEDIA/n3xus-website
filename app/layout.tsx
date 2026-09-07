@@ -32,7 +32,7 @@ const body = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: 'N3XUS — Strategy, Intelligence, Growth',
+    default: 'N3XUS — Business Management Consultancy | Strategy, Intelligence, Growth',
     template: '%s | N3XUS',
   },
   description: site.descriptor,

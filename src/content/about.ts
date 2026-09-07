@@ -26,7 +26,7 @@ export const CLAIMS = {
 export const aboutHero = {
   eyebrow: 'Who we are',
   title: 'We’re who you call when the business has outgrown how it’s run.',
-  lede: 'Most business owners we meet aren’t short of ideas or effort. They’re short of a straight answer about what to do next — because the advice comes from one place, the building from another, and the marketing from a third, and none of them can see the whole thing. We do all three, so someone can.',
+  lede: 'N3XUS is a business management consultancy. Most business owners we meet aren’t short of ideas or effort. They’re short of a straight answer about what to do next — because the advice comes from one place, the building from another, and the marketing from a third, and none of them can see the whole thing. We do all three, so someone can.',
 };
 
 export const mission = {
@@ -119,3 +119,24 @@ export const closing = {
   ledeWithAudit:
     '45 minutes, no pitch. We’ll tell you what we’d look at first and roughly what it would take — and you keep that whether or not you work with us.',
 };
+
+/**
+ * Plain business details.
+ *
+ * Written for people who want to know who they are dealing with before they
+ * enquire — and, immediately, for the Google Business Profile review that
+ * declined a name and category change because the site did not reflect them.
+ * Everything here is stated rather than implied, which is the whole point.
+ */
+export const businessDetails = [
+  { label: 'Trading name', value: 'N3XUS' },
+  { label: 'Registered entity', value: 'N3XUS Media (Pty) Ltd' },
+  { label: 'Type of business', value: 'Business management consultancy' },
+  {
+    label: 'What we do',
+    value:
+      'Strategy, intelligence and growth — business diagnostics and advisory, the systems a business runs on, and the demand that feeds it.',
+  },
+  { label: 'Where we operate', value: 'South Africa and the United States, delivered remotely' },
+  { label: 'Contact', value: 'info@n3xus.media' },
+] as const;

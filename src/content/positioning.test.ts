@@ -124,7 +124,7 @@ describe('the assistant', () => {
   const prompt = buildSystemPrompt().replace(/\s+/g, ' ');
 
   it('describes the firm as a consultancy', () => {
-    expect(prompt).toMatch(/business consultancy/i);
+    expect(prompt).toMatch(/business management consultancy/i);
   });
 
   it('is told not to call it a marketing agency', () => {
@@ -141,7 +141,7 @@ describe('public files carry the repositioning', () => {
   const plugin = readFileSync('public/.well-known/ai-plugin.json', 'utf-8');
 
   it('llms.txt leads with the consultancy positioning', () => {
-    expect(llms).toMatch(/N3XUS is a business consultancy/);
+    expect(llms).toMatch(/N3XUS is a business management consultancy/);
     expect(llms).toMatch(/strategy, intelligence and growth/i);
   });
 
@@ -165,7 +165,7 @@ describe('public files carry the repositioning', () => {
   it('ai-plugin.json is valid JSON and repositioned', () => {
     const parsed = JSON.parse(plugin);
     expect(parsed.name_for_human).toBe('N3XUS');
-    expect(parsed.description_for_model).toMatch(/business consultancy/i);
+    expect(parsed.description_for_model).toMatch(/business management consultancy/i);
     // The dangling openapi.yaml reference is gone (claims register G3).
     expect(parsed.api).toBeUndefined();
   });
@@ -263,5 +263,52 @@ describe('plain language', () => {
     for (const sentence of hero.title.split(/(?<=[.?!])\s+/)) {
       expect(sentence.split(/\s+/).length, sentence).toBeLessThanOrEqual(16);
     }
+  });
+});
+
+/**
+ * Google declined a Business Profile edit — name N3XUS Media → N3XUS, category
+ * Marketing agency → Business management consultant — because the website did
+ * not reflect either change. Their reviewer checks the site, so these assert
+ * the site keeps saying both.
+ */
+describe('Google Business Profile alignment', () => {
+  const CATEGORY = 'business management consultancy';
+
+  it('states the category verbatim, in the words Google uses', () => {
+    expect(site.category).toBe(CATEGORY);
+    expect(site.descriptor.toLowerCase()).toContain(CATEGORY);
+  });
+
+  it('puts the category in the homepage title and description', () => {
+    for (const f of ['app/layout.tsx', 'app/page.tsx']) {
+      expect(readFileSync(f, 'utf-8').toLowerCase(), f).toContain('business management consultancy');
+    }
+  });
+
+  /**
+   * The name discrepancy is real and cannot be removed — the registered
+   * company is still N3XUS Media (Pty) Ltd. So it has to be explained rather
+   * than hidden, in a place a reviewer will actually look.
+   */
+  it('explains the trading name rather than leaving it to be reconciled', () => {
+    expect(site.tradingNameNote).toContain('N3XUS');
+    expect(site.tradingNameNote).toContain('N3XUS Media (Pty) Ltd');
+
+    const about = readFileSync('src/content/about.ts', 'utf-8');
+    expect(about).toContain('Trading name');
+    expect(about).toContain('Registered entity');
+    expect(about).toContain('Business management consultancy');
+  });
+
+  it('says it in the machine-readable files too', () => {
+    for (const f of ['public/llms.txt', 'public/.well-known/ai-plugin.json']) {
+      expect(readFileSync(f, 'utf-8').toLowerCase(), f).toContain(CATEGORY);
+    }
+  });
+
+  /** The old category is what Google is being asked to move away from. */
+  it('does not describe the firm as a marketing agency', () => {
+    expect(site.descriptor.toLowerCase()).not.toContain('marketing agency');
   });
 });

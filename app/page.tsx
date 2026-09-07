@@ -22,9 +22,9 @@ import {
 import { faqLd, organisationLd, serviceLd, visibleFaqs, websiteLd } from '@/content/structuredData';
 
 export const metadata: Metadata = {
-  title: 'N3XUS — Strategy, Intelligence, Growth',
+  title: 'N3XUS — Business Management Consultancy | Strategy, Intelligence, Growth',
   description:
-    'We work out what’s holding your business back, build the systems to fix it, and bring you the customers. Strategy, intelligence and growth — from one team.',
+    'N3XUS is a business management consultancy working across strategy, intelligence and growth. We work out what’s holding your business back, build the systems to fix it, and bring you the customers.',
   alternates: { canonical: '/' },
 };
 

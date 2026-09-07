@@ -43,6 +43,12 @@ export function organisationLd() {
     // LocalBusiness and lets search and AI assistants classify the firm as a
     // consultancy rather than guessing from copy.
     '@type': ['Organization', 'ProfessionalService'],
+    /**
+     * Mirrors the Google Business Profile category. Google declined a profile
+     * edit because the site did not reflect the category change away from
+     * "Marketing agency"; this states it machine-readably as well as in copy.
+     */
+    additionalType: 'https://en.wikipedia.org/wiki/Management_consulting',
     '@id': ORG_ID,
     name: site.name,
     legalName: site.legalName,

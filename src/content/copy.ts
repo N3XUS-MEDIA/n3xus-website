@@ -23,10 +23,29 @@ export const site = {
   email: 'info@n3xus.media',
   retainersEmail: 'retainers@n3xus.media',
   bookingUrl: 'https://link.n3xus.media/widget/bookings/jared-sinclair-calendar',
+  /**
+   * The Google Business Profile category, verbatim.
+   *
+   * Google declined a profile edit changing the category from "Marketing
+   * agency" because the website did not reflect it. Their reviewer looks for
+   * the category language on the site, and "business consultancy" is not the
+   * same string as "business management consultant". This constant exists so
+   * the exact term is used consistently and cannot drift back out.
+   */
+  category: 'business management consultancy',
+
+  /**
+   * Explains the name to anyone — a Google reviewer included — who sees
+   * "N3XUS" on the site and "N3XUS Media (Pty) Ltd" in the copyright line.
+   * The registered company has not been renamed at CIPC, so both are true and
+   * the relationship between them has to be stated rather than implied.
+   */
+  tradingNameNote: 'N3XUS is the trading name of N3XUS Media (Pty) Ltd.',
+
   tagline: 'Strategy, intelligence and growth — for businesses that have outgrown how they work.',
   /** One line, used in metadata and structured data. */
   descriptor:
-    'A consultancy that works out what is holding your business back, builds the systems to fix it, and brings you the customers. Strategy, intelligence and growth, from one team.',
+    'N3XUS is a business management consultancy working across strategy, intelligence and growth. We work out what is holding your business back, build the systems to fix it, and bring you the customers.',
 } as const;
 
 /**
