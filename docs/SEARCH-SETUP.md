@@ -92,33 +92,38 @@ Google above.
 
 ## 3. Google Business Profile — connect it to the site
 
-The profile already exists, which means there is a **verified address** — and
-that unlocks two things the site currently cannot claim on its own.
+The profile exists but carries **no address**, so this is a service-area
+listing rather than a mappable location. That is legitimate for a firm
+delivering remotely, and it is weaker for local ranking than a verified
+premises would be — worth knowing rather than working around.
 
-**NAP consistency** (name, address, phone) between the profile and the site's
-structured data is a real local ranking factor. They have to match exactly,
-character for character: "Street" and "St." are different strings to a machine.
+The site's schema therefore declares **country only**, deliberately. Publishing
+an address the business does not trade from is exactly the field Google
+verifies, so it was left incomplete rather than guessed.
 
-To finish this, three details are needed exactly as they appear in the profile:
+**If an address is ever added to the profile**, send these and the schema can
+be completed to match:
 
-- [ ] Business name as listed
 - [ ] Full street address, city, province, postal code
 - [ ] Public phone number
 - [ ] The profile's share URL (`g.page/…` or the Maps listing)
 
-Once supplied, `organisationLd()` in `src/content/structuredData.ts` gains a
-complete `PostalAddress`, a `telephone`, and a `sameAs` pointing at the
-profile. Today it declares country only, deliberately — publishing an address
-the business does not trade from is exactly the field Google verifies, so it
-was left incomplete rather than guessed.
+They must match the profile character for character — "Street" and "St." are
+different strings to a machine, and NAP consistency (name, address, phone)
+between profile and site is a real local ranking factor.
 
-**Also worth doing inside the profile itself:**
+**The name and category changes** — N3XUS Media → N3XUS, Marketing agency →
+Business management consultant — were declined because the site did not reflect
+them. That is fixed: the category now appears verbatim in the homepage title,
+description, schema and both machine-readable files, and /about carries a
+"Who you're dealing with" block stating the trading name, the registered
+entity and the type of business. Resubmit; if it is declined again, point the
+reviewer at `n3xus.media/about`.
 
-- Set the primary category to the closest match for a consultancy — the
-  category is one of the strongest local ranking signals, and an inherited
-  "Marketing agency" category actively works against the repositioning.
-- Add the service areas that match the site: the provinces, and the US states
-  if the profile supports service-area listing.
+**Also worth doing inside the profile:**
+
+- Add the service areas that match the site: the nine provinces, and the US
+  states if the listing type supports it.
 - Link the profile to `https://n3xus.media`.
 
 ## 4. Analytics — one thing to check, not to add
