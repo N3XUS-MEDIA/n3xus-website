@@ -24,6 +24,31 @@ that **nine new articles currently exist and nobody has told Google they exist.*
 
 ---
 
+## 0. Before you start — two facts checked against live DNS
+
+**The domain is already verified.** `n3xus.media` carries two
+`google-site-verification` TXT records:
+
+```
+google-site-verification=Wg0yLOlGEs42yPVaTxfyHXk9RG3bNtzNRq08aacQgnw
+google-site-verification=uH93MZ-Fqi_SOZm90_iVGXx0uT52iIr-9sZkh6bjHgI
+```
+
+So a Search Console property exists already and there is nothing to verify.
+Two tokens usually means either two properties (often a legacy URL-prefix
+alongside a domain property) or two Google accounts with access. Sign in and
+look — if the property you land in is a URL-prefix one, add a **Domain**
+property as well, since that is the one that covers every subdomain and
+protocol.
+
+**DNS is at GoDaddy, not Cloudflare.** Live nameservers are
+`ns07.domaincontrol.com` / `ns08.domaincontrol.com`. The monorepo's
+`CLAUDE.md` lists Cloudflare for DNS; that is stale and worth correcting there,
+because it will send the next person to the wrong control panel. Any TXT record
+work happens in **GoDaddy → Domain → DNS → Records**.
+
+---
+
 ## 1. Google Search Console — 10 minutes
 
 **Use a Domain property, not a URL prefix.** A domain property covers
@@ -35,9 +60,10 @@ properties and no complete picture.
    and sign in with the account that should own this long-term — not a personal
    address that leaves with somebody.
 2. **Add property → Domain →** `n3xus.media`
-3. Google gives you a **TXT record**. Add it in Cloudflare:
-   - DNS → Records → Add record
-   - Type `TXT`, Name `@`, Content = the `google-site-verification=…` string
+3. **You will probably not be asked to verify** — the domain already carries
+   two verification records (see section 0). If you are asked, the TXT record
+   goes in **GoDaddy → Domain → DNS → Records** (not Cloudflare):
+   - Type `TXT`, Name `@`, Value = the `google-site-verification=…` string
    - Save, then click Verify. Usually instant; occasionally up to an hour.
 4. Once verified: **Sitemaps** → enter `sitemap.xml` → Submit.
 5. **URL Inspection** → paste `https://n3xus.media/` → **Request indexing**.
