@@ -19,7 +19,7 @@ import {
   websiteOs,
   whatWeDo,
 } from '@/content/home';
-import { faqLd, organisationLd, visibleFaqs, websiteLd } from '@/content/structuredData';
+import { faqLd, organisationLd, serviceLd, visibleFaqs, websiteLd } from '@/content/structuredData';
 
 export const metadata: Metadata = {
   title: 'N3XUS — Strategy, Intelligence, Growth',
@@ -37,6 +37,11 @@ export default function HomePage() {
       <JsonLd data={organisationLd()} />
       <JsonLd data={websiteLd()} />
       <JsonLd data={faqLd(faqs)} />
+      {/* One Service entity per discipline, each carrying areaServed — this is
+          what a geographic service query actually matches against. */}
+      {serviceLd().map((svc) => (
+        <JsonLd key={String(svc['@id'])} data={svc} />
+      ))}
 
       {/* Hero — hand-rolled rather than <Section>, for the gradient and the
           asymmetric grid. Everything below it uses the shared primitives. */}

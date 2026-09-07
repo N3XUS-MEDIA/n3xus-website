@@ -16,7 +16,8 @@
  * return, they must be generated from src/content/pricing.ts.
  */
 
-import { site } from './copy';
+import { site, PILLARS } from './copy';
+import { MARKETS, areaServedLd, homeMarket } from './markets';
 import { faqs, type Faq } from './home';
 import { CLAIMS } from './about';
 
@@ -63,7 +64,29 @@ export function organisationLd() {
       'Performance marketing',
     ],
     image: `${site.url}/assets/og-image.png`,
-    areaServed: 'Worldwide',
+
+    /**
+     * Named markets, not "Worldwide".
+     *
+     * "Worldwide" is unverifiable, matches no query, and dilutes relevance in
+     * every market. Two countries plus their regions, as resolvable Country /
+     * State entities, is what actually helps a search engine or an assistant
+     * decide the firm is relevant to someone in Cape Town or Austin.
+     */
+    areaServed: areaServedLd(),
+
+    /**
+     * Where the business actually is. Country-level only: there is no street
+     * address here because publishing one N3XUS does not trade from would be
+     * false, and a LocalBusiness address is exactly the field Google verifies.
+     * Add `streetAddress`, `addressLocality` and `postalCode` when there is a
+     * real registered premises to name — that unlocks Google Business Profile,
+     * which is the single biggest remaining local-SEO lever in South Africa.
+     */
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: homeMarket.countryCode,
+    },
 
     // NOT included pending docs/CLAIMS-REGISTER.md:
     // - foundingDate (F1) and numberOfEmployees (F2), unverified here
@@ -124,4 +147,45 @@ export function breadcrumbLd(trail: { name: string; path: string }[]) {
       item: `${site.url}${item.path}`,
     })),
   };
+}
+
+/**
+ * A `Service` entity per pillar, each carrying `areaServed`.
+ *
+ * This is the piece that was missing. Organization schema tells a search
+ * engine who the firm is; Service schema tells it what the firm sells and
+ * where — which is what an "AI consultant in Cape Town" or "operations
+ * consultancy Texas" query is actually matching against. Without it, the only
+ * geographic signal on the site was a single word on the organisation.
+ *
+ * Generated from PILLARS so a discipline cannot exist in the navigation and be
+ * absent from the structured data.
+ */
+export function serviceLd() {
+  return PILLARS.map((pillar) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${site.url}${pillar.href}#service`,
+    name: `${pillar.name} — ${site.name}`,
+    description: pillar.summary,
+    serviceType: pillar.name,
+    provider: { '@id': ORG_ID },
+    areaServed: areaServedLd(),
+    url: `${site.url}${pillar.href}`,
+    /**
+     * Currency is a real geographic signal: it tells an assistant which market
+     * a quote applies to, and it is why the retainer matrix stores ZAR
+     * explicitly rather than converting from USD.
+     */
+    offers: MARKETS.map((market) => ({
+      '@type': 'Offer',
+      priceCurrency: market.currency,
+      availableAtOrFrom: {
+        '@type': 'Country',
+        name: market.country,
+        identifier: market.countryCode,
+      },
+      url: `${site.url}/pricing`,
+    })),
+  }));
 }

@@ -10,6 +10,7 @@
  * the shape of what we accept, which is worth stating twice.
  */
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { z } from 'zod';
 
 const chatSchema = z.object({
@@ -100,5 +101,23 @@ describe('contact request schema', () => {
     const result = contactSchema.safeParse({ ...valid, email: '  ada@example.com  ' });
     expect(result.success).toBe(true);
     if (result.success) expect(result.data.email).toBe('ada@example.com');
+  });
+});
+
+/**
+ * The model ID is a string in a file nobody re-reads, and a wrong one fails at
+ * runtime with a generic upstream error rather than at build time. It was
+ * wrong once already: the old site's 'claude-haiku-4-5-20251001' was carried
+ * into the rebuild and rejected by the API.
+ */
+describe('chat model id', () => {
+  const route = readFileSync('app/api/chat/route.ts', 'utf-8');
+
+  it('pins a model with no date suffix', () => {
+    const match = route.match(/^const MODEL = '([^']+)';/m);
+    expect(match, 'MODEL constant not found').toBeTruthy();
+    const id = match![1];
+    expect(id).toBe('claude-haiku-4-5');
+    expect(id, 'model IDs are complete as-is — never append a date').not.toMatch(/-\d{8}$/);
   });
 });
