@@ -43,6 +43,28 @@ export const metadata: Metadata = {
     images: ['/assets/og-image.png'],
   },
   twitter: { card: 'summary_large_image' },
+
+  /**
+   * Search Console / Webmaster Tools ownership.
+   *
+   * Driven by environment variables so proving ownership is a Vercel setting
+   * plus a redeploy, never a code change — the person who has the Google
+   * account is rarely the person who can ship a commit, and that gap is where
+   * verification stalls for weeks.
+   *
+   * A DNS TXT record in Cloudflare is the better method where it is available:
+   * it covers every subdomain and survives any redeploy. This is the fallback
+   * for when DNS access is the thing that is missing.
+   *
+   * Bing is included because Copilot and several assistants draw on its index,
+   * which matters more than usual for a firm selling AI visibility.
+   */
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+    other: process.env.BING_SITE_VERIFICATION
+      ? { 'msvalidate.01': process.env.BING_SITE_VERIFICATION }
+      : undefined,
+  },
   // The favicon comes from app/icon.svg — same geometry as HexMark, drawn
   // rather than the 11KB of rasters it replaces. Next wires it up on its own.
   icons: { apple: '/assets/n3xus-icon.png' },

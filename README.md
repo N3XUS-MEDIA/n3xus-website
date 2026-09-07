@@ -47,6 +47,11 @@ curl -sI localhost:3000/about | grep -iE 'x-frame|nosniff|referrer|permissions'
 |---|---|---|
 | `RESEND_API_KEY` | `/api/contact` | Route returns 503 and the form shows a `mailto:` fallback. It does **not** pretend to succeed |
 | `ANTHROPIC_API_KEY` | `/api/chat` | Aria returns 503 |
+| `GOOGLE_SITE_VERIFICATION` | Search Console ownership | No meta tag; use the DNS method instead |
+| `BING_SITE_VERIFICATION` | Bing Webmaster Tools | No meta tag |
+
+Search setup — Search Console, Bing, Google Business Profile and the AI-answer
+baseline — is a runbook in `docs/SEARCH-SETUP.md`.
 
 `website@n3xus.media` must be a verified sender in Resend before the contact
 form can deliver.

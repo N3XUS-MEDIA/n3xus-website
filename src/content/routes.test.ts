@@ -121,3 +121,26 @@ describe('blog content', () => {
     }
   });
 });
+
+/**
+ * A sitemap URL that disagrees with the page's own canonical is a Search
+ * Console warning. It happened once on the root, where the sitemap emitted a
+ * trailing slash and the canonical did not.
+ */
+describe('sitemap and canonical agree', () => {
+  it('emits the root without a trailing slash', async () => {
+    const { default: sitemap } = await import('../../app/sitemap');
+    const root = sitemap().find((e) => !e.url.replace('https://n3xus.media', ''));
+    expect(root, 'no root entry in sitemap').toBeDefined();
+    expect(root!.url).toBe('https://n3xus.media');
+    expect(root!.url.endsWith('/'), 'root must not have a trailing slash').toBe(false);
+  });
+
+  it('gives every other entry a path starting with a slash', async () => {
+    const { default: sitemap } = await import('../../app/sitemap');
+    for (const e of sitemap()) {
+      expect(e.url.startsWith('https://n3xus.media'), e.url).toBe(true);
+      expect(e.url.endsWith('/'), `${e.url} has a trailing slash`).toBe(false);
+    }
+  });
+});
