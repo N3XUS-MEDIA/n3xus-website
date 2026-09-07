@@ -37,7 +37,7 @@ export default function WebsiteOsPage() {
       <PageHero eyebrow={page.eyebrow} title={page.title} lede={page.lede}>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg">
-            <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+            <a href={site.bookingUrl} {...site.bookingLinkProps}>
               Book a website audit
             </a>
           </Button>

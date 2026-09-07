@@ -56,7 +56,7 @@ export default function HomePage() {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button asChild size="lg">
-                  <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={site.bookingUrl} {...site.bookingLinkProps}>
                     {ctas.book}
                   </a>
                 </Button>
@@ -287,7 +287,7 @@ export default function HomePage() {
           />
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg">
-              <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+              <a href={site.bookingUrl} {...site.bookingLinkProps}>
                 {ctas.book}
               </a>
             </Button>

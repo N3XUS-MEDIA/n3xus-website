@@ -32,7 +32,7 @@ export default function StrategyPage() {
 
       <PageHero eyebrow={page.eyebrow} title={page.title} lede={page.lede}>
         <Button asChild size="lg">
-          <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+          <a href={site.bookingUrl} {...site.bookingLinkProps}>
             Book a consultation
           </a>
         </Button>

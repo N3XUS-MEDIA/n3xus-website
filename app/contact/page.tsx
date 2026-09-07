@@ -47,14 +47,22 @@ export default function ContactPage() {
             </dl>
 
             <div className="mt-8 rounded-lg bg-mist/50 p-6">
-              <h2 className="text-lg text-ink">Prefer to book directly?</h2>
+              <h2 className="text-lg text-ink">
+                {site.bookingIsLive ? 'Prefer to book directly?' : 'Prefer to email?'}
+              </h2>
               <p className="mt-3 leading-relaxed text-ink-muted">
-                A strategy call, no pitch — just a clear map of your growth opportunity.
+                {site.bookingIsLive
+                  ? 'A strategy call, no pitch — just a clear map of your growth opportunity.'
+                  : `Write to ${site.email} and we'll come back to you within one business day. A call, no pitch — just a clear read on where you are and what to do first.`}
               </p>
               <Button asChild className="mt-5">
-                <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
-                  Book a consultation
-                </a>
+                {site.bookingIsLive ? (
+                  <a href={site.bookingUrl} {...site.bookingLinkProps}>
+                    Book a consultation
+                  </a>
+                ) : (
+                  <a href={`mailto:${site.email}`}>Email us</a>
+                )}
               </Button>
             </div>
           </div>

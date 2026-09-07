@@ -48,12 +48,19 @@ export function ContactForm() {
       <div className="rounded-lg border border-line bg-mist/40 p-8" role="status">
         <h3 className="text-xl text-ink">Message sent.</h3>
         <p className="mt-3 leading-relaxed text-ink-muted">
-          We’ll come back to you within one business day. If it’s urgent, book a call directly.
+          We’ll come back to you within one business day.{' '}
+          {site.bookingIsLive
+            ? 'If it’s urgent, book a call directly.'
+            : `If it’s urgent, email ${site.email} and say so in the subject line.`}
         </p>
         <Button asChild className="mt-6">
-          <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
-            Book a consultation
-          </a>
+          {site.bookingIsLive ? (
+            <a href={site.bookingUrl} {...site.bookingLinkProps}>
+              Book a consultation
+            </a>
+          ) : (
+            <a href={`mailto:${site.email}`}>Email us</a>
+          )}
         </Button>
       </div>
     );

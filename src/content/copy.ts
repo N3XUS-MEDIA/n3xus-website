@@ -15,14 +15,62 @@
  * The domain stays n3xus.media.
  */
 
+const SITE_URL = 'https://n3xus.media';
+
+/**
+ * Where every "Book a free call" button goes.
+ *
+ * ── Why this is not a plain string ──────────────────────────────────────────
+ * It used to be:
+ *
+ *   https://link.n3xus.media/widget/bookings/jared-sinclair-calendar
+ *
+ * That host DOES NOT EXIST. Checked 2026-09-07 against GoDaddy's authoritative
+ * nameserver (ns07.domaincontrol.com) and the 1.1.1.1 / 8.8.8.8 / 9.9.9.9
+ * resolvers — NXDOMAIN from all four. It is not a slow record or a caching
+ * problem; nothing is published for that name.
+ *
+ * So the primary call to action on more than twenty pages, in `llms.txt`, and
+ * in the answers Aria gives, was sending buyers to a browser DNS error. The old
+ * static site carried the same URL, so this has been broken for some time and
+ * silently — a dead external link produces no error anyone here would see.
+ *
+ * Until that host resolves again, the CTA goes to /contact, which works and
+ * reaches the same inbox. To restore self-serve booking:
+ *
+ *   1. Add the CNAME the booking provider asks for in
+ *      GoDaddy → Domain → DNS → Records (DNS is GoDaddy, not Cloudflare).
+ *   2. Confirm it resolves:  dig +short link.n3xus.media
+ *   3. Set NEXT_PUBLIC_BOOKING_URL in Vercel to the full booking URL.
+ *
+ * No code change is needed for step 3, and if the variable is ever set to a
+ * host that goes dead again, the fix is to unset it rather than to ship.
+ */
+const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim() || `${SITE_URL}/contact`;
+
+/**
+ * Booking links open in a new tab only when they actually leave the site.
+ * `target="_blank"` on our own contact page would be a small rudeness.
+ */
+const bookingLinkProps: { target?: '_blank'; rel?: string } = bookingUrl.startsWith(SITE_URL)
+  ? {}
+  : { target: '_blank', rel: 'noopener noreferrer' };
+
 export const site = {
   name: 'N3XUS',
   /** The registered entity. Legal and copyright contexts only. */
   legalName: 'N3XUS Media (Pty) Ltd',
-  url: 'https://n3xus.media',
+  url: SITE_URL,
   email: 'info@n3xus.media',
   retainersEmail: 'retainers@n3xus.media',
-  bookingUrl: 'https://link.n3xus.media/widget/bookings/jared-sinclair-calendar',
+  bookingUrl,
+  bookingLinkProps,
+  /**
+   * True only when a real scheduler is configured. The contact page uses this
+   * to decide whether "book directly" is a genuine second option or a link
+   * back to the page the reader is already on.
+   */
+  bookingIsLive: !bookingUrl.startsWith(SITE_URL),
   /**
    * The Google Business Profile category, verbatim.
    *

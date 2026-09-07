@@ -1,6 +1,10 @@
 /**
  * Guards the 2026 repositioning: N3XUS Media (marketing agency) → N3XUS
- * (business consultancy across strategy, technology and growth).
+ * (a business management consultancy across strategy, intelligence and growth).
+ *
+ * This comment said "technology and growth" until 2026-09-07 — the exact
+ * phrase the test below forbids in the app. A doc comment is not covered by
+ * its own assertions, which is how the wrong pillar survived here.
  *
  * A rename is easy to do and easy to half-undo. These tests exist because the
  * old naming and the old framing are still sitting in git history, in the
@@ -8,7 +12,7 @@
  * document.
  */
 import { describe, expect, it } from 'vitest';
-import { readFileSync } from 'node:fs';
+import { globSync, readFileSync } from 'node:fs';
 import { PILLARS, primaryNav, serviceLinks, serviceNav, site } from './copy';
 import { audiences, core3, faqs, hero } from './home';
 import { layers } from './services';
@@ -310,5 +314,75 @@ describe('Google Business Profile alignment', () => {
   /** The old category is what Google is being asked to move away from. */
   it('does not describe the firm as a marketing agency', () => {
     expect(site.descriptor.toLowerCase()).not.toContain('marketing agency');
+  });
+});
+
+/**
+ * On 2026-09-07 every "Book a free call" button on the site — 22 of them,
+ * plus llms.txt and Aria's own answers — pointed at
+ * https://link.n3xus.media/widget/bookings/jared-sinclair-calendar, a host
+ * that returns NXDOMAIN from GoDaddy's authoritative nameserver and from
+ * 1.1.1.1, 8.8.8.8 and 9.9.9.9. The primary call to action was a browser
+ * error page, and had been for long enough that the previous static site
+ * carried the same URL.
+ *
+ * Nothing caught it because a dead *external* link produces no build error, no
+ * test failure and no 404 in our own logs. These tests are the substitute: they
+ * cannot check DNS, but they can stop that specific host coming back, and they
+ * can insist the CTA always points somewhere this repo controls or somewhere
+ * explicitly configured.
+ */
+describe('the booking call to action goes somewhere that exists', () => {
+  const DEAD_HOST = 'link.n3xus.media';
+
+  it('never points at the host that stopped resolving', () => {
+    expect(site.bookingUrl).not.toContain(DEAD_HOST);
+  });
+
+  it('keeps the dead host out of the machine-readable files', () => {
+    for (const f of ['public/llms.txt', 'public/.well-known/ai-plugin.json']) {
+      expect(readFileSync(f, 'utf-8'), f).not.toContain(DEAD_HOST);
+    }
+  });
+
+  it('is an absolute https URL, since assistants quote it verbatim', () => {
+    expect(site.bookingUrl).toMatch(/^https:\/\//);
+  });
+
+  /**
+   * Without an override the CTA must land on our own contact page — the one
+   * destination whose existence this repo can actually guarantee.
+   */
+  it('falls back to a page this repo serves', () => {
+    if (!process.env.NEXT_PUBLIC_BOOKING_URL) {
+      expect(site.bookingUrl).toBe(`${site.url}/contact`);
+      expect(staticRoutes.map((r) => r.path)).toContain('/contact');
+    }
+  });
+
+  it('only opens a new tab when the link actually leaves the site', () => {
+    expect(site.bookingLinkProps.target).toBe(
+      site.bookingUrl.startsWith(site.url) ? undefined : '_blank',
+    );
+    expect(site.bookingIsLive).toBe(!site.bookingUrl.startsWith(site.url));
+  });
+
+  /**
+   * No page should offer "book a call" as an alternative to the form it is
+   * already showing. The contact page branches on `bookingIsLive` to avoid it.
+   */
+  it('does not let the contact page link to itself', () => {
+    for (const f of ['app/contact/page.tsx', 'src/ui/marketing/ContactForm.tsx']) {
+      expect(readFileSync(f, 'utf-8'), f).toContain('site.bookingIsLive');
+    }
+  });
+
+  /** Every call site must go through the shared value, not a pasted string. */
+  it('has no hardcoded booking URLs left in the pages', () => {
+    const pages = globSync('{app,src}/**/*.tsx');
+    expect(pages.length).toBeGreaterThan(20);
+    for (const f of pages) {
+      expect(readFileSync(f, 'utf-8'), f).not.toContain(DEAD_HOST);
+    }
   });
 });

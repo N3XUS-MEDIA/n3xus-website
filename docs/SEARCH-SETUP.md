@@ -126,6 +126,44 @@ reviewer at `n3xus.media/about`.
   states if the listing type supports it.
 - Link the profile to `https://n3xus.media`.
 
+## 3b. The booking link is dead — restore it or leave it routed to /contact
+
+Found on 2026-09-07 while checking DNS for the section above, and worth
+treating as more urgent than anything else on this page.
+
+`link.n3xus.media` **does not exist.** NXDOMAIN from GoDaddy's own
+authoritative nameserver and from 1.1.1.1, 8.8.8.8 and 9.9.9.9. Every
+"Book a free call" button on the site pointed at
+
+```
+https://link.n3xus.media/widget/bookings/jared-sinclair-calendar
+```
+
+so the primary call to action was a browser DNS error — on 22 pages, in
+`llms.txt`, and in the answers the assistant gives. The previous static site
+carried the same URL, so this was not introduced by the rebuild and has been
+losing enquiries quietly for some time. A dead external link produces no build
+failure, no test failure and no 404 in our own logs, which is why nothing
+surfaced it.
+
+**Already done:** every booking CTA now goes to `https://n3xus.media/contact`,
+which works and reaches the same inbox. The contact page and the post-submit
+confirmation offer email instead of linking to themselves. Tests now fail if
+that host ever returns.
+
+**To restore real self-serve booking:**
+
+1. Sign into the booking provider (the `/widget/bookings/…` path is a
+   white-label scheduler) and find the CNAME it wants for `link`.
+2. Add it in **GoDaddy → Domain → DNS → Records**.
+3. Confirm it resolves — `dig +short link.n3xus.media` must return something.
+4. Set `NEXT_PUBLIC_BOOKING_URL` in Vercel to the full booking URL and
+   redeploy. No code change; the buttons, `llms.txt` and the assistant all read
+   that one value, and the new-tab behaviour switches back on by itself.
+
+If self-serve booking is not coming back, nothing further is needed — `/contact`
+is a working destination and the copy no longer promises a calendar.
+
 ## 4. Analytics — one thing to check, not to add
 
 Both a GTM container (`GT-57S4GH8K`) and a standalone GA4 tag

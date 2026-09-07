@@ -26,7 +26,7 @@ export default function IntelligencePage() {
 
       <PageHero eyebrow={page.eyebrow} title={page.title} lede={page.lede}>
         <Button asChild size="lg">
-          <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+          <a href={site.bookingUrl} {...site.bookingLinkProps}>
             Request a demo
           </a>
         </Button>

@@ -146,8 +146,8 @@ function buildEntries(): KnowledgeEntry[] {
       'I want to speak to someone',
     ],
     answer:
-      `Email ${site.email}, or book a free call at ${site.bookingUrl}. There is also a contact form at ` +
-      `${site.url}/contact. We come back within one business day.`,
+      `Email ${site.email}, or tell us what you need at ${site.bookingUrl} and we will set up a free ` +
+      `call. We come back within one business day.`,
   });
 
   entries.push({
@@ -162,7 +162,7 @@ function buildEntries(): KnowledgeEntry[] {
     answer:
       `It starts with a conversation — you tell us what is going wrong, and we tell you what we would ` +
       `look at first and roughly what it would take. No deck, no pressure, and you keep whatever we ` +
-      `work out even if you never speak to us again. Book one at ${site.bookingUrl}.`,
+      `work out even if you never speak to us again. Start it at ${site.bookingUrl}.`,
   });
 
   // ── One entry per discipline ──────────────────────────────────────────────

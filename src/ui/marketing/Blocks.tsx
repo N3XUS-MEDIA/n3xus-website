@@ -312,7 +312,7 @@ export function BlockRenderer({
                 <Link href="/pricing">Build your retainer</Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
-                <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+                <a href={site.bookingUrl} {...site.bookingLinkProps}>
                   Talk it through
                 </a>
               </Button>
@@ -333,7 +333,7 @@ export function BlockRenderer({
             />
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg">
-                <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+                <a href={site.bookingUrl} {...site.bookingLinkProps}>
                   Book a consultation
                 </a>
               </Button>

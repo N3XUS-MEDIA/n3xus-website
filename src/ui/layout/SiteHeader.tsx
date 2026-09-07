@@ -143,7 +143,7 @@ export function SiteHeader() {
             <ThemeToggle />
 
             <Button asChild variant="primary" className="hidden lg:inline-flex">
-              <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+              <a href={site.bookingUrl} {...site.bookingLinkProps}>
                 {ctas.book}
               </a>
             </Button>
@@ -204,7 +204,7 @@ export function SiteHeader() {
               </ul>
 
               <Button asChild variant="primary" size="lg" className="mt-4 w-full">
-                <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+                <a href={site.bookingUrl} {...site.bookingLinkProps}>
                   {ctas.book}
                 </a>
               </Button>

@@ -198,7 +198,7 @@ export function RetainerBuilder() {
             ) : null}
 
             <Button asChild size="lg" className="mt-6 w-full">
-              <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+              <a href={site.bookingUrl} {...site.bookingLinkProps}>
                 Book a call about this build
               </a>
             </Button>

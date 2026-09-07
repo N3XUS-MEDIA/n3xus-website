@@ -161,7 +161,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           />
           <div className="mt-8">
             <Button asChild size="lg">
-              <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+              <a href={site.bookingUrl} {...site.bookingLinkProps}>
                 {ctas.book}
               </a>
             </Button>
