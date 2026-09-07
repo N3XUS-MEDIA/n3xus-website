@@ -49,12 +49,28 @@ curl -sI localhost:3000/about | grep -iE 'x-frame|nosniff|referrer|permissions'
 | `ANTHROPIC_API_KEY` | `/api/chat` | Aria returns 503 |
 | `GOOGLE_SITE_VERIFICATION` | Search Console ownership | No meta tag; use the DNS method instead |
 | `BING_SITE_VERIFICATION` | Bing Webmaster Tools | No meta tag |
+| `HQ_LINK_URL` | `/api/contact` | The enquiry is not forwarded to N3XUS HQ. Email delivery is **unaffected** |
+| `HQ_LINK_KEY` | `/api/contact` | Same — the forward is skipped silently |
 
 Search setup — Search Console, Bing, Google Business Profile and the AI-answer
 baseline — is a runbook in `docs/SEARCH-SETUP.md`.
 
 `website@n3xus.media` must be a verified sender in Resend before the contact
 form can deliver.
+
+### The HQ forward
+
+`/api/contact` also forwards each enquiry to N3XUS HQ (`apps/hq` in the `n3xus`
+monorepo), where it becomes a work order and an AI agent drafts a reply for a
+person to approve. `HQ_LINK_URL` is HQ's `/api/link/events`; `HQ_LINK_KEY` is a
+connector key issued from HQ.
+
+**The forward cannot affect the enquiry.** It is started before the email work
+so it overlaps rather than delays, it never throws, and it never changes the
+response. If HQ is down the enquiry still reaches the inbox exactly as before;
+if the inbox path fails, HQ has still recorded the lead. `src/server/hq.test.ts`
+asserts that property — those tests are the reason to be confident adding a
+second network call to the lead path was safe.
 
 ## Layout
 

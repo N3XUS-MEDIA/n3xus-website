@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { clientIp, rateLimit } from '@/server/rateLimit';
+import { notifyHq } from '@/server/hq';
 
 export const runtime = 'nodejs';
 
@@ -117,21 +118,39 @@ export async function POST(req: Request) {
    */
   const forward = { name, email, phone, service, message };
 
+  /**
+   * Forward to N3XUS HQ, where the lead becomes a work order and an AI agent
+   * drafts the reply for a human to approve.
+   *
+   * Started here and awaited at every exit below, so it overlaps the email send
+   * instead of delaying it. It cannot throw and cannot change what the enquirer
+   * sees — the inbox path above is unchanged and remains the guarantee.
+   */
+  const hqForward = notifyHq(forward);
+  const done = async (response: NextResponse): Promise<NextResponse> => {
+    // Awaited rather than left floating: a serverless function can be frozen
+    // the moment it responds, and a floating fetch would simply never finish.
+    await hqForward;
+    return response;
+  };
+
   const apiKey = process.env.RESEND_API_KEY;
 
   // No Resend key: try the endpoint that has been carrying enquiries until now
   // rather than dropping the lead. Only error if that fails too.
   if (!apiKey) {
     console.warn('[contact] RESEND_API_KEY not configured — using Formspree fallback');
-    if (await sendViaFormspree(forward)) return NextResponse.json({ ok: true });
+    if (await sendViaFormspree(forward)) return done(NextResponse.json({ ok: true }));
 
     console.error('[contact] no delivery path available — enquiry NOT delivered', { from: email });
-    return NextResponse.json(
-      {
-        ok: false,
-        error: `Our contact form is temporarily unavailable. Please email ${TO_EMAIL} directly.`,
-      },
-      { status: 503 },
+    return done(
+      NextResponse.json(
+        {
+          ok: false,
+          error: `Our contact form is temporarily unavailable. Please email ${TO_EMAIL} directly.`,
+        },
+        { status: 503 },
+      ),
     );
   }
 
@@ -164,23 +183,27 @@ export async function POST(req: Request) {
     if (!res.ok) {
       const detail = await res.text();
       console.error('[contact] resend rejected the send', res.status, detail);
-      if (await sendViaFormspree(forward)) return NextResponse.json({ ok: true });
-      return NextResponse.json(
-        {
-          ok: false,
-          error: `We couldn't send that. Please email ${TO_EMAIL} directly.`,
-        },
-        { status: 502 },
+      if (await sendViaFormspree(forward)) return done(NextResponse.json({ ok: true }));
+      return done(
+        NextResponse.json(
+          {
+            ok: false,
+            error: `We couldn't send that. Please email ${TO_EMAIL} directly.`,
+          },
+          { status: 502 },
+        ),
       );
     }
 
-    return NextResponse.json({ ok: true });
+    return done(NextResponse.json({ ok: true }));
   } catch (err) {
     console.error('[contact] send failed', err);
-    if (await sendViaFormspree(forward)) return NextResponse.json({ ok: true });
-    return NextResponse.json(
-      { ok: false, error: `We couldn't send that. Please email ${TO_EMAIL} directly.` },
-      { status: 502 },
+    if (await sendViaFormspree(forward)) return done(NextResponse.json({ ok: true }));
+    return done(
+      NextResponse.json(
+        { ok: false, error: `We couldn't send that. Please email ${TO_EMAIL} directly.` },
+        { status: 502 },
+      ),
     );
   }
 }
