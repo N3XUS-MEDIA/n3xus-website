@@ -5,8 +5,15 @@ import { Container } from '@/ui/layout/Container';
 import { Section, SectionHeading } from '@/ui/layout/Section';
 import { Button } from '@/ui/primitives/Button';
 import { JsonLd } from '@/ui/seo/JsonLd';
-import { articles, findArticle, relatedTo, type ArticleBlock } from '@/content/blog';
-import { breadcrumbLd } from '@/content/structuredData';
+import {
+  INTENT_LABEL,
+  articles,
+  findArticle,
+  relatedTo,
+  type ArticleBlock,
+} from '@/content/blog';
+import { FaqList } from '@/ui/marketing/FaqList';
+import { breadcrumbLd, faqLd } from '@/content/structuredData';
 import { ctas, site } from '@/content/copy';
 
 export function generateStaticParams() {
@@ -75,6 +82,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           mainEntityOfPage: `${site.url}/blog/${article.slug}`,
         }}
       />
+      {/* Article FAQs as FAQPage schema. A visible question with a direct
+          answer under it is the shape assistants and Google's own summaries
+          lift most readily — which is the entire point of the exercise for a
+          firm that sells being found in those answers. */}
+      {article.faqs?.length ? <JsonLd data={faqLd(article.faqs)} /> : null}
       <JsonLd
         data={breadcrumbLd([
           { name: 'Home', path: '/' },
@@ -94,6 +106,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 ·
               </span>
               <span className="eyebrow">{article.category}</span>
+              <span aria-hidden className="text-line">
+                ·
+              </span>
+              <span className="eyebrow">{INTENT_LABEL[article.intent]}</span>
             </div>
 
             <h1 className="mt-4 text-3xl text-ink sm:text-4xl lg:text-5xl">{article.title}</h1>
@@ -127,6 +143,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           })}
         </div>
       </Section>
+
+      {article.faqs?.length ? (
+        <Section width="narrow" bordered>
+          <SectionHeading eyebrow="Common questions" title="Quick answers." />
+          <FaqList items={article.faqs} />
+        </Section>
+      ) : null}
 
       <Section tone="mist" bordered width="narrow">
         <div className="rounded-lg bg-carbon p-8 sm:p-10">

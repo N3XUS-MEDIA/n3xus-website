@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { RETIRED_SLUGS } from './src/content/blog';
 
 /**
  * Headers live here rather than in vercel.json.
@@ -28,6 +29,19 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+
+  /**
+   * Slugs retired when the blog was rebuilt around buyer intent. Permanent
+   * redirects rather than 404s — the mapping lives beside the articles in
+   * src/content/blog/index.ts so it is maintained with the content.
+   */
+  async redirects() {
+    return Object.entries(RETIRED_SLUGS).map(([from, to]) => ({
+      source: `/blog/${from}`,
+      destination: `/blog/${to}`,
+      permanent: true,
+    }));
+  },
 
   async headers() {
     return [
