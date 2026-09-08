@@ -30,17 +30,39 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
-  /**
-   * Slugs retired when the blog was rebuilt around buyer intent. Permanent
-   * redirects rather than 404s — the mapping lives beside the articles in
-   * src/content/blog/index.ts so it is maintained with the content.
-   */
   async redirects() {
-    return Object.entries(RETIRED_SLUGS).map(([from, to]) => ({
-      source: `/blog/${from}`,
-      destination: `/blog/${to}`,
-      permanent: true,
-    }));
+    return [
+      /**
+       * www → apex.
+       *
+       * Both hostnames were serving the site with a 200. The canonical tag on
+       * every page already pointed at the apex, so Google would most likely
+       * have consolidated them — but "most likely" is doing real work in that
+       * sentence. A redirect is deterministic: it stops the same page existing
+       * at two addresses, keeps links to the www form passing their value to
+       * the apex, and halves what a crawler has to fetch to see one site.
+       *
+       * `has: host` is matched by Vercel's edge before the app runs, so this
+       * costs nothing on normal apex traffic.
+       */
+      {
+        source: '/:path*',
+        has: [{ type: 'host' as const, value: 'www.n3xus.media' }],
+        destination: 'https://n3xus.media/:path*',
+        permanent: true,
+      },
+
+      /**
+       * Slugs retired when the blog was rebuilt around buyer intent. Permanent
+       * redirects rather than 404s — the mapping lives beside the articles in
+       * src/content/blog/index.ts so it is maintained with the content.
+       */
+      ...Object.entries(RETIRED_SLUGS).map(([from, to]) => ({
+        source: `/blog/${from}`,
+        destination: `/blog/${to}`,
+        permanent: true,
+      })),
+    ];
   },
 
   async headers() {

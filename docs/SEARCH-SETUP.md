@@ -164,17 +164,47 @@ that host ever returns.
 If self-serve booking is not coming back, nothing further is needed — `/contact`
 is a working destination and the copy no longer promises a calendar.
 
-## 4. Analytics — one thing to check, not to add
+## 4. Analytics — checked, and there is nothing to fix
 
-Both a GTM container (`GT-57S4GH8K`) and a standalone GA4 tag
-(`G-223R7S2381`) load on every page. If GA4 is *also* configured inside the
-container, every pageview has been counted twice and historic traffic is
-inflated roughly 2×.
+**This section previously told you to open GTM and check for a double-count.
+That has now been measured, and the answer is no. Nothing to do.**
 
-Open GTM, look for a GA4 Configuration tag for that property. If it is there,
-set `STANDALONE_GA4` to `false` in `src/ui/Analytics.tsx`. That is the whole
-fix. It was left in place rather than guessed at, because guessing wrong in the
-other direction silently stops all analytics.
+Both a Google tag container (`GT-57S4GH8K`) and a standalone GA4 tag
+(`G-223R7S2381`) load on every page, and the container does carry
+`G-223R7S2381` as a destination — which is what made a double-count look
+likely. But loading both does not produce two hits: `gtag.js` shares one
+global and de-duplicates the `config` call.
+
+Measured on the live site, 2026-09-08, by counting the actual requests the
+browser sends to `google-analytics.com/g/collect`:
+
+| Page load | `page_view` hits sent |
+|---|---|
+| `/about`, hard load | 1 |
+
+One hit, one measurement ID. **Historic traffic is not inflated, and
+`STANDALONE_GA4` in `src/ui/Analytics.tsx` should be left alone.** Changing it
+now would be fixing a problem that does not exist, and the failure mode in that
+direction is silent — no analytics at all.
+
+*How to re-check if you ever doubt it:* open the site, then in the browser
+console run
+
+```js
+performance.getEntriesByType('resource')
+  .filter(r => r.name.includes('/g/collect')).length
+```
+
+One hit per page load is correct. Two would be the double-count.
+
+**One real limitation, worth knowing rather than fixing.** In-site navigation
+is client-side, so a `page_view` for the second and third page a visitor reads
+is sent by the browser-history listener rather than on page load. It fires, but
+it lags, and under fast navigation some are coalesced — in a four-page journey
+clicked at three-second intervals, two of the four were reported. Real visitors
+browse slower than a script does, so treat per-page view counts as a floor
+rather than an exact figure, and judge content on **entry pages and Search
+Console impressions**, which are unaffected.
 
 While in Search Console, link it to GA4 (Admin → Property → Search Console
 links). That is what lets you see which queries produced sessions rather than
