@@ -1,33 +1,59 @@
 import Script from 'next/script';
 
 /**
- * Google Tag Manager + GA4.
+ * The Google tag, loaded twice by two different URLs.
  *
- * ── A live measurement bug, deliberately NOT silently "fixed" ───────────────
- * Every page of the old site loaded BOTH the GTM container GT-57S4GH8K and a
- * standalone gtag for GA4 property G-223R7S2381. If that GA4 property is also
- * configured as a tag inside the container — which is the usual setup when the
- * same person deploys both — then every pageview has been counted twice, and
- * the site's historic traffic numbers are inflated by roughly 2×.
+ * ── The double-count scare, resolved 2026-09-08 ─────────────────────────────
+ * This file used to warn that GT-57S4GH8K was a GTM container which probably
+ * also held a GA4 tag for G-223R7S2381, meaning every pageview was counted
+ * twice and historic traffic was inflated ~2x. It told Jared to open the
+ * container and check. That instruction was wrong, and so was the premise.
  *
- * I cannot see inside the GTM container, so I cannot tell which it is. Both
- * ways of guessing are bad:
- *   - Drop the standalone gtag: if GA4 is NOT in the container, all analytics
- *     silently stop, and nobody notices for a month.
- *   - Keep both: the double-count continues.
+ * With access to the Tag Manager account, the "Google tags" tab shows:
  *
- * So this preserves current behaviour exactly — no regression — and makes the
- * fix a one-line change once someone opens the container and looks.
+ *     N3XUS MEDIA    →    G-223R7S2381, GT-57S4GH8K
  *
- * ACTION FOR JARED: open GTM container GT-57S4GH8K. If a GA4 Configuration tag
- * for G-223R7S2381 exists in it, set STANDALONE_GA4 to false below. That is the
- * whole fix. See docs/CLAIMS-REGISTER.md G4.
+ * They are TWO IDS FOR ONE TAG, not two tags. Loading both URLs loads the same
+ * tag twice; gtag.js shares one global and de-duplicates the config call.
+ * Measured on the live site by counting requests to
+ * google-analytics.com/g/collect: exactly one page_view per page load.
+ *
+ * Corroborated in GA4 itself — 42 page_view against 37 session_start over
+ * seven days. A genuine 2x double-count could not produce that ratio.
+ *
+ * So there is nothing to fix, historic traffic is not inflated, and
+ * STANDALONE_GA4 must stay true. Setting it false is not a "cleanup": it
+ * removes a working loader on a false premise, and the failure mode is silent.
+ *
+ * ── The other container, which is a separate thing ──────────────────────────
+ * There IS a real GTM container, GTM-NV7LGFQ7, under the N3XUS account for
+ * www.n3xus.media. It is NOT installed here and nothing is missing because of
+ * that: it is empty (zero tags, zero workspace changes) and Tag Manager reports
+ * "No data has been received from your tag."
+ *
+ * If it is ever wanted, install GTM-NV7LGFQ7 *as well* — it is a different
+ * mechanism from the Google tag below, not a replacement for it. If it is not
+ * wanted, delete it, so the next person does not spend an afternoon working
+ * out why a container they can see has no data in it.
+ *
+ * ── One known limitation ────────────────────────────────────────────────────
+ * In-site navigation is client-side. Enhanced Measurement reports those
+ * through the browser-history listener rather than on load, which does fire
+ * but lags, and coalesces under rapid navigation. Do NOT "fix" this by sending
+ * a page_view on route change: that listener is already active, and a manual
+ * event would create the exact double-count this comment spent years being
+ * wrong about. Judge content on entry pages and Search Console impressions.
  */
 
+/** Two IDs for the same Google tag. See the comment above before changing either. */
 const GTM_ID = 'GT-57S4GH8K';
 const GA4_ID = 'G-223R7S2381';
 
-/** Set to false once GA4 is confirmed to be inside the GTM container. */
+/**
+ * Keep true. Verified 2026-09-08 that both IDs are one tag and that only one
+ * page_view is sent per load, so this is redundant rather than duplicated —
+ * and removing it would stop analytics silently if that ever stopped being so.
+ */
 const STANDALONE_GA4 = true;
 
 export function Analytics() {
