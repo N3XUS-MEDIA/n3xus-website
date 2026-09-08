@@ -29,6 +29,12 @@ const body = Inter({
   display: 'swap',
 });
 
+/**
+ * Google Search Console, property https://n3xus.media/ owned by
+ * deacon@n3xus.media. Issued 2026-09-08 by the HTML-tag method.
+ */
+const GOOGLE_VERIFICATION_TOKEN = 'KDzoMfakoGBct6ClPBBU1XZkMmJ6N9vE3TZpb50jozA';
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -60,7 +66,25 @@ export const metadata: Metadata = {
    * which matters more than usual for a firm selling AI visibility.
    */
   verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION,
+    /**
+     * Committed rather than left to an environment variable, deliberately.
+     *
+     * The comment above assumed whoever holds the Google account can also set
+     * a Vercel variable. On 2026-09-08 that turned out to be false: the Vercel
+     * project sits on another person's account, DNS sits at GoDaddy, and the
+     * Search Console property that already existed belongs to a different
+     * Google account — Workspace admin does not inherit it. The only lever
+     * available to the person doing the work was a commit.
+     *
+     * So the token is the default and the variable overrides it. This is a
+     * public token: it appears in the page source of every site that uses this
+     * method, and it proves nothing except that whoever set it could change
+     * the site. It is not a credential and does not belong in a secret store.
+     *
+     * Do not delete it after verification succeeds — Google re-checks, and a
+     * property that silently unverifies stops reporting without an error.
+     */
+    google: process.env.GOOGLE_SITE_VERIFICATION ?? GOOGLE_VERIFICATION_TOKEN,
     other: process.env.BING_SITE_VERIFICATION
       ? { 'msvalidate.01': process.env.BING_SITE_VERIFICATION }
       : undefined,
