@@ -1,130 +1,65 @@
-# Search setup — what's done, and what needs your accounts
+# Search setup — what is done, and the few things left
 
-The site is ready to be indexed. What remains needs a Google account and DNS
-access, which is why it is written as a runbook rather than done.
-
-Nothing here is urgent in the "site is broken" sense. It is urgent in the sense
-that **nine new articles currently exist and nobody has told Google they exist.**
+Most of this is now done. What remains is listed at the bottom and is short.
 
 ---
 
-## Already done, no action needed
+## Done on 2026-09-08, verified
 
-- `sitemap.xml` — 25 URLs, generated from the routes and articles rather than
-  hand-kept, so it cannot fall behind. Every URL returns 200 and its own
-  canonical agrees with the sitemap entry (verified).
-- `robots.txt` — declares the sitemap, allows the AI crawlers (GPTBot,
-  ClaudeBot, PerplexityBot, Google-Extended), disallows `/api/`.
-- Retired blog URLs 308-redirect to their closest replacement; none of them
-  appear in the sitemap.
-- Structured data: Organization/ProfessionalService, one Service per pillar
-  with `areaServed`, FAQPage on the homepage and on most articles,
-  BreadcrumbList, Article.
-- Nothing on the site carries `noindex`.
+**Google Search Console** — property `https://n3xus.media/`, owned by
+`deacon@n3xus.media`.
+
+- Verified by HTML file (`public/googled33c617bcf056e7c.html`), with the
+  meta-tag token committed in `app/layout.tsx` as a second route. **Do not
+  delete either.** Google re-checks, and a property that silently unverifies
+  stops reporting without raising an error.
+- `sitemap.xml` submitted. Status **Success**, **25 URLs discovered**.
+- Indexing requested on 10 URLs: the homepage, `/services/strategy`,
+  `/pricing`, `/intelligence`, `/about`, `/services` and four articles. That is
+  Google's daily quota; the rest are covered by the sitemap.
+- Linked to GA4 (Admin → Product links → Search Console links).
+
+**Why a URL-prefix property rather than a Domain property.** A Domain property
+needs a DNS TXT record at GoDaddy, which was not available. It costs nothing
+here: `www` and `http` both 308 to the apex, so the prefix covers every live
+URL.
+
+**Why a new property at all.** One already existed on this domain, on a
+different Google account. Workspace admin does **not** inherit Search Console
+access — it is granted per property by an existing owner. Same for Analytics,
+Tag Manager and Ads. If the historical data matters, ask the current owner to
+add `deacon@n3xus.media` as an Owner on the old property; nothing else depends
+on it.
+
+**What the inspections showed, which justified the exercise.**
+`/services/strategy` came back *"URL is unknown to Google"* — never crawled, no
+referring sitemap. The rebuilt pages were invisible. Within minutes of
+submission, later inspections showed `sitemap.xml` as the referring source.
+
+**Bing Webmaster Tools** — site added and the sitemap imported automatically
+with the Search Console connection. Status **Success**, 25 URLs, 0 errors,
+0 warnings, crawled 2026-09-08. Nothing further needed.
+
+**Google Business Profile** — the name and category edits Google previously
+declined have been **approved**: the profile reads *N3XUS* /
+*Business management consultant*. Nothing to resubmit.
+
+Also fixed on the profile:
+
+- The description was empty. Now 741/750 characters covering the three
+  disciplines, both audiences and buyer search language.
+- The website field pointed at `https://www.n3xus.media/` — a redirect hop
+  rather than the canonical. Now `https://n3xus.media/`.
+
+The profile is a **service-area listing with no address**, which is why the
+site's schema declares country only. It confirmed two things the site was
+missing, now published in `structuredData.ts`: the phone number
+`+27 21 002 8515` and opening hours. Name/address/phone consistency between
+profile and site is a local ranking factor, and the site was publishing no
+phone at all. Service areas on the profile are South Africa and United States,
+matching `src/content/markets.ts`.
 
 ---
-
-## 0. Before you start — two facts checked against live DNS
-
-**The domain is already verified.** `n3xus.media` carries two
-`google-site-verification` TXT records:
-
-```
-google-site-verification=Wg0yLOlGEs42yPVaTxfyHXk9RG3bNtzNRq08aacQgnw
-google-site-verification=uH93MZ-Fqi_SOZm90_iVGXx0uT52iIr-9sZkh6bjHgI
-```
-
-So a Search Console property exists already and there is nothing to verify.
-Two tokens usually means either two properties (often a legacy URL-prefix
-alongside a domain property) or two Google accounts with access. Sign in and
-look — if the property you land in is a URL-prefix one, add a **Domain**
-property as well, since that is the one that covers every subdomain and
-protocol.
-
-**DNS is at GoDaddy, not Cloudflare.** Live nameservers are
-`ns07.domaincontrol.com` / `ns08.domaincontrol.com`. The monorepo's
-`CLAUDE.md` lists Cloudflare for DNS; that is stale and worth correcting there,
-because it will send the next person to the wrong control panel. Any TXT record
-work happens in **GoDaddy → Domain → DNS → Records**.
-
----
-
-## 1. Google Search Console — 10 minutes
-
-**Use a Domain property, not a URL prefix.** A domain property covers
-`https://`, `http://`, `www.` and every subdomain in one place. A URL-prefix
-property covers exactly one of those, which is how people end up with four
-properties and no complete picture.
-
-1. Go to [search.google.com/search-console](https://search.google.com/search-console)
-   and sign in with the account that should own this long-term — not a personal
-   address that leaves with somebody.
-2. **Add property → Domain →** `n3xus.media`
-3. **You will probably not be asked to verify** — the domain already carries
-   two verification records (see section 0). If you are asked, the TXT record
-   goes in **GoDaddy → Domain → DNS → Records** (not Cloudflare):
-   - Type `TXT`, Name `@`, Value = the `google-site-verification=…` string
-   - Save, then click Verify. Usually instant; occasionally up to an hour.
-4. Once verified: **Sitemaps** → enter `sitemap.xml` → Submit.
-5. **URL Inspection** → paste `https://n3xus.media/` → **Request indexing**.
-   Do the same for two or three of the new articles. This does not jump a
-   queue, but it does tell Google the pages exist rather than waiting to be
-   discovered.
-
-**If DNS access is the blocker**, there is a fallback already wired in: set
-`GOOGLE_SITE_VERIFICATION` in Vercel to the token from Google's *HTML tag*
-method (the `content="..."` value only, not the whole tag), redeploy, and
-verify. The DNS method is better where possible — it survives redeploys and
-covers subdomains — but this needs no DNS and no code change.
-
-## 2. Bing Webmaster Tools — 5 minutes
-
-Worth doing despite the traffic share, because **Copilot and several AI
-assistants draw on Bing's index**. For a firm selling AI visibility this is not
-optional.
-
-[bing.com/webmasters](https://www.bing.com/webmasters) → Add site →
-**Import from Google Search Console** (fastest, carries the verification over)
-→ submit the same sitemap.
-
-Or set `BING_SITE_VERIFICATION` in Vercel and redeploy — same mechanism as
-Google above.
-
-## 3. Google Business Profile — connect it to the site
-
-The profile exists but carries **no address**, so this is a service-area
-listing rather than a mappable location. That is legitimate for a firm
-delivering remotely, and it is weaker for local ranking than a verified
-premises would be — worth knowing rather than working around.
-
-The site's schema therefore declares **country only**, deliberately. Publishing
-an address the business does not trade from is exactly the field Google
-verifies, so it was left incomplete rather than guessed.
-
-**If an address is ever added to the profile**, send these and the schema can
-be completed to match:
-
-- [ ] Full street address, city, province, postal code
-- [ ] Public phone number
-- [ ] The profile's share URL (`g.page/…` or the Maps listing)
-
-They must match the profile character for character — "Street" and "St." are
-different strings to a machine, and NAP consistency (name, address, phone)
-between profile and site is a real local ranking factor.
-
-**The name and category changes** — N3XUS Media → N3XUS, Marketing agency →
-Business management consultant — were declined because the site did not reflect
-them. That is fixed: the category now appears verbatim in the homepage title,
-description, schema and both machine-readable files, and /about carries a
-"Who you're dealing with" block stating the trading name, the registered
-entity and the type of business. Resubmit; if it is declined again, point the
-reviewer at `n3xus.media/about`.
-
-**Also worth doing inside the profile:**
-
-- Add the service areas that match the site: the nine provinces, and the US
-  states if the listing type supports it.
-- Link the profile to `https://n3xus.media`.
 
 ## 3b. The booking link is dead — restore it or leave it routed to /contact
 
@@ -164,51 +99,57 @@ that host ever returns.
 If self-serve booking is not coming back, nothing further is needed — `/contact`
 is a working destination and the copy no longer promises a calendar.
 
-## 4. Analytics — checked, and there is nothing to fix
+## 4. Analytics — resolved, plus one click left for you
 
-**This section previously told you to open GTM and check for a double-count.
-That has now been measured, and the answer is no. Nothing to do.**
+**The double-count warning was wrong, and so was its premise.** This document
+and `src/ui/Analytics.tsx` both told Jared to open "GTM container GT-57S4GH8K"
+and look for a GA4 tag inside it. No such container exists. Tag Manager's
+"Google tags" tab shows:
 
-Both a Google tag container (`GT-57S4GH8K`) and a standalone GA4 tag
-(`G-223R7S2381`) load on every page, and the container does carry
-`G-223R7S2381` as a destination — which is what made a double-count look
-likely. But loading both does not produce two hits: `gtag.js` shares one
-global and de-duplicates the `config` call.
-
-Measured on the live site, 2026-09-08, by counting the actual requests the
-browser sends to `google-analytics.com/g/collect`:
-
-| Page load | `page_view` hits sent |
-|---|---|
-| `/about`, hard load | 1 |
-
-One hit, one measurement ID. **Historic traffic is not inflated, and
-`STANDALONE_GA4` in `src/ui/Analytics.tsx` should be left alone.** Changing it
-now would be fixing a problem that does not exist, and the failure mode in that
-direction is silent — no analytics at all.
-
-*How to re-check if you ever doubt it:* open the site, then in the browser
-console run
-
-```js
-performance.getEntriesByType('resource')
-  .filter(r => r.name.includes('/g/collect')).length
+```
+N3XUS MEDIA    →    G-223R7S2381, GT-57S4GH8K
 ```
 
-One hit per page load is correct. Two would be the double-count.
+**Two IDs for one tag.** Loading both URLs loads the same tag twice and
+gtag.js de-duplicates. Confirmed twice over: one `/g/collect` page_view per
+load measured in the browser, and 42 `page_view` against 37 `session_start`
+over seven days in GA4 — a ratio a real 2x count cannot produce.
 
-**One real limitation, worth knowing rather than fixing.** In-site navigation
-is client-side, so a `page_view` for the second and third page a visitor reads
-is sent by the browser-history listener rather than on page load. It fires, but
-it lags, and under fast navigation some are coalesced — in a four-page journey
-clicked at three-second intervals, two of the four were reported. Real visitors
-browse slower than a script does, so treat per-page view counts as a floor
-rather than an exact figure, and judge content on **entry pages and Search
-Console impressions**, which are unaffected.
+Historic traffic is **not** inflated. `STANDALONE_GA4` stays `true`; setting it
+false is not a cleanup, it is a silent outage.
 
-While in Search Console, link it to GA4 (Admin → Property → Search Console
-links). That is what lets you see which queries produced sessions rather than
-only impressions.
+**The real Tag Manager container is `GTM-NV7LGFQ7`**, under the N3XUS account
+for www.n3xus.media. It is **not installed** on the site and nothing is missing
+because of it: zero tags, zero workspace changes, and Tag Manager reports "No
+data has been received from your tag." Two honest options — install it
+*alongside* the Google tag if you want tag management, or delete it so nobody
+loses an afternoon to a container with no data in it.
+
+### The one click left: mark `generate_lead` as a key event
+
+GA4 reported **Key events: 0**. The property counted pageviews and nothing
+else, so a completed enquiry looked identical to a bounce. `src/lib/track.ts`
+now fires GA4's recommended `generate_lead` event once an enquiry is confirmed
+delivered.
+
+GA4 will not let an event be starred until it has fired at least once, so:
+
+1. **Submit one real test enquiry** through `n3xus.media/contact`. Worth doing
+   regardless — it is the only way to confirm the whole lead path works end to
+   end, and nobody has verified whether `RESEND_API_KEY` is set in Vercel.
+   Check the enquiry actually lands in the inbox.
+2. Wait up to 24 hours, then **GA4 → Admin → Data display → Events → Key
+   events**, and click the star next to `generate_lead`.
+
+From then on leads are counted, and the event can be imported into Google Ads
+as a conversion.
+
+**One limitation, deliberately not "fixed".** In-site navigation is
+client-side; Enhanced Measurement reports it through the browser-history
+listener, which fires but lags and coalesces under rapid clicking. Do not send
+a page_view on route change to compensate — that listener is already active and
+a manual event would create a genuine double-count. Judge content on entry
+pages and Search Console impressions.
 
 ---
 
@@ -246,3 +187,24 @@ The leading indicator to watch is **impressions**, not clicks or position.
 Impressions rising means Google is showing the pages for real queries; clicks
 follow once position improves. Judging this on clicks in month one will read as
 failure regardless of how well it is going.
+
+---
+
+## Still outstanding
+
+Short list, in order of what it costs you to leave undone.
+
+1. **`ANTHROPIC_API_KEY` in Vercel.** `/api/chat` returns 502, which is an
+   Anthropic-side rejection rather than a missing key — the route returns 503
+   when the key is absent. Invalid key or no credit. Aria answers common
+   questions from the knowledge base for free, but every follow-up and every
+   question outside it fails. Vercel is on another person's account, so this
+   needs either their access or the project moved to a team you own.
+2. **One test enquiry**, per section 4 — confirms the lead path and unlocks the
+   key-event star.
+3. **`NEXT_PUBLIC_BOOKING_URL`**, if self-serve booking is coming back. See
+   section 3b.
+4. **Ask for access to the old Search Console property** if its history
+   matters. Nothing depends on it.
+5. **Baseline the AI answers**, section 5. Nothing has ranked yet, so this is
+   the moment the baseline is worth taking.
