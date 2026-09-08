@@ -94,9 +94,47 @@ export function organisationLd() {
       addressCountry: homeMarket.countryCode,
     },
 
+    /**
+     * Read off the verified Google Business Profile on 2026-09-08, not
+     * supplied from memory.
+     *
+     * NAP consistency — name, address, phone matching between the profile and
+     * the site — is a real local ranking factor, and the site was publishing
+     * no phone number at all while the profile published one. The profile is
+     * the authoritative source here because Google verified it, so these
+     * values are copied from it exactly rather than reformatted.
+     */
+    telephone: '+27 21 002 8515',
+
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+        opens: '09:00',
+        closes: '16:30',
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: 'Friday',
+        opens: '09:00',
+        closes: '15:30',
+      },
+    ],
+
+    /**
+     * Claims register F3 asked that each social URL be confirmed as owned and
+     * live before being published as `sameAs` — an unowned profile in `sameAs`
+     * tells search engines the wrong entity is us. These two are listed on the
+     * verified Business Profile, which is the confirmation that item wanted.
+     * Any further profile needs the same evidence before it is added here.
+     */
+    sameAs: [
+      'https://www.instagram.com/n3xusmedia/',
+      'https://www.facebook.com/profile.php?id=61571728277189',
+    ],
+
     // NOT included pending docs/CLAIMS-REGISTER.md:
     // - foundingDate (F1) and numberOfEmployees (F2), unverified here
-    // - sameAs profiles (F3), each URL needs confirming as owned and live
     // - paymentAccepted, which named "Cryptocurrency via Syrax" (E1)
     // - hasOfferCatalog, whose prices are superseded (C3)
     // - priceRange "$500 — $20,000+", which no longer matches the retainer

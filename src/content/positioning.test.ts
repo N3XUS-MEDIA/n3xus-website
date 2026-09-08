@@ -386,3 +386,46 @@ describe('the booking call to action goes somewhere that exists', () => {
     }
   });
 });
+
+/**
+ * Values read off the verified Google Business Profile on 2026-09-08. NAP
+ * consistency between profile and site is a local ranking factor, so a change
+ * on one side without the other is a regression — these pin the site side.
+ */
+describe('NAP consistency with the Business Profile', () => {
+  const ld = organisationLd() as {
+    telephone?: string;
+    sameAs?: string[];
+    openingHoursSpecification?: { dayOfWeek: string | string[]; opens: string; closes: string }[];
+    address?: { streetAddress?: string };
+  };
+
+  it('publishes the same phone number the profile does', () => {
+    expect(ld.telephone).toBe('+27 21 002 8515');
+  });
+
+  it('states hours matching the profile', () => {
+    const hours = ld.openingHoursSpecification ?? [];
+    expect(hours.length).toBe(2);
+    expect(hours[0].closes).toBe('16:30');
+    expect(hours[1].dayOfWeek).toBe('Friday');
+    expect(hours[1].closes).toBe('15:30');
+  });
+
+  /**
+   * The profile is a service-area listing with no address, so the site must
+   * not invent one. A street address is the field Google verifies, and a
+   * mismatch there is worse than an absence.
+   */
+  it('still publishes no street address, because the profile has none', () => {
+    expect(ld.address?.streetAddress).toBeUndefined();
+  });
+
+  it('lists only social profiles confirmed on the verified profile', () => {
+    expect(ld.sameAs).toEqual([
+      'https://www.instagram.com/n3xusmedia/',
+      'https://www.facebook.com/profile.php?id=61571728277189',
+    ]);
+    for (const url of ld.sameAs ?? []) expect(url).toMatch(/^https:\/\//);
+  });
+});

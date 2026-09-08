@@ -111,7 +111,7 @@ standard.
 |---|---|---|---|
 | F1 | `foundingDate: 2022` | `about.html` JSON-LD | |
 | F2 | `numberOfEmployees: 5–20` | `about.html` JSON-LD | |
-| F3 | `sameAs` social profiles (LinkedIn, Instagram, Facebook, Twitter) | `about.html` JSON-LD | Confirm each URL still resolves and is owned |
+| F3 | `sameAs` social profiles | `structuredData.ts` | **Partly resolved 2026-09-08.** Instagram and Facebook are listed on the *verified* Google Business Profile, which is the ownership evidence this row asked for, and are now published. LinkedIn and Twitter were NOT on the profile and stay out until someone confirms they exist and are ours. |
 | F4 | FAQPage with 12 Q&As, including the zero-markup answer | `index.html:92-208` | Depends on A2 |
 
 ## G. Content bugs found while porting
