@@ -45,12 +45,13 @@ curl -sI localhost:3000/about | grep -iE 'x-frame|nosniff|referrer|permissions'
 
 | Variable | Used by | Without it |
 |---|---|---|
-| `RESEND_API_KEY` | `/api/contact` | Route returns 503 and the form shows a `mailto:` fallback. It does **not** pretend to succeed |
+| `RESEND_API_KEY` | `/api/contact` | The enquiry falls back to Formspree and still arrives; only if that fails too does the route 503 and show a `mailto:`. It never pretends to succeed |
 | `ANTHROPIC_API_KEY` | `/api/chat` | Aria returns 503 |
 | `GOOGLE_SITE_VERIFICATION` | Search Console ownership | No meta tag; use the DNS method instead |
 | `BING_SITE_VERIFICATION` | Bing Webmaster Tools | No meta tag |
 | `HQ_LINK_URL` | `/api/contact` | The enquiry is not forwarded to N3XUS HQ. Email delivery is **unaffected** |
 | `HQ_LINK_KEY` | `/api/contact` | Same — the forward is skipped silently |
+| `NEXT_PUBLIC_BOOKING_URL` | Every "Book a free call" button, `llms.txt`, Aria | The CTA falls back to `/contact`. Set this only to a booking host that **resolves** — see `docs/SEARCH-SETUP.md` §3b for why |
 
 Search setup — Search Console, Bing, Google Business Profile and the AI-answer
 baseline — is a runbook in `docs/SEARCH-SETUP.md`.
