@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/cn';
 import { HexMark } from '@/ui/brand/HexMark';
+import { HexArtMark } from '@/ui/brand/HexArtMark';
 import { site } from '@/content/copy';
 
 /**
@@ -133,14 +134,25 @@ export function Aria() {
         aria-expanded={open}
         aria-haspopup="dialog"
         className={cn(
-          'fixed bottom-5 right-5 z-50 inline-flex size-14 items-center justify-center rounded-full',
-          'bg-accent text-carbon shadow-lg transition-colors hover:bg-accent-deep',
-          'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-ink',
+          'fixed bottom-5 right-5 z-50 inline-flex items-center justify-center',
+          // The mark itself, not a mark inside a disc.
+          //
+          // A carbon disc was tried first and reads as a dark blob on the light
+          // theme: the artwork's ground and the disc are near the same value,
+          // so the shape that identifies it disappears. The bare hexagon keeps
+          // its silhouette on both themes, and it is what was asked for —
+          // the hex is the thing that opens Aria.
+          //
+          // The disc carried the affordance, so it is replaced by a glow that
+          // grows on hover, and by a focus ring that traces the hexagon.
+          'rounded-md p-1 transition-transform duration-200 hover:scale-110',
+          'drop-shadow-[0_0_14px_rgba(0,200,163,0.45)] hover:drop-shadow-[0_0_22px_rgba(0,200,163,0.75)]',
+          'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent',
           open && 'hidden',
         )}
       >
         <span className="sr-only">Ask Aria, the N3XUS assistant</span>
-        <HexMark className="size-7" />
+        <HexArtMark className="h-14" />
       </button>
 
       {open ? (
@@ -157,6 +169,9 @@ export function Aria() {
         >
           <div className="flex items-center justify-between gap-3 border-b border-line bg-carbon px-4 py-3">
             <span className="inline-flex items-center gap-2.5">
+              {/* Drawn, not the artwork. At 20px the photographic texture is
+                  mud; a stroked mark in accent stays legible. The artwork is
+                  used where it is big enough to be seen. */}
               <HexMark className="size-5 text-accent" />
               <span className="font-heading font-semibold text-on-carbon">Aria</span>
             </span>
