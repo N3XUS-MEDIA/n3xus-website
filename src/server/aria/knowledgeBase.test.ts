@@ -26,14 +26,17 @@ describe('knowledge base contents', () => {
   });
 
   /**
-   * The pricing answer is generated from src/content/pricing.ts, so it cannot
-   * drift from the pricing page. If someone hardcodes a figure here, this fails.
+   * Prices are not published (withdrawn 2026-09-18), but the question is common
+   * enough that it must still be answered free — with a route to a quote, and
+   * no figure anywhere in the knowledge base.
    */
-  it('generates the pricing answer from the pricing matrix', () => {
+  it('answers the price question without a price', () => {
     const entry = KNOWLEDGE_BASE.find((e) => e.id === 'pricing-base');
     expect(entry).toBeDefined();
-    expect(entry!.answer).toContain('$450');
-    expect(entry!.answer).toContain('R6,500');
+    expect(entry!.answer).toMatch(/quote/i);
+    for (const e of KNOWLEDGE_BASE) {
+      expect(e.answer, e.id).not.toMatch(/[$£€]\s?\d|\bR\s?\d{1,3}(,\d{3})+/);
+    }
   });
 
   it('carries no retired pricing', () => {

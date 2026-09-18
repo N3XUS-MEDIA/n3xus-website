@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ALL_MODULES } from '@/content/pricing';
-import { formatPrice } from '@/lib/retainer';
+import { ALL_MODULES } from '@/content/retainerModules';
 import { buildSystemPrompt } from './systemPrompt';
 
 describe('Aria system prompt', () => {
@@ -9,13 +8,14 @@ describe('Aria system prompt', () => {
   // that span a newline.
   const flat = prompt.replace(/\s+/g, ' ');
 
-  it('quotes every module at the price in the matrix, in both currencies', () => {
-    // Use the same formatter the prompt uses, rather than reimplementing it —
-    // en-ZA's default group separator is a space, the formatter emits commas.
-    for (const m of ALL_MODULES) {
-      expect(prompt, `${m.id} USD`).toContain(formatPrice(m.price.USD, 'USD'));
-      expect(prompt, `${m.id} ZAR`).toContain(formatPrice(m.price.ZAR, 'ZAR'));
-    }
+  /**
+   * Pricing was withdrawn from the site on 2026-09-18. The assistant is the
+   * easiest place for a figure to leak back out, so the prompt must not carry
+   * one in any currency.
+   */
+  it('carries no price in any currency', () => {
+    expect(prompt).not.toMatch(/[$£€R]\s?\d/);
+    expect(prompt).not.toMatch(/\d+\s?%\s*(off|discount)/i);
   });
 
   it('names every module', () => {
@@ -34,9 +34,10 @@ describe('Aria system prompt', () => {
     }
   });
 
-  it('forbids inventing prices and totals', () => {
-    expect(flat).toMatch(/never estimate, discount, round, or invent a price/i);
-    expect(flat).toMatch(/never state a total you have calculated yourself/i);
+  it('tells the assistant not to state, estimate or hint at prices', () => {
+    expect(flat).toMatch(/does not publish prices/i);
+    expect(flat).toMatch(/never state, estimate, compare or hint at a price/i);
+    expect(flat).toMatch(/even if the person insists/i);
   });
 
   it('carries the brand-separation rule', () => {

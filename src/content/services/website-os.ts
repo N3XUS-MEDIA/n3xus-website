@@ -211,7 +211,7 @@ export const websiteOsPage: ServicePageContent = {
       type: 'pricingPointer',
       eyebrow: 'Retainer plans',
       title: 'Built once. Improved every month.',
-      lede: 'A website project ends at launch and starts depreciating; an operating system compounds. Every retainer starts on the Website OS base from $450 / R6,500 a month, and you add only the modules you need on top.',
+      lede: 'A website project ends at launch and starts depreciating; an operating system compounds. Every retainer starts on the Website OS base, and you add only the modules you need on top.',
     },
 
     {
@@ -224,7 +224,7 @@ export const websiteOsPage: ServicePageContent = {
       eyebrow: 'Next step',
       title: 'Find out what your website should be doing.',
       lede: 'We map how your business operates today, show you where revenue is leaking and what each fix is worth — and you keep the findings either way.',
-      secondary: { href: '/pricing', label: 'Build your retainer' },
+      secondary: { href: '/pricing', label: 'See the retainer modules' },
     },
   ],
 

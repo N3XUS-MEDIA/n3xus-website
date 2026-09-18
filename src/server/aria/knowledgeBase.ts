@@ -26,17 +26,11 @@
 import { PILLARS, site } from '@/content/copy';
 import { faqs as homeFaqs } from '@/content/home';
 import { contactFaqs } from '@/content/contact';
-import {
-  ALL_MODULES,
-  BUNDLE_RULE_DESCRIPTION,
-  CURRENCIES,
-  PILLARS as PRICING_PILLARS,
-} from '@/content/pricing';
+import { RETAINER_AREAS } from '@/content/retainerModules';
 import { strategyPage } from '@/content/services/strategy';
 import { websiteOsPage } from '@/content/services/website-os';
 import { aiPage } from '@/content/services/ai';
 import { softwarePage } from '@/content/services/software';
-import { formatMonthly } from '@/lib/retainer';
 
 export interface KnowledgeEntry {
   id: string;
@@ -64,26 +58,28 @@ function buildEntries(): KnowledgeEntry[] {
     }
   }
 
-  // ── Pricing, generated from the single source ─────────────────────────────
-  const base = ALL_MODULES.find((m) => m.required);
-  if (base) {
-    entries.push({
-      id: 'pricing-base',
-      keywords: ['price', 'pricing', 'cost', 'costs', 'much', 'fee', 'rate', 'quote', 'expensive', 'afford'],
-      questions: [
-        'How much does it cost?',
-        'What does it cost?',
-        'What are your prices?',
-        'How much do you charge?',
-        'What is your pricing?',
-      ],
-      answer:
-        `Retainers are built from modules rather than fixed packages. Every retainer includes the ` +
-        `${base.name} at ${formatMonthly(base.price.USD, 'USD')} or ${formatMonthly(base.price.ZAR, 'ZAR')}, ` +
-        `and you add only what you need on top — search visibility, social, AI assistants, paid media. ` +
-        `${BUNDLE_RULE_DESCRIPTION} You can build your exact figure at ${site.url}/pricing.`,
-    });
-  }
+  // ── Pricing: not published, but still answered for free ───────────────────
+  // Prices were withdrawn from the site on 2026-09-18. "How much does it cost"
+  // is still one of the most common opening questions, so it keeps a
+  // knowledge-base answer — spending model tokens to say "we quote it" would be
+  // pure cost. The answer must never carry a figure; the positioning tests
+  // check for currency amounts anywhere the assistant can read.
+  entries.push({
+    id: 'pricing-base',
+    keywords: ['price', 'pricing', 'cost', 'costs', 'much', 'fee', 'rate', 'quote', 'expensive', 'afford'],
+    questions: [
+      'How much does it cost?',
+      'What does it cost?',
+      'What are your prices?',
+      'How much do you charge?',
+      'What is your pricing?',
+    ],
+    answer:
+      `We quote every business individually rather than publishing a price list — what it costs ` +
+      `depends on which parts you actually need. Retainers are built from modules on top of a ` +
+      `Website OS base, so you only pay for what you use. Tell us what you are after at ` +
+      `${site.bookingUrl} and we will come back with a figure within one business day.`,
+  });
 
   entries.push({
     id: 'pricing-modules',
@@ -95,10 +91,10 @@ function buildEntries(): KnowledgeEntry[] {
       'What are the options?',
     ],
     answer:
-      `Retainers are grouped into ${PRICING_PILLARS.length} areas: ` +
-      PRICING_PILLARS.map((p) => p.name).join(', ') +
-      `. Each has its own modules, priced individually in ${CURRENCIES.USD.symbol} and ${CURRENCIES.ZAR.symbol}. ` +
-      `The builder at ${site.url}/pricing shows every module with its price and totals it as you pick.`,
+      `Retainers are grouped into ${RETAINER_AREAS.length} areas: ` +
+      RETAINER_AREAS.map((a) => a.name).join(', ') +
+      `. Every retainer includes the Website OS base, and you add only the modules you need. ` +
+      `They are all described at ${site.url}/pricing, and we quote the combination you choose.`,
   });
 
   // ── Who we are and where we work ──────────────────────────────────────────

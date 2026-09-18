@@ -79,7 +79,7 @@ second network call to the lead path was safe.
 app/                    routes; one directory per page, six explicit service pages
 src/design/             tokens.ts is the single source of colour, type and radius
 src/ui/layout/          Container, Section, SectionHeading, PageHero, header, footer
-src/ui/marketing/       Blocks, RetainerBuilder, LeakCalculator, ContactForm, FaqList
+src/ui/marketing/       Blocks, LeakCalculator, ContactForm, FaqList
 src/content/            all copy, as typed data
 src/server/             route-handler logic; the Aria prompt lives here, never client-side
 public/                 assets, llms.txt, robots.txt, .well-known
@@ -88,14 +88,13 @@ docs/CLAIMS-REGISTER.md every factual claim awaiting founder sign-off
 
 ## Things worth knowing before you change something
 
-**Pricing has one source.** `src/content/pricing.ts` feeds the retainer builder,
-the proposal summary, and the Aria system prompt. It exists because the old site
-quoted three different figures for the same retainer across the pricing page, a
-chat widget prompt and the homepage JSON-LD. Do not hardcode a price in a page.
-
-ZAR is stored explicitly rather than derived — the published rates are
-hand-rounded and the implied rate drifts R17.86–R18.13/USD, so computing it
-would contradict the signed proposal.
+**The site publishes no prices** (since 2026-09-18). `/pricing` lists the retainer
+modules and their descriptions from `src/content/retainerModules.ts`, with no
+figures; every engagement is quoted after a conversation. A test in
+`src/content/positioning.test.ts` fails if a currency figure appears in site
+copy, `llms.txt` or `ai-plugin.json`, and Aria's prompt forbids quoting one.
+The withdrawn figures are kept in the internal *N3XUS Pricing Reference*
+(2026-09-18), and the old retainer builder can be restored from git history.
 
 **Claims are gated, not softened.** CLAUDE.md non-negotiable #5 forbids
 unverifiable stats client-facing. Unconfirmed claims sit behind a boolean in

@@ -91,7 +91,7 @@ export const digitalPage: ServicePageContent = {
     {
       type: 'pricingPointer',
       title: 'Priced as modules, not packages.',
-      lede: 'Search visibility, GEO, social and paid media are retainer modules on top of the Website OS base. Build the combination you need and see the monthly figure before you speak to anyone.',
+      lede: 'Search visibility, GEO, social and paid media are retainer modules on top of the Website OS base. Choose the combination you need and we will quote exactly that.',
     },
 
     { type: 'faq', items: [] },

@@ -429,3 +429,55 @@ describe('NAP consistency with the Business Profile', () => {
     for (const url of ld.sameAs ?? []) expect(url).toMatch(/^https:\/\//);
   });
 });
+
+/**
+ * Published pricing was withdrawn on 2026-09-18. Every figure — retainer
+ * modules, the bundle discount, project "starting from" prices — lives in an
+ * internal document now, not on the site.
+ *
+ * Prices leak back one sentence at a time: an FAQ answer, a CTA lede, a line
+ * in llms.txt that an AI assistant will quote verbatim to a buyer. So this
+ * scans every file that becomes visible copy or machine-readable output.
+ * Code comments are stripped first, because several of them record the old
+ * figures deliberately as history.
+ */
+describe('no published pricing', () => {
+  const MONEY = /[$£€]\s?\d|\bR\s?\d{1,3}(,\d{3})+\b|\bR\d{3,}\b|\b(USD|ZAR|GBP)\s?\d/;
+  const DISCOUNT = /\d+\s?%\s*(off|discount)/i;
+
+  const stripComments = (src: string) =>
+    src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1');
+
+  const copyFiles = globSync('{src/content,app}/**/*.{ts,tsx}').filter(
+    (f) => !f.endsWith('.test.ts'),
+  );
+
+  it('scans a meaningful number of copy files', () => {
+    expect(copyFiles.length).toBeGreaterThan(20);
+  });
+
+  it('carries no currency figure in any site copy', () => {
+    for (const f of copyFiles) {
+      const text = stripComments(readFileSync(f, 'utf-8'));
+      const hit = text.match(MONEY);
+      expect(hit?.[0], `${f} contains a price`).toBeUndefined();
+    }
+  });
+
+  it('carries no currency figure or discount in the files AI assistants read', () => {
+    for (const f of ['public/llms.txt', 'public/.well-known/ai-plugin.json']) {
+      const text = readFileSync(f, 'utf-8');
+      expect(text.match(MONEY)?.[0], `${f} contains a price`).toBeUndefined();
+      expect(text.match(DISCOUNT)?.[0], `${f} states a discount`).toBeUndefined();
+    }
+  });
+
+  it('tells assistants that prices are not published', () => {
+    const llms = readFileSync('public/llms.txt', 'utf-8');
+    expect(llms).toMatch(/does not publish prices/i);
+  });
+
+  it('keeps /pricing as a live route, because it is indexed', () => {
+    expect(staticRoutes.map((r) => r.path)).toContain('/pricing');
+  });
+});

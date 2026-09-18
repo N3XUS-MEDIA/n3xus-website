@@ -57,22 +57,22 @@ export const aiPage: ServicePageContent = {
         {
           title: 'LLM application development',
           body: 'Applications built on Claude, GPT-4o, Gemini or open-source Llama — well past simple API calls. Context architecture, prompt engineering, structured outputs, tool use, multi-modal inputs, streaming interfaces, evaluation and fallback strategies, and token-cost optimisation.',
-          outcome: 'From $3,500 — work that needed a specialist runs on demand',
+          outcome: 'Work that needed a specialist runs on demand',
         },
         {
           title: 'RAG systems & knowledge bases',
           body: 'Retrieval-augmented generation connects the model to your own data, so it retrieves exact information from your documents and databases instead of guessing. Ingestion and chunking, embeddings, vector store, hybrid semantic and keyword search, reranking, and the generation layer.',
-          outcome: 'From $5,500 — an assistant that genuinely knows your business',
+          outcome: 'An assistant that genuinely knows your business',
         },
         {
           title: 'AI agents & multi-agent systems',
           body: 'Autonomous agents that plan, use tools and complete multi-step work, built on LangChain, LangGraph or CrewAI, with human-in-the-loop checkpoints where the stakes justify them.',
-          outcome: 'From $6,000 — processes that ran on people now run on demand',
+          outcome: 'Processes that ran on people now run on demand',
         },
         {
           title: 'Custom AI software',
           body: 'Full-stack applications, SaaS products and enterprise systems with AI capability built in from the architecture up rather than bolted on afterwards.',
-          outcome: 'From $8,000 — a product, not an integration',
+          outcome: 'A product, not an integration',
         },
         {
           title: 'AI chatbots & assistants',

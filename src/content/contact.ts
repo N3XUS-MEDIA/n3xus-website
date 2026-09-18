@@ -84,11 +84,8 @@ export const contactFaqs: Faq[] = [
   },
   {
     q: 'What is your minimum engagement?',
-    // The old answer read "Retainer plans start at $500/mo with a 3-month
-    // minimum". Both halves conflict with the current terms: the retainer now
-    // starts at the $450 / R6,500 Base OS, and the configurator's engagement
-    // terms specify 30 days written notice with no stated minimum term.
-    // Logged in docs/CLAIMS-REGISTER.md. This answer follows the current terms.
-    a: 'Project work has no minimum. Monthly retainers start with the Website OS base at $450 / R6,500 per month, and modules can be changed or swapped with 30 days written notice before the next billing cycle.',
+    // No figure: published pricing was withdrawn on 2026-09-18. The notice
+    // period is an engagement term rather than a price, so it stays.
+    a: 'Project work has no minimum. Monthly retainers start with the Website OS base, and modules can be changed or swapped with 30 days written notice before the next billing cycle.',
   },
 ];

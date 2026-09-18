@@ -43,9 +43,12 @@ competitor or regulator reading them would ask for evidence.
 
 ## C. Pricing inconsistencies
 
-Superseded by `src/content/pricing.ts` for **monthly retainers**, which is now
-the single source. These rows are the historical contradictions — listed so the
-old figures are not reintroduced from an unported page.
+**All published pricing was withdrawn on 2026-09-18** — retainer modules, the
+bundle discount and project "starting from" figures alike. The site now quotes
+per business and carries no figures (enforced by a test). The rows below are
+the historical contradictions, kept so old figures are not reintroduced from an
+unported page. The final published set is recorded in the internal N3XUS Pricing
+Reference (2026-09-18).
 
 | # | Conflict | Where | Resolution |
 |---|---|---|---|
@@ -59,7 +62,7 @@ old figures are not reintroduced from an unported page.
 | C7 | Rate card: SEO $185/$345/$630, ads management $160/$290/$500, social $240/$395/$630, LLM marketing $345/$630/$950 | `services/digital.html` | Superseded by the retainer builder; removed |
 | C8 | Website OS "monthly retainer from $950" | `index.html` Website OS section | Superseded; now "from the modules you pick" |
 
-**C4 and C5 still need a decision.** The retainer builder replaced monthly
+**C4 and C5 are moot while prices are unpublished**, but need a decision before any are published again. The retainer builder replaced monthly
 pricing only; one-off project figures still contradict each other. C4 in
 particular is blocking: the AI chatbot is currently quoted "per build" on both
 `/services/ai` and the ported blog article because there is no single agreed

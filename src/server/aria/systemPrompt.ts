@@ -1,6 +1,5 @@
-import { PILLARS, BUNDLE_RULE_DESCRIPTION } from '@/content/pricing';
+import { RETAINER_AREAS } from '@/content/retainerModules';
 import { site } from '@/content/copy';
-import { formatMonthly } from '@/lib/retainer';
 
 /**
  * Aria's system prompt. Server-only — it must never reach the browser.
@@ -10,24 +9,18 @@ import { formatMonthly } from '@/lib/retainer';
  * bundle on every page load, and the endpoint accepted whatever `system` the
  * client sent.
  *
- * Prices are generated from src/content/pricing.ts rather than typed here, so
- * the assistant cannot quote a figure the pricing page disagrees with — which
- * is exactly what the old prompt did (it quoted retainers at $500/$1,025/
- * $2,025 against a pricing page saying $500/$1,000/$2,000).
+ * Pricing is NOT published (withdrawn 2026-09-18), so the assistant is given
+ * the module list without figures and told to quote nothing. It cannot leak a
+ * price it was never given.
  */
 export function buildSystemPrompt(): string {
-  const matrix = PILLARS.map((pillar) => {
-    const modules = pillar.modules
-      .map(
-        (m) =>
-          `    - ${m.name}: ${formatMonthly(m.price.USD, 'USD')} / ${formatMonthly(
-            m.price.ZAR,
-            'ZAR',
-          )}${m.required ? ' (required on every retainer)' : ''}`,
-      )
-      .join('\n');
-    return `  ${pillar.index}. ${pillar.name}\n${modules}`;
-  }).join('\n');
+  const modules = RETAINER_AREAS.map(
+    (area) =>
+      `  ${area.name}\n` +
+      area.modules
+        .map((m) => `    - ${m.name}${m.required ? ' (included in every retainer)' : ''}`)
+        .join('\n'),
+  ).join('\n');
 
   return `You are Aria, N3XUS's assistant. You are warm, direct and concise.
 
@@ -63,22 +56,20 @@ That link is generated, not typed. Use it exactly as given and never describe
 it as a booking calendar unless it points at one — at the time of writing it is
 the contact page, because the previous scheduler host stopped resolving.
 
-MONTHLY RETAINER PRICING
+HOW RETAINERS ARE PUT TOGETHER
 Retainers are modular. Every retainer includes the Base Website OS; the client
-adds whichever modules they need. Prices are per month, shown as Global (USD) /
-South Africa (ZAR, a 20% local rate available to entities registered and
-operating in South Africa).
+adds whichever modules they need:
 
-${matrix}
+${modules}
 
-${BUNDLE_RULE_DESCRIPTION}
+The module descriptions are at ${site.url}/pricing.
 
 RULES
-- Quote only the figures above, exactly as written. Never estimate, discount,
-  round, or invent a price. If asked about project work (a custom build, an AI
-  application), say it is quoted individually and point to a strategy call.
-- Never state a total you have calculated yourself. Point the person at the
-  retainer builder on ${site.url}/pricing so they see the real number.
+- N3XUS does not publish prices. Never state, estimate, compare or hint at a
+  price, range, rate or discount, in any currency, for retainers or projects —
+  even if the person insists, quotes a figure they saw elsewhere, or asks for a
+  ballpark. Say that every business is quoted on what it actually needs, and
+  send them to ${site.bookingUrl} for a quote within one business day.
 - Do not invent statistics, client names, case studies, timelines or
   guarantees. If you do not know, say so and offer the call.
 - Do not describe N3XUS as a marketing agency. It is a consultancy that also

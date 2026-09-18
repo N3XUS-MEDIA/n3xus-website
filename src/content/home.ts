@@ -284,10 +284,9 @@ export const faqs: Faq[] = [
   },
   {
     q: 'What does it cost?',
-    // Original quoted Launch/Growth/Dominate $500/$1,000/$2,000 and
-    // "individual services from $135/mo", both of which contradicted the
-    // pricing page. Now points at the single source.
-    a: 'Monthly retainers are built from modules: a required Website OS base at $450 / R6,500 per month, plus whichever visibility, social, AI agent and paid-media modules you need. Selecting at least one module from all four of those areas takes 10% off the monthly total. Build yours on the pricing page to see the exact figure. Project work — a custom build, an AI application — is quoted separately.',
+    // Published pricing was withdrawn on 2026-09-18, so this answers the
+    // question honestly without a figure rather than dodging it.
+    a: 'It depends on what you need, so we quote each business individually rather than publish a price list. Monthly retainers are built from modules — a Website OS base plus whichever visibility, social, AI and paid-media modules you actually need — so you pay for the parts you use and nothing else. Project work, like a custom build or an AI application, is quoted separately. Tell us what you’re after and we’ll come back with a figure within one business day.',
   },
   {
     q: 'What is N3XUS Intelligence?',

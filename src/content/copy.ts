@@ -188,5 +188,5 @@ export const ctas = {
   /** Low commitment on purpose — "consultation" sounds like an invoice. */
   book: 'Book a free call',
   contact: 'Get in touch',
-  buildRetainer: 'Price it up',
+  buildRetainer: 'See the retainer modules',
 } as const;
