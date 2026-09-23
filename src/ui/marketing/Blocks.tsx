@@ -303,13 +303,13 @@ export function BlockRenderer({
         <Section tone={tone} bordered={bordered}>
           <div className="rounded-lg border border-line bg-mist/40 p-8 sm:p-10">
             <SectionHeading
-              eyebrow={block.eyebrow ?? 'Pricing'}
+              eyebrow={block.eyebrow ?? 'Retainers'}
               title={block.title}
               lede={block.lede}
             />
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg">
-                <Link href="/pricing">See the retainer modules</Link>
+                <Link href="/retainers">See the retainer modules</Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
                 <a href={site.bookingUrl} {...site.bookingLinkProps}>

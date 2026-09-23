@@ -45,6 +45,22 @@ const nextConfig: NextConfig = {
        * `has: host` is matched by Vercel's edge before the app runs, so this
        * costs nothing on normal apex traffic.
        */
+      /**
+       * /pricing → /retainers, renamed 2026-09-23.
+       *
+       * The page stopped carrying prices on 2026-09-18, so the address was
+       * describing something it no longer did. Permanent rather than
+       * temporary: /pricing was submitted to Search Console and indexed, and a
+       * 308 is what passes that standing to the new URL instead of stranding
+       * it. Keep this redirect — inbound links, the Business Profile and any
+       * assistant that cached the old answer still point at /pricing.
+       */
+      {
+        source: '/pricing',
+        destination: '/retainers',
+        permanent: true,
+      },
+
       {
         source: '/:path*',
         has: [{ type: 'host' as const, value: 'www.n3xus.media' }],

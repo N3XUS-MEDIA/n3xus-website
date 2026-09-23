@@ -6,25 +6,32 @@ import { RETAINER_AREAS } from '@/content/retainerModules';
 import { site } from '@/content/copy';
 
 /**
- * Kept at /pricing, deliberately, even with no prices on it.
+ * Moved from /pricing to /retainers on 2026-09-23.
  *
- * The URL has been submitted to Search Console and requested for indexing, and
- * "pricing" is what people search for when they are close to buying. Moving it
- * would throw that away. What changed on 2026-09-18 is what it says: the
- * modules and what each one does, and that the figure is quoted per business.
+ * The page stopped being about prices on 2026-09-18 and an address reading
+ * /pricing on a page with no prices misleads people before they arrive.
+ * "Services" was not available: /services is the What we do hub, whose
+ * capability catalogue already covers the same ground from the other
+ * direction — what we can do, rather than what a monthly retainer is built
+ * from. Those are different enough to stay two pages.
+ *
+ * /pricing 308-redirects here (next.config.ts) so the indexing it earned
+ * carries over rather than being thrown away, and the word "pricing" stays in
+ * the description because that is still what people type when they are close
+ * to buying.
  */
 export const metadata: Metadata = {
-  title: 'Pricing',
+  title: 'Retainers',
   description:
     'How N3XUS retainers are put together — a Website OS base plus the visibility, social, AI and paid-media modules your business needs. Pricing is quoted per business after a conversation.',
-  alternates: { canonical: '/pricing' },
+  alternates: { canonical: '/retainers' },
 };
 
 export default function PricingPage() {
   return (
     <>
       <PageHero
-        eyebrow="Pricing"
+        eyebrow="Retainers"
         title="Build the retainer your business actually needs."
         lede="Every build starts on the same Website OS base — the engine that routes leads, holds your data and keeps the lights on. Everything above it is modular: you take only what you need. We quote it once we understand what that is."
       />

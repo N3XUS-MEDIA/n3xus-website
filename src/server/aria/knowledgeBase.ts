@@ -94,7 +94,7 @@ function buildEntries(): KnowledgeEntry[] {
       `Retainers are grouped into ${RETAINER_AREAS.length} areas: ` +
       RETAINER_AREAS.map((a) => a.name).join(', ') +
       `. Every retainer includes the Website OS base, and you add only the modules you need. ` +
-      `They are all described at ${site.url}/pricing, and we quote the combination you choose.`,
+      `They are all described at ${site.url}/retainers, and we quote the combination you choose.`,
   });
 
   // ── Who we are and where we work ──────────────────────────────────────────

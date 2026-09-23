@@ -88,7 +88,7 @@ docs/CLAIMS-REGISTER.md every factual claim awaiting founder sign-off
 
 ## Things worth knowing before you change something
 
-**The site publishes no prices** (since 2026-09-18). `/pricing` lists the retainer
+**The site publishes no prices** (since 2026-09-18). `/retainers` lists the retainer
 modules and their descriptions from `src/content/retainerModules.ts`, with no
 figures; every engagement is quoted after a conversation. A test in
 `src/content/positioning.test.ts` fails if a currency figure appears in site

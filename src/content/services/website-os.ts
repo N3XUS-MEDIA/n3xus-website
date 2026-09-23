@@ -4,7 +4,7 @@ import type { ServicePageContent } from '../blocks';
  * /services/website-os — the flagship service page.
  *
  * The tier table ($950 / $2,400 / $5,500 per month) is NOT ported: it is
- * superseded by the modular retainer on /pricing. See
+ * superseded by the modular retainer on /retainers. See
  * docs/CLAIMS-REGISTER.md C3. The three-way cost comparison it sat inside is
  * kept, because that framing does real work — only the figure changed.
  *
@@ -224,7 +224,7 @@ export const websiteOsPage: ServicePageContent = {
       eyebrow: 'Next step',
       title: 'Find out what your website should be doing.',
       lede: 'We map how your business operates today, show you where revenue is leaking and what each fix is worth — and you keep the findings either way.',
-      secondary: { href: '/pricing', label: 'See the retainer modules' },
+      secondary: { href: '/retainers', label: 'See the retainer modules' },
     },
   ],
 

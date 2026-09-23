@@ -38,7 +38,7 @@ describe('routes', () => {
       '/',
       '/about',
       '/contact',
-      '/pricing',
+      '/retainers',
       '/intelligence',
       '/services',
       '/services/strategy',

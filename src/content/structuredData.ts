@@ -13,7 +13,7 @@
  * The old index.html shipped an OfferCatalog of twelve services with prices
  * that contradicted the pricing page (Website OS at $950/$2,400/$5,500 monthly,
  * retired by the retainer builder). That catalogue is NOT ported. When offers
- * return, they must be generated from src/content/pricing.ts.
+ * return, they must be generated from src/content/retainers.ts.
  */
 
 import { site, PILLARS } from './copy';
@@ -229,7 +229,7 @@ export function serviceLd() {
         name: market.country,
         identifier: market.countryCode,
       },
-      url: `${site.url}/pricing`,
+      url: `${site.url}/retainers`,
     })),
   }));
 }

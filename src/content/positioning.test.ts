@@ -477,7 +477,14 @@ describe('no published pricing', () => {
     expect(llms).toMatch(/does not publish prices/i);
   });
 
-  it('keeps /pricing as a live route, because it is indexed', () => {
-    expect(staticRoutes.map((r) => r.path)).toContain('/pricing');
+  /**
+   * Renamed from /pricing on 2026-09-23 because the page has no prices on it.
+   * The old URL must stay redirected rather than 404, and must not come back
+   * into the sitemap — a redirecting URL listed as canonical is a crawl error.
+   */
+  it('lists /retainers in the sitemap and not the old /pricing', () => {
+    const paths = staticRoutes.map((r) => r.path);
+    expect(paths).toContain('/retainers');
+    expect(paths).not.toContain('/pricing');
   });
 });

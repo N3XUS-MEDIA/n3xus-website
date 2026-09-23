@@ -27,7 +27,7 @@ export const staticRoutes: RouteDef[] = [
   { path: '/services/brand', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/services/dstv-stream', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/intelligence', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/pricing', priority: 0.9, changeFrequency: 'monthly' },
+  { path: '/retainers', priority: 0.9, changeFrequency: 'monthly' },
   { path: '/about', priority: 0.7, changeFrequency: 'monthly' },
   { path: '/contact', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/blog', priority: 0.7, changeFrequency: 'weekly' },

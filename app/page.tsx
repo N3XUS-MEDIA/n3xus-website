@@ -184,7 +184,7 @@ export default function HomePage() {
                 <Link href="/services/website-os">Explore Website OS</Link>
               </Button>
               <Button asChild variant="secondary">
-                <Link href="/pricing">{ctas.buildRetainer}</Link>
+                <Link href="/retainers">{ctas.buildRetainer}</Link>
               </Button>
             </div>
           </div>

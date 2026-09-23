@@ -62,7 +62,7 @@ adds whichever modules they need:
 
 ${modules}
 
-The module descriptions are at ${site.url}/pricing.
+The module descriptions are at ${site.url}/retainers.
 
 RULES
 - N3XUS does not publish prices. Never state, estimate, compare or hint at a

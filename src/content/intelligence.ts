@@ -95,7 +95,7 @@ export const intelligencePage: ServicePageContent = {
       eyebrow: 'Next step',
       title: 'See it against your own numbers.',
       lede: 'A walkthrough using your channels and your data, so you can judge whether it tells you anything your current reporting doesn’t.',
-      secondary: { href: '/pricing', label: 'See the retainer modules' },
+      secondary: { href: '/retainers', label: 'See the retainer modules' },
     },
   ],
 };

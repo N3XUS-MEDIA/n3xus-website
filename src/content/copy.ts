@@ -129,7 +129,7 @@ export const PILLARS = [
 export const primaryNav = [
   { href: '/services', label: 'What we do' },
   { href: '/intelligence', label: 'Intelligence' },
-  { href: '/pricing', label: 'Pricing' },
+  { href: '/retainers', label: 'Retainers' },
   { href: '/blog', label: 'Insights' },
   { href: '/about', label: 'About' },
 ] as const;
