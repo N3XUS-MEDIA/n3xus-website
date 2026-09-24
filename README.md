@@ -3,11 +3,20 @@
 The N3XUS website. Next.js 15 + React 19 + Tailwind, deployed to Vercel from
 this repo.
 
-N3XUS is a business consultancy across strategy, technology and growth — the
-three disciplines the 3 in the name refers to. It was previously N3XUS Media, a
-marketing agency; the registered entity is still N3XUS Media (Pty) Ltd, which is
-why `site.legalName` exists separately from `site.name` and is used in the
-copyright line and the legal pages.
+N3XUS is a full-service marketing agency working across strategy, intelligence
+and growth — the three disciplines the 3 in the name refers to. It runs the
+marketing (social, paid media, television, search) and builds the website
+systems, tracking and AI integrations that make it measurable.
+
+The site briefly described the firm as a "business management consultancy"
+(Aug–Sep 2026). That overcorrected and was reversed on 2026-09-24: Google
+declined the matching Business Profile category twice and then auto-reverted
+it. `src/content/positioning.test.ts` now fails if the consultancy wording
+returns to public-facing copy.
+
+The trading name is N3XUS; the registered entity is still N3XUS Media (Pty)
+Ltd, which is why `site.legalName` exists separately from `site.name` and is
+used in the copyright line and the legal pages.
 
 > This is the repo that actually deploys to n3xus.media. The copy under
 > `apps/website` in the `n3xus` monorepo is a stale mirror and should be reduced

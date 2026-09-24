@@ -263,7 +263,7 @@ export const faqs: Faq[] = [
     q: 'What kind of firm is N3XUS?',
     // Original opened "N3XUS is the only agency that genuinely operates
     // across..." — see docs/CLAIMS-REGISTER.md B3. Restated as what is done.
-    a: 'A consultancy — but one that does the work as well as the thinking. We work out what’s holding the business back (strategy), build and run the systems that fix it (intelligence), and bring you the customers (growth). Most firms do one of those three and leave you to manage the other two.',
+    a: 'A full-service marketing agency — with a build team. We work out what’s holding the business back (strategy), build and run the systems that fix it (intelligence), and bring you the customers through social, paid media, television and search (growth). Most agencies do the last part and hand you a report; we build the thing the report comes from.',
   },
   {
     q: 'How quickly will I see results?',

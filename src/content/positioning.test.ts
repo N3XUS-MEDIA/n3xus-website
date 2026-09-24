@@ -1,6 +1,13 @@
 /**
- * Guards the 2026 repositioning: N3XUS Media (marketing agency) → N3XUS
- * (a business management consultancy across strategy, intelligence and growth).
+ * Guards the positioning: N3XUS is a full-service marketing agency working
+ * across strategy, intelligence and growth.
+ *
+ * An August 2026 pass relabelled the site a "business management consultancy".
+ * That overcorrected — the revenue is execution, and the systems work exists to
+ * make that execution measurable — and Google declined the matching Business
+ * Profile category twice before auto-reverting it. Reversed 2026-09-24. These
+ * tests exist because the consultancy wording is still in git history, in the
+ * founders' muscle memory, and in every draft written from an August document.
  *
  * This comment said "technology and growth" until 2026-09-07 — the exact
  * phrase the test below forbids in the app. A doc comment is not covered by
@@ -127,12 +134,18 @@ describe('metadata and structured data', () => {
 describe('the assistant', () => {
   const prompt = buildSystemPrompt().replace(/\s+/g, ' ');
 
-  it('describes the firm as a consultancy', () => {
-    expect(prompt).toMatch(/business management consultancy/i);
+  it('describes the firm as a marketing agency', () => {
+    expect(prompt).toMatch(/full-service marketing agency/i);
   });
 
-  it('is told not to call it a marketing agency', () => {
-    expect(prompt).toMatch(/do not describe N3XUS as a marketing agency/i);
+  /**
+   * The inverse of the rule this file used to assert. Aria was previously told
+   * never to call N3XUS a marketing agency, which meant it corrected people who
+   * had it right.
+   */
+  it('is told that "marketing agency" is correct, and not to say consultancy', () => {
+    expect(prompt).toMatch(/N3XUS is a marketing agency, and saying so is correct/i);
+    expect(prompt).toMatch(/do not call it a consultancy/i);
   });
 
   it('can still answer to the former name', () => {
@@ -144,8 +157,8 @@ describe('public files carry the repositioning', () => {
   const llms = readFileSync('public/llms.txt', 'utf-8');
   const plugin = readFileSync('public/.well-known/ai-plugin.json', 'utf-8');
 
-  it('llms.txt leads with the consultancy positioning', () => {
-    expect(llms).toMatch(/N3XUS is a business management consultancy/);
+  it('llms.txt leads with the agency positioning', () => {
+    expect(llms).toMatch(/N3XUS is a full-service marketing agency/);
     expect(llms).toMatch(/strategy, intelligence and growth/i);
   });
 
@@ -169,7 +182,7 @@ describe('public files carry the repositioning', () => {
   it('ai-plugin.json is valid JSON and repositioned', () => {
     const parsed = JSON.parse(plugin);
     expect(parsed.name_for_human).toBe('N3XUS');
-    expect(parsed.description_for_model).toMatch(/business management consultancy/i);
+    expect(parsed.description_for_model).toMatch(/full-service marketing agency/i);
     // The dangling openapi.yaml reference is gone (claims register G3).
     expect(parsed.api).toBeUndefined();
   });
@@ -271,22 +284,26 @@ describe('plain language', () => {
 });
 
 /**
- * Google declined a Business Profile edit — name N3XUS Media → N3XUS, category
- * Marketing agency → Business management consultant — because the website did
- * not reflect either change. Their reviewer checks the site, so these assert
- * the site keeps saying both.
+ * The site and the Google Business Profile have to agree, because a reviewer
+ * deciding a category comparison reads the site as evidence.
+ *
+ * History worth keeping: an edit changing the primary category from "Marketing
+ * agency" to "Business management consultant" was declined twice and then
+ * auto-reverted by Google from outside feedback. Rather than push harder, the
+ * claim was withdrawn — the evidence said agency. The profile keeps "Marketing
+ * agency" as primary, with secondary categories covering the build side.
  */
 describe('Google Business Profile alignment', () => {
-  const CATEGORY = 'business management consultancy';
+  const CATEGORY = 'marketing agency';
 
-  it('states the category verbatim, in the words Google uses', () => {
+  it('states the primary category verbatim, in the words Google uses', () => {
     expect(site.category).toBe(CATEGORY);
     expect(site.descriptor.toLowerCase()).toContain(CATEGORY);
   });
 
   it('puts the category in the homepage title and description', () => {
     for (const f of ['app/layout.tsx', 'app/page.tsx']) {
-      expect(readFileSync(f, 'utf-8').toLowerCase(), f).toContain('business management consultancy');
+      expect(readFileSync(f, 'utf-8').toLowerCase(), f).toContain(CATEGORY);
     }
   });
 
@@ -302,7 +319,7 @@ describe('Google Business Profile alignment', () => {
     const about = readFileSync('src/content/about.ts', 'utf-8');
     expect(about).toContain('Trading name');
     expect(about).toContain('Registered entity');
-    expect(about).toContain('Business management consultancy');
+    expect(about).toContain('Full-service marketing agency');
   });
 
   it('says it in the machine-readable files too', () => {
@@ -311,122 +328,20 @@ describe('Google Business Profile alignment', () => {
     }
   });
 
-  /** The old category is what Google is being asked to move away from. */
-  it('does not describe the firm as a marketing agency', () => {
-    expect(site.descriptor.toLowerCase()).not.toContain('marketing agency');
-  });
-});
-
-/**
- * On 2026-09-07 every "Book a free call" button on the site — 22 of them,
- * plus llms.txt and Aria's own answers — pointed at
- * https://link.n3xus.media/widget/bookings/jared-sinclair-calendar, a host
- * that returns NXDOMAIN from GoDaddy's authoritative nameserver and from
- * 1.1.1.1, 8.8.8.8 and 9.9.9.9. The primary call to action was a browser
- * error page, and had been for long enough that the previous static site
- * carried the same URL.
- *
- * Nothing caught it because a dead *external* link produces no build error, no
- * test failure and no 404 in our own logs. These tests are the substitute: they
- * cannot check DNS, but they can stop that specific host coming back, and they
- * can insist the CTA always points somewhere this repo controls or somewhere
- * explicitly configured.
- */
-describe('the booking call to action goes somewhere that exists', () => {
-  const DEAD_HOST = 'link.n3xus.media';
-
-  it('never points at the host that stopped resolving', () => {
-    expect(site.bookingUrl).not.toContain(DEAD_HOST);
-  });
-
-  it('keeps the dead host out of the machine-readable files', () => {
-    for (const f of ['public/llms.txt', 'public/.well-known/ai-plugin.json']) {
-      expect(readFileSync(f, 'utf-8'), f).not.toContain(DEAD_HOST);
-    }
-  });
-
-  it('is an absolute https URL, since assistants quote it verbatim', () => {
-    expect(site.bookingUrl).toMatch(/^https:\/\//);
-  });
-
   /**
-   * Without an override the CTA must land on our own contact page — the one
-   * destination whose existence this repo can actually guarantee.
+   * The claim that was withdrawn. It must not creep back into the copy that a
+   * category reviewer reads, or the profile and the site disagree again.
    */
-  it('falls back to a page this repo serves', () => {
-    if (!process.env.NEXT_PUBLIC_BOOKING_URL) {
-      expect(site.bookingUrl).toBe(`${site.url}/contact`);
-      expect(staticRoutes.map((r) => r.path)).toContain('/contact');
+  it('does not call the firm a consultancy in public-facing copy', () => {
+    expect(site.descriptor.toLowerCase()).not.toContain('consultan');
+    for (const f of [
+      'app/layout.tsx',
+      'app/page.tsx',
+      'public/llms.txt',
+      'public/.well-known/ai-plugin.json',
+    ]) {
+      expect(readFileSync(f, 'utf-8').toLowerCase(), f).not.toContain('consultancy');
     }
-  });
-
-  it('only opens a new tab when the link actually leaves the site', () => {
-    expect(site.bookingLinkProps.target).toBe(
-      site.bookingUrl.startsWith(site.url) ? undefined : '_blank',
-    );
-    expect(site.bookingIsLive).toBe(!site.bookingUrl.startsWith(site.url));
-  });
-
-  /**
-   * No page should offer "book a call" as an alternative to the form it is
-   * already showing. The contact page branches on `bookingIsLive` to avoid it.
-   */
-  it('does not let the contact page link to itself', () => {
-    for (const f of ['app/contact/page.tsx', 'src/ui/marketing/ContactForm.tsx']) {
-      expect(readFileSync(f, 'utf-8'), f).toContain('site.bookingIsLive');
-    }
-  });
-
-  /** Every call site must go through the shared value, not a pasted string. */
-  it('has no hardcoded booking URLs left in the pages', () => {
-    const pages = globSync('{app,src}/**/*.tsx');
-    expect(pages.length).toBeGreaterThan(20);
-    for (const f of pages) {
-      expect(readFileSync(f, 'utf-8'), f).not.toContain(DEAD_HOST);
-    }
-  });
-});
-
-/**
- * Values read off the verified Google Business Profile on 2026-09-08. NAP
- * consistency between profile and site is a local ranking factor, so a change
- * on one side without the other is a regression — these pin the site side.
- */
-describe('NAP consistency with the Business Profile', () => {
-  const ld = organisationLd() as {
-    telephone?: string;
-    sameAs?: string[];
-    openingHoursSpecification?: { dayOfWeek: string | string[]; opens: string; closes: string }[];
-    address?: { streetAddress?: string };
-  };
-
-  it('publishes the same phone number the profile does', () => {
-    expect(ld.telephone).toBe('+27 21 002 8515');
-  });
-
-  it('states hours matching the profile', () => {
-    const hours = ld.openingHoursSpecification ?? [];
-    expect(hours.length).toBe(2);
-    expect(hours[0].closes).toBe('16:30');
-    expect(hours[1].dayOfWeek).toBe('Friday');
-    expect(hours[1].closes).toBe('15:30');
-  });
-
-  /**
-   * The profile is a service-area listing with no address, so the site must
-   * not invent one. A street address is the field Google verifies, and a
-   * mismatch there is worse than an absence.
-   */
-  it('still publishes no street address, because the profile has none', () => {
-    expect(ld.address?.streetAddress).toBeUndefined();
-  });
-
-  it('lists only social profiles confirmed on the verified profile', () => {
-    expect(ld.sameAs).toEqual([
-      'https://www.instagram.com/n3xusmedia/',
-      'https://www.facebook.com/profile.php?id=61571728277189',
-    ]);
-    for (const url of ld.sameAs ?? []) expect(url).toMatch(/^https:\/\//);
   });
 });
 

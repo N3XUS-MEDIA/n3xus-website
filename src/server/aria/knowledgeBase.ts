@@ -109,10 +109,11 @@ function buildEntries(): KnowledgeEntry[] {
       'What kind of company are you?',
     ],
     answer:
-      `${site.name} is a business consultancy working across three areas — ` +
+      `${site.name} is a full-service marketing agency working across three areas — ` +
       PILLARS.map((p) => `${p.name} (${p.summary.replace(/\.$/, '')})`).join(', ') +
-      `. That is what the 3 in the name stands for. Unlike most firms, we do the work as well as the ` +
-      `thinking, so there is no handover between whoever advised you and whoever builds it.`,
+      `. That is what the 3 in the name stands for. We run the marketing — social, paid media, ` +
+      `television and search — and we also build the systems on your site that make it measurable, ` +
+      `so there is no handover between whoever plans it and whoever builds it.`,
   });
 
   entries.push({

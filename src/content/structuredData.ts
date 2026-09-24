@@ -44,11 +44,12 @@ export function organisationLd() {
     // consultancy rather than guessing from copy.
     '@type': ['Organization', 'ProfessionalService'],
     /**
-     * Mirrors the Google Business Profile category. Google declined a profile
-     * edit because the site did not reflect the category change away from
-     * "Marketing agency"; this states it machine-readably as well as in copy.
+     * Mirrors the Google Business Profile primary category. An earlier pass
+     * pointed this at Management_consulting to support a category change
+     * Google twice declined and then auto-reverted; the evidence said agency,
+     * and so does this now.
      */
-    additionalType: 'https://en.wikipedia.org/wiki/Management_consulting',
+    additionalType: 'https://en.wikipedia.org/wiki/Advertising_agency',
     '@id': ORG_ID,
     name: site.name,
     legalName: site.legalName,

@@ -26,14 +26,14 @@ export const CLAIMS = {
 export const aboutHero = {
   eyebrow: 'Who we are',
   title: 'We’re who you call when the business has outgrown how it’s run.',
-  lede: 'N3XUS is a business management consultancy. Most business owners we meet aren’t short of ideas or effort. They’re short of a straight answer about what to do next — because the advice comes from one place, the building from another, and the marketing from a third, and none of them can see the whole thing. We do all three, so someone can.',
+  lede: 'N3XUS is a full-service marketing agency. We run the social, the paid media, the television and the search — and we build the systems on your website that turn all of it into something you can actually measure. Most owners we meet aren’t short of ideas or effort. They’re short of one place where the marketing, the website and the numbers all connect.',
 };
 
 export const mission = {
   eyebrow: 'Our mission',
   title: 'One team who can see the whole picture.',
   paragraphs: [
-    'Advice is easy to give and expensive to act on badly. A consultancy hands you a deck and leaves. A developer builds exactly what the deck said, whether or not it was right. An agency sends traffic to a business that can’t handle it. Everyone did their job. Nothing got better.',
+    'Most agencies rent you attention and hand you a report. A developer builds what the brief said, whether or not it was right. A consultant leaves you a deck. Everyone did their job, and nothing got better — because nobody owned the join between the marketing and the machinery underneath it.',
     // B1's "one of the few agencies in the world … at enterprise level" is cut
     // from this paragraph until confirmed; the sentence stands without it.
     'We work across all three — strategy, intelligence and growth, which is what the 3 in N3XUS stands for. Same team, same numbers, one person you can call.',
@@ -131,7 +131,7 @@ export const closing = {
 export const businessDetails = [
   { label: 'Trading name', value: 'N3XUS' },
   { label: 'Registered entity', value: 'N3XUS Media (Pty) Ltd' },
-  { label: 'Type of business', value: 'Business management consultancy' },
+  { label: 'Type of business', value: 'Full-service marketing agency' },
   {
     label: 'What we do',
     value:

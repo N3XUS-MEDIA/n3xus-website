@@ -3,8 +3,16 @@
  * here so the two copies cannot drift.
  *
  * ── Naming ──────────────────────────────────────────────────────────────────
- * The brand is N3XUS. "Media" is dropped: it described a marketing agency, and
- * the business is repositioning as a consultancy.
+ * The brand is N3XUS. "Media" is dropped from the trading name, but the
+ * business it described has not changed: N3XUS is a full-service marketing
+ * agency. An earlier pass in 2026 relabelled the site a "business management
+ * consultancy"; that overcorrected. The revenue is execution — social, paid
+ * media, television, search — and the systems work exists to make that
+ * execution measurable. Strategy is the front door, not the business.
+ *
+ * Reverted 2026-09-24. Google declined the matching Business Profile category
+ * twice and then auto-reverted it, which is the market telling us the same
+ * thing: the evidence says agency.
  *
  * `legalName` is deliberately still "N3XUS Media (Pty) Ltd". That is the
  * registered entity, and it must stay accurate in the copyright line, the
@@ -72,15 +80,15 @@ export const site = {
    */
   bookingIsLive: !bookingUrl.startsWith(SITE_URL),
   /**
-   * The Google Business Profile category, verbatim.
+   * The Google Business Profile primary category, verbatim.
    *
-   * Google declined a profile edit changing the category from "Marketing
-   * agency" because the website did not reflect it. Their reviewer looks for
-   * the category language on the site, and "business consultancy" is not the
-   * same string as "business management consultant". This constant exists so
-   * the exact term is used consistently and cannot drift back out.
+   * Kept identical to the profile on purpose: a reviewer comparing the two
+   * should find the same words. Secondary categories on the profile cover the
+   * build side (internet marketing service, website designer, advertising
+   * agency, software company) and are deliberately not claimed as the headline
+   * here — the category is how buyers find us, and this is the one they search.
    */
-  category: 'business management consultancy',
+  category: 'marketing agency',
 
   /**
    * Explains the name to anyone — a Google reviewer included — who sees
@@ -93,7 +101,7 @@ export const site = {
   tagline: 'Strategy, intelligence and growth — for businesses that have outgrown how they work.',
   /** One line, used in metadata and structured data. */
   descriptor:
-    'N3XUS is a business management consultancy working across strategy, intelligence and growth. We work out what is holding your business back, build the systems to fix it, and bring you the customers.',
+    'N3XUS is a full-service marketing agency. Social media, paid media, television and search — plus the website systems, tracking and AI integrations that make the rest of it measurable.',
 } as const;
 
 /**

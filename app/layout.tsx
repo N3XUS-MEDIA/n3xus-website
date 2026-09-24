@@ -38,7 +38,7 @@ const GOOGLE_VERIFICATION_TOKEN = 'KDzoMfakoGBct6ClPBBU1XZkMmJ6N9vE3TZpb50jozA';
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: 'N3XUS — Business Management Consultancy | Strategy, Intelligence, Growth',
+    default: 'N3XUS — Full-Service Marketing Agency | Social, TV, Web Systems',
     template: '%s | N3XUS',
   },
   description: site.descriptor,

@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'N3XUS is a business consultancy working across strategy, technology and growth — one firm accountable across all three, rather than three suppliers accountable for none.',
+    'N3XUS is a full-service marketing agency working across strategy, intelligence and growth — one firm accountable across all three, rather than three suppliers accountable for none.',
   alternates: { canonical: '/about' },
 };
 
