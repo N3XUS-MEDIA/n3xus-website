@@ -1,4 +1,5 @@
 import { articles } from './blog';
+import { AUDIT_LIVE } from './copy';
 
 /**
  * Every indexable route, in one place.
@@ -33,6 +34,8 @@ export const staticRoutes: RouteDef[] = [
   { path: '/blog', priority: 0.7, changeFrequency: 'weekly' },
   { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
   { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
+  // Listed once it launches — see AUDIT_LIVE. Report pages (/audit/[token]) never are.
+  ...(AUDIT_LIVE ? [{ path: '/audit', priority: 0.9, changeFrequency: 'monthly' as const }] : []),
 ];
 
 export const blogRoutes: RouteDef[] = articles.map((a) => ({

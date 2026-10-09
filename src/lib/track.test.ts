@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { trackLead } from './track';
+import { trackAuditStarted, trackLead } from './track';
 
 declare global {
   // eslint-disable-next-line no-var
@@ -57,5 +57,29 @@ describe('trackLead', () => {
 
     const params = gtag.mock.calls[0][2] as Record<string, unknown>;
     expect(Object.keys(params).sort()).toEqual(['lead_source', 'service']);
+  });
+});
+
+describe('website audit events', () => {
+  it('tags an audit unlock as a lead from the audit', () => {
+    const gtag = vi.fn();
+    (globalThis as { gtag?: unknown }).gtag = gtag;
+
+    trackLead(undefined, 'website_audit');
+
+    expect(gtag).toHaveBeenCalledWith('event', 'generate_lead', { lead_source: 'website_audit' });
+  });
+
+  it('records an audit start with no parameters — not even the address', () => {
+    const gtag = vi.fn();
+    (globalThis as { gtag?: unknown }).gtag = gtag;
+
+    trackAuditStarted();
+
+    expect(gtag).toHaveBeenCalledWith('event', 'audit_started', undefined);
+  });
+
+  it('does not throw without gtag', () => {
+    expect(() => trackAuditStarted()).not.toThrow();
   });
 });

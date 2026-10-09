@@ -134,12 +134,32 @@ export const PILLARS = [
   },
 ] as const;
 
+/**
+ * The launch switch for the free website audit (/audit).
+ *
+ * The page and its API exist either way — so the whole flow can be tested on a
+ * preview deploy — but nothing links to it, and it stays out of the sitemap and
+ * search results, until this is true. Flip it only when all of these hold:
+ *
+ *   1. N3XUS HQ is deployed and its audit engine has been run on real sites
+ *      (see the monorepo's docs/context/STATE.md).
+ *   2. Vercel has HQ_LINK_URL, HQ_LINK_KEY (with the audits:write scope),
+ *      NEXT_PUBLIC_TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY.
+ *   3. Claims register A8 (the free audit offer) is marked CONFIRM.
+ *   4. public/llms.txt gains its /audit line.
+ *
+ * Without (2) the form answers "the audit isn't available right now", which is
+ * honest but is not a launch.
+ */
+export const AUDIT_LIVE = false;
+
 export const primaryNav = [
   { href: '/services', label: 'What we do' },
   { href: '/intelligence', label: 'Intelligence' },
   { href: '/retainers', label: 'Retainers' },
   { href: '/blog', label: 'Insights' },
   { href: '/about', label: 'About' },
+  ...(AUDIT_LIVE ? ([{ href: '/audit', label: 'Free audit' }] as const) : []),
 ] as const;
 
 /**

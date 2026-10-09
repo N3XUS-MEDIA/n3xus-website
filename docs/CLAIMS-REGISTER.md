@@ -24,6 +24,7 @@ Amended column), or `CUT` (does not ship).
 | A5 | "Limited strategy call slots available this month" | `index.html` closing CTA | **CUT** (not ported) | Manufactured scarcity, unverifiable |
 | A6 | Fabricated "live dashboard" — 247 leads, 1,840 AI responses today, "#1" ranking, 38/21/12/0 pipeline strip | `index.html` hero | **CUT** (not ported) | Invented figures shown as a real product screenshot |
 | A7 | Fabricated Intelligence dashboard — 38 enquiries, 21 quotes, 12 booked, channel scores 78/92/66/71/55, "Updated just now" | `intelligence.html` hero | **CUT** (not ported) | As above. Replace with a real screenshot once `apps/intelligence` boots — see `docs/context/STATE.md` |
+| A8 | "Free website audit" — automated score on screen, full report by email (`/audit`, added 2026-10-09) | `app/audit/page.tsx`, `src/content/audit.ts`; nav and sitemap once `AUDIT_LIVE` is true | | Distinct from A4 (a 45-minute call). Confirm the offer is free with no catch, and that a person will review every report before it is emailed — the page promises both. |
 
 **Note on A2:** this is a billing *policy*, not a performance statistic — N3XUS
 can confirm it from its own contracts. It is listed here because it is stated as

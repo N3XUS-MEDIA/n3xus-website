@@ -43,7 +43,11 @@ export type ColorRole =
   | 'accentDeep'
   | 'danger'
   | 'warn'
-  | 'ok';
+  | 'ok'
+  | 'dataBar'
+  | 'statusGood'
+  | 'statusWarn'
+  | 'statusBad';
 
 export const palette: Record<ThemeName, Record<ColorRole, string>> = {
   light: {
@@ -72,6 +76,18 @@ export const palette: Record<ThemeName, Record<ColorRole, string>> = {
     danger: '#a02b2f',
     warn: '#8A5A12',
     ok: '#2F6B45',
+
+    /* Chart marks — the audit report. Computed with the dataviz skill's
+       validate_palette.js against this theme's paper, not picked: #009e7f
+       passes the lightness band, chroma floor and 3:1 contrast here, where the
+       brand #00c8a3 is too light to read as a bar on paper. */
+    dataBar: '#009e7f',
+    /* Status fills, used ONLY beside an icon and a word — never colour alone.
+       Amber is 1.72:1 on paper, which the word beside it is there to relieve.
+       Distinct from danger/warn/ok, which are text colours. */
+    statusGood: '#0ca30c',
+    statusWarn: '#fab219',
+    statusBad: '#d03b3b',
   },
 
   dark: {
@@ -100,6 +116,12 @@ export const palette: Record<ThemeName, Record<ColorRole, string>> = {
     danger: '#f1918e',
     warn: '#E0B36A',
     ok: '#7FC79B',
+
+    /* The dark-surface step of the same teal: passes all checks on #030c0d. */
+    dataBar: '#00ad8d',
+    statusGood: '#0ca30c',
+    statusWarn: '#fab219',
+    statusBad: '#d03b3b',
   },
 };
 

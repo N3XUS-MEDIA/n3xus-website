@@ -30,50 +30,71 @@ export interface HqLeadPayload {
 }
 
 export async function notifyHq(payload: HqLeadPayload): Promise<boolean> {
-  const url = process.env.HQ_LINK_URL;
-  const key = process.env.HQ_LINK_KEY;
-  if (!url || !key) return false;
-
   // A fresh id per submission. HQ dedupes on this, which protects against a
   // retried DELIVERY of one enquiry — not against a person pressing submit
   // twice, which is two enquiries as far as anyone can tell from here.
-  const externalId = globalThis.crypto.randomUUID();
+  return postLinkEvent(
+    {
+      type: 'lead.created',
+      external_id: globalThis.crypto.randomUUID(),
+      payload: {
+        name: payload.name,
+        email: payload.email,
+        phone: payload.phone || undefined,
+        service: payload.service || undefined,
+        message: payload.message,
+        source: 'n3xus.media contact form',
+      },
+    },
+    'contact',
+  );
+}
+
+/** One N3XUS Link event, as HQ's /api/link/events accepts it. */
+export interface LinkEvent {
+  type: 'lead.created' | 'audit.requested' | 'audit.unlocked';
+  external_id: string;
+  payload: Record<string, unknown>;
+}
+
+/** Both connector settings, or null when HQ is not wired up here. */
+export function hqLink(): { url: string; key: string } | null {
+  const url = process.env.HQ_LINK_URL;
+  const key = process.env.HQ_LINK_KEY;
+  return url && key ? { url, key } : null;
+}
+
+/**
+ * Send one event to HQ. Never throws; true only when HQ accepted it.
+ *
+ * Shared by the contact form and the website audit, so both inherit the same
+ * timeout and the same refusal to let HQ's state leak into an exception.
+ */
+export async function postLinkEvent(event: LinkEvent, tag: string): Promise<boolean> {
+  const link = hqLink();
+  if (!link) return false;
 
   try {
-    const res = await fetch(url, {
+    const res = await fetch(link.url, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${key}`,
+        Authorization: `Bearer ${link.key}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        events: [
-          {
-            type: 'lead.created',
-            external_id: externalId,
-            occurred_at: new Date().toISOString(),
-            payload: {
-              name: payload.name,
-              email: payload.email,
-              phone: payload.phone || undefined,
-              service: payload.service || undefined,
-              message: payload.message,
-              source: 'n3xus.media contact form',
-            },
-          },
-        ],
+        events: [{ ...event, occurred_at: new Date().toISOString() }],
       }),
       signal: AbortSignal.timeout(5_000),
     });
 
     if (!res.ok) {
-      console.error('[contact] HQ rejected the lead', res.status, await res.text());
+      console.error(`[${tag}] HQ rejected the event`, res.status, await res.text());
       return false;
     }
     return true;
   } catch (err) {
-    // Includes the timeout. Log and carry on — the inbox path is unaffected.
-    console.error('[contact] could not reach HQ', err);
+    // Includes the timeout. Log and carry on — callers decide what it means.
+    console.error(`[${tag}] could not reach HQ`, err);
     return false;
   }
 }

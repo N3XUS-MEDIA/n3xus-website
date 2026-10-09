@@ -133,3 +133,39 @@
     @apply border-l-2 border-accent/40 pl-6 text-lg italic leading-relaxed text-ink;
   }
 }
+
+/* ── Website audit report ─────────────────────────────────────────────────── */
+
+@keyframes audit-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.audit-indeterminate {
+  animation: audit-indeterminate 1.6s ease-in-out infinite;
+}
+
+/* "Save as PDF" from the browser is the report's PDF. Print the report and
+   nothing else, in the light theme, with chart colours kept rather than
+   stripped to save ink. Scoped with :has() so no other page's print changes. */
+@media print {
+  body:has(.audit-report) > header,
+  body:has(.audit-report) > footer,
+  body:has(.audit-report) .fixed,
+  .audit-noprint {
+    display: none !important;
+  }
+
+  .audit-report {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .audit-block {
+    break-inside: avoid-page;
+  }
+}

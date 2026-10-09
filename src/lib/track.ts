@@ -21,20 +21,36 @@
  */
 type Gtag = (command: 'event', name: string, params?: Record<string, unknown>) => void;
 
-export function trackLead(service?: string): void {
+/** Where a lead came from. A fixed list, so the GA4 report has no typos in it. */
+export type LeadSource = 'contact_form' | 'website_audit';
+
+export function trackLead(service?: string, source: LeadSource = 'contact_form'): void {
+  send('generate_lead', {
+    lead_source: source,
+    // Which service the enquiry chose, so the report can show what people
+    // actually come for. A free-text field is never passed through here.
+    ...(service ? { service } : {}),
+  });
+}
+
+/**
+ * Someone started a free website audit. Not a lead — they have given us a web
+ * address and nothing else — but the top of the audit funnel, so the step from
+ * here to `generate_lead` with `lead_source: website_audit` can be measured.
+ * The address itself is not sent: it is the visitor's, not ours to report on.
+ */
+export function trackAuditStarted(): void {
+  send('audit_started');
+}
+
+function send(name: string, params?: Record<string, unknown>): void {
   try {
     // globalThis rather than window: identical in a browser, but defined
     // everywhere, so this cannot throw a ReferenceError if it is ever reached
     // during server rendering or in a non-DOM test environment.
     const gtag = (globalThis as unknown as { gtag?: Gtag }).gtag;
     if (typeof gtag !== 'function') return;
-
-    gtag('event', 'generate_lead', {
-      // Which service the enquiry chose, so the report can show what people
-      // actually come for. A free-text field is never passed through here.
-      lead_source: 'contact_form',
-      ...(service ? { service } : {}),
-    });
+    gtag('event', name, params);
   } catch {
     // Measurement is never worth an exception on the success path.
   }

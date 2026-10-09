@@ -2,7 +2,10 @@
  * Privacy Policy — text ported verbatim from privacy.html.
  *
  * Legal copy is NOT paraphrased. The only edits are the two marked FIXED
- * below, where the original had gaps that made a sentence meaningless.
+ * below, where the original had gaps that made a sentence meaningless, and
+ * three list items added deliberately for the free website audit (2026-10-09):
+ * what it collects (section 2), why (section 3) and who processes it
+ * (section 5). Review those three before /audit launches.
  * Anything else that reads oddly is how it reads on the live site today and
  * should be changed deliberately, not in passing.
  */
@@ -52,6 +55,10 @@ export const privacySections: LegalSection[] = [
       },
       {
         "kind": "li",
+        "text": "Your website address when you use our free website audit, together with the publicly available pages of that website, which we read in order to audit it; and, if you ask for the full report, your name, email address and, optionally, your business name and phone number"
+      },
+      {
+        "kind": "li",
         "text": "Payment and billing information when you engage our services"
       },
       {
@@ -82,6 +89,10 @@ export const privacySections: LegalSection[] = [
       {
         "kind": "li",
         "text": "Respond to your enquiries and provide requested services"
+      },
+      {
+        "kind": "li",
+        "text": "Run the website audit you request, send you its report, and follow up with you about it"
       },
       {
         "kind": "li",
@@ -136,6 +147,10 @@ export const privacySections: LegalSection[] = [
       {
         "kind": "li",
         "text": "Service providers — including Formspree (form submissions), Google (Analytics, Ads), Meta (advertising), and our booking platform"
+      },
+      {
+        "kind": "li",
+        "text": "Service providers for our website audit — Cloudflare (bot protection on our forms, and hosting), Google PageSpeed Insights (speed testing of the website you submit), Anthropic (AI analysis of the website you submit, and help drafting our replies to you) and Supabase (storing audits and enquiries)"
       },
       {
         "kind": "li",
