@@ -146,7 +146,8 @@ export const PILLARS = [
  *   2. Vercel has HQ_LINK_URL, HQ_LINK_KEY (with the audits:write scope),
  *      NEXT_PUBLIC_TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY.
  *   3. Claims register A8 (the free audit offer) is marked CONFIRM.
- *   4. public/llms.txt gains its /audit line.
+ *   4. public/llms.txt gains this line under SITE PAGES:
+ *        - Free website audit (search, AI visibility, speed, lead capture): https://n3xus.media/audit
  *
  * Without (2) the form answers "the audit isn't available right now", which is
  * honest but is not a launch.

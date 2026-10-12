@@ -14,6 +14,13 @@ export const auditHero = {
   lede: 'Enter your address. We check how you show up in search and in AI assistants, how fast you load, how easy you are to contact, and what you can and can’t measure. Your score appears on screen in a minute or two.',
 };
 
+/** The homepage band. Shown only once AUDIT_LIVE is true. */
+export const auditHomeBand = {
+  eyebrow: 'Free website audit',
+  title: 'Not sure where to start? Check your website first.',
+  lede: 'Search, AI visibility, speed, how easy you are to contact, and what you can measure — scored in a minute or two. No email needed to see your score.',
+};
+
 export const auditAreas = [
   {
     title: 'Search',

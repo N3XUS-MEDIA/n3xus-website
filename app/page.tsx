@@ -5,7 +5,9 @@ import { Section, SectionHeading } from '@/ui/layout/Section';
 import { Button } from '@/ui/primitives/Button';
 import { FaqList } from '@/ui/marketing/FaqList';
 import { JsonLd } from '@/ui/seo/JsonLd';
-import { ctas, site } from '@/content/copy';
+import { AUDIT_LIVE, ctas, site } from '@/content/copy';
+import { auditHomeBand } from '@/content/audit';
+import { AuditForm } from '@/ui/audit/AuditForm';
 import { CLAIMS } from '@/content/about';
 import {
   audiences,
@@ -112,6 +114,21 @@ export default function HomePage() {
           ))}
         </ul>
       </Section>
+
+      {/* The free audit — the lowest-commitment door on the page, for someone
+          not ready to talk yet. Off until launch; see AUDIT_LIVE. */}
+      {AUDIT_LIVE ? (
+        <Section size="sm">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-12">
+            <div className="lg:col-span-5">
+              <SectionHeading eyebrow={auditHomeBand.eyebrow} title={auditHomeBand.title} lede={auditHomeBand.lede} />
+            </div>
+            <div className="lg:col-span-7">
+              <AuditForm id="audit-url-home" />
+            </div>
+          </div>
+        </Section>
+      ) : null}
 
       {/* The one place the page raises its voice. */}
       <Section tone="carbon">

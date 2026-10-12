@@ -144,3 +144,20 @@ describe('sitemap and canonical agree', () => {
     }
   });
 });
+
+/**
+ * The free audit is built but not launched. Until AUDIT_LIVE is flipped — the
+ * checklist beside it in copy.ts — it must not be discoverable: not in the
+ * sitemap, not in the nav. The report pages (/audit/[token]) never are.
+ */
+describe('website audit launch gate', () => {
+  it('keeps /audit out of the sitemap and nav until launch, and report pages out always', async () => {
+    const { AUDIT_LIVE, primaryNav } = await import('./copy');
+    const paths = allRoutes.map((r) => r.path);
+    const navHrefs = primaryNav.map((l) => l.href as string);
+
+    expect(paths.some((p) => p.startsWith('/audit/'))).toBe(false);
+    expect(paths.includes('/audit')).toBe(AUDIT_LIVE);
+    expect(navHrefs.includes('/audit')).toBe(AUDIT_LIVE);
+  });
+});
