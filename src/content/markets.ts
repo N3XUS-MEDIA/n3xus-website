@@ -1,5 +1,5 @@
 /**
- * The two markets N3XUS targets, as structured data.
+ * The three markets N3XUS targets, as structured data.
  *
  * ── Why this file exists ────────────────────────────────────────────────────
  * The site previously declared `areaServed: 'Worldwide'`. That is the weakest
@@ -14,7 +14,7 @@
  * names explicitly and penalises. For a firm that delivers remotely, city
  * pages are also simply untrue.
  *
- * Two markets, two genuinely different pages — different currency, different
+ * A few named markets, each genuinely different — different currency, different
  * buying context, different concerns — is the defensible version of the same
  * intent, and it is what actually ranks.
  *
@@ -29,13 +29,13 @@
  */
 
 export interface Market {
-  id: 'za' | 'us';
+  id: 'za' | 'gb' | 'us';
   /** ISO 3166-1 alpha-2, for schema.org Country. */
   countryCode: string;
   country: string;
   /** Sub-national regions of focus. Named for relevance, not presence. */
   regions: string[];
-  currency: 'ZAR' | 'USD';
+  currency: 'ZAR' | 'GBP' | 'USD';
   /** True only where the firm is actually established. */
   isHomeMarket: boolean;
 }
@@ -58,6 +58,17 @@ export const MARKETS: Market[] = [
     ],
     currency: 'ZAR',
     isHomeMarket: true,
+  },
+  {
+    // Added 2026-10-13: the social programme leads with the UK, and GBP quotes
+    // and invoicing are in place. No focus regions — the whole country, delivered
+    // remotely, with no UK office.
+    id: 'gb',
+    countryCode: 'GB',
+    country: 'United Kingdom',
+    regions: [],
+    currency: 'GBP',
+    isHomeMarket: false,
   },
   {
     id: 'us',

@@ -137,6 +137,6 @@ export const businessDetails = [
     value:
       'Strategy, intelligence and growth — business diagnostics and advisory, the systems a business runs on, and the demand that feeds it.',
   },
-  { label: 'Where we operate', value: 'South Africa and the United States, delivered remotely' },
+  { label: 'Where we operate', value: 'South Africa, the United Kingdom and the United States, delivered remotely' },
   { label: 'Contact', value: 'info@n3xus.media' },
 ] as const;
