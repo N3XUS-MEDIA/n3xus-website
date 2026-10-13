@@ -556,7 +556,7 @@ N3XUS does not publish prices. Every engagement is quoted for the business in qu
 - Brand & Market Presence (TV, Activations, Sponsorship): https://n3xus.media/services/brand
 - Digital Growth & Performance (SEO, Ads, Social, LLM Marketing): https://n3xus.media/services/digital
 - N3XUS Intelligence (proprietary AI marketing platform): https://n3xus.media/intelligence
-- Pricing (all services, USD): https://n3xus.media/retainers
+- Retainers (modular monthly services; no published prices): https://n3xus.media/retainers
 - About N3XUS: https://n3xus.media/about
 - Contact: https://n3xus.media/contact
 - Blog & Insights: https://n3xus.media/blog
