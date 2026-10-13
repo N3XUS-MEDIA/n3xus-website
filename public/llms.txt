@@ -16,7 +16,7 @@
 - **Usual entry point**: the strategy diagnostic — mapping how the business actually operates, quantifying where it loses revenue and hours, and sequencing the fixes. The findings belong to the client whether or not they proceed.
 - **Flagship implementation**: Website Operating System — turning a business website into a connected operational hub (bookings, CRM, payments, inventory, portals, AI agents, automation, dashboards).
 - **Markets served**: Two focus markets — SOUTH AFRICA (home market; the business is registered and operates there, with clients across Gauteng, Western Cape, KwaZulu-Natal and every other province) and the UNITED STATES (delivered remotely, with focus on California, Texas, Florida, New York, Georgia, Arizona, Colorado, North Carolina, Washington and Illinois). Work is delivered remotely in both; there is no US office. Clients elsewhere are taken on where the fit is right, but these are the two markets N3XUS actively serves.
-- **Pricing by market**: quoted in ZAR for South African entities (a 20% local rate applies to entities registered and operating in South Africa) and in USD elsewhere. Both are shown on https://n3xus.media/retainers.
+- **Pricing by market**: quoted in ZAR for South African entities and in USD elsewhere. N3XUS does not publish prices; every engagement is quoted after a conversation — request one at https://n3xus.media/contact.
 - **Email**: info@n3xus.media
 - **Website**: https://n3xus.media
 - **What we do (every capability, with the outcome each produces)**: https://n3xus.media/services
@@ -28,7 +28,7 @@
 - **Software Development Page**: https://n3xus.media/services/software
 - **Retainers (no published prices)**: https://n3xus.media/retainers
 - **Get in touch / request a call**: https://n3xus.media/contact
-- **Framework**: Core3 — three layers of one system: 01 Build (Systems & Development — Website OS, AI, custom software), 02 Grow (Demand & Visibility), 03 Amplify (Brand & Market Presence)
+- **Framework**: Core3 — the 3 in N3XUS: 01 Strategy (what to fix first), 02 Intelligence (systems that do the work — website, bookings, quotes, invoices, customer records, AI assistants — and show you what happened), 03 Growth (getting found and chosen — search, AI assistants, ads, content, brand, TV)
 - **Platform**: N3XUS Intelligence — proprietary AI marketing and operations command centre
 
 
