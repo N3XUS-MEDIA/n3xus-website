@@ -4,6 +4,7 @@ import { Container } from '@/ui/layout/Container';
 import { Section, SectionHeading } from '@/ui/layout/Section';
 import { Button } from '@/ui/primitives/Button';
 import { FaqList } from '@/ui/marketing/FaqList';
+import { EnquiryPanel } from '@/ui/marketing/EnquiryPanel';
 import { JsonLd } from '@/ui/seo/JsonLd';
 import { ctas, site } from '@/content/copy';
 import { CLAIMS } from '@/content/about';
@@ -226,29 +227,7 @@ export default function HomePage() {
       </Section>
 
       <Section>
-        <div className="rounded-lg bg-carbon p-8 sm:p-12">
-          <SectionHeading
-            onCarbon
-            eyebrow={closing.eyebrow}
-            title={closing.title}
-            lede={closing.lede}
-          />
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg">
-              <a href={site.bookingUrl} {...site.bookingLinkProps}>
-                {ctas.book}
-              </a>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="secondary"
-              className="border-on-carbon/25 bg-transparent text-on-carbon hover:bg-on-carbon/10"
-            >
-              <a href={`mailto:${site.email}`}>{site.email}</a>
-            </Button>
-          </div>
-        </div>
+        <EnquiryPanel eyebrow={closing.eyebrow} title={closing.title} lede={closing.lede} />
       </Section>
     </>
   );
