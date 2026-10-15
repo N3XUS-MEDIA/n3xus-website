@@ -5,7 +5,14 @@ import { notifyHq } from '@/server/hq';
 
 export const runtime = 'nodejs';
 
-const TO_EMAIL = 'info@n3xus.media';
+/**
+ * Where enquiries are delivered. Deacon handles inbound since 2026-10-15
+ * (Jared's instruction). Override with ENQUIRY_TO_EMAIL in Vercel to reroute
+ * without a deploy. PUBLIC_EMAIL is what a visitor is told to write to if
+ * sending fails — kept separate so a personal inbox is never shown publicly.
+ */
+const TO_EMAIL = process.env.ENQUIRY_TO_EMAIL?.trim() || 'deacon@n3xus.media';
+const PUBLIC_EMAIL = 'info@n3xus.media';
 const FROM_EMAIL = 'website@n3xus.media'; // must be a verified sender in Resend
 
 /**
@@ -147,7 +154,7 @@ export async function POST(req: Request) {
       NextResponse.json(
         {
           ok: false,
-          error: `Our contact form is temporarily unavailable. Please email ${TO_EMAIL} directly.`,
+          error: `Our contact form is temporarily unavailable. Please email ${PUBLIC_EMAIL} directly.`,
         },
         { status: 503 },
       ),
@@ -188,7 +195,7 @@ export async function POST(req: Request) {
         NextResponse.json(
           {
             ok: false,
-            error: `We couldn't send that. Please email ${TO_EMAIL} directly.`,
+            error: `We couldn't send that. Please email ${PUBLIC_EMAIL} directly.`,
           },
           { status: 502 },
         ),
@@ -201,7 +208,7 @@ export async function POST(req: Request) {
     if (await sendViaFormspree(forward)) return done(NextResponse.json({ ok: true }));
     return done(
       NextResponse.json(
-        { ok: false, error: `We couldn't send that. Please email ${TO_EMAIL} directly.` },
+        { ok: false, error: `We couldn't send that. Please email ${PUBLIC_EMAIL} directly.` },
         { status: 502 },
       ),
     );

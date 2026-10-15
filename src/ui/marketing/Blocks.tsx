@@ -3,6 +3,7 @@ import { cn } from '@/lib/cn';
 import { Section, SectionHeading } from '@/ui/layout/Section';
 import { Button } from '@/ui/primitives/Button';
 import { FaqList } from '@/ui/marketing/FaqList';
+import { EnquiryPanel } from '@/ui/marketing/EnquiryPanel';
 import { site } from '@/content/copy';
 import type { Block } from '@/content/blocks';
 import { CompareVisual } from '@/ui/explainers/CompareVisual';
@@ -385,33 +386,35 @@ export function BlockRenderer({
     case 'cta':
       return (
         <Section tone={tone === 'carbon' ? 'paper' : tone} bordered={bordered}>
-          <div className="rounded-lg bg-carbon p-8 sm:p-12">
-            <SectionHeading
-              onCarbon
-              eyebrow={block.eyebrow}
-              title={block.title}
-              lede={block.lede}
-            />
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <a href={site.bookingUrl} {...site.bookingLinkProps}>
-                  Book a consultation
-                </a>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="secondary"
-                className="border-on-carbon/25 bg-transparent text-on-carbon hover:bg-on-carbon/10"
-              >
-                {block.secondary ? (
-                  <Link href={block.secondary.href}>{block.secondary.label}</Link>
-                ) : (
-                  <a href={`mailto:${site.email}`}>{site.email}</a>
-                )}
-              </Button>
-            </div>
-          </div>
+          <EnquiryPanel
+            eyebrow={block.eyebrow}
+            title={block.title}
+            lede={block.lede}
+            secondary={
+              block.secondary || site.bookingIsLive ? (
+                <div className="flex flex-wrap gap-x-6 gap-y-2">
+                  {site.bookingIsLive ? (
+                    <a
+                      href={site.bookingUrl}
+                      {...site.bookingLinkProps}
+                      className="inline-flex min-h-[44px] items-center font-medium text-on-carbon underline underline-offset-4 hover:no-underline"
+                    >
+                      Or book a call
+                    </a>
+                  ) : null}
+                  {block.secondary ? (
+                    <Link
+                      href={block.secondary.href}
+                      className="inline-flex min-h-[44px] items-center gap-2 font-medium text-on-carbon underline underline-offset-4 hover:no-underline"
+                    >
+                      {block.secondary.label}
+                      <span aria-hidden>→</span>
+                    </Link>
+                  ) : null}
+                </div>
+              ) : undefined
+            }
+          />
         </Section>
       );
 
