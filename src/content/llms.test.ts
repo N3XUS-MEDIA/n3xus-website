@@ -8,7 +8,8 @@
  */
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { staticRoutes } from './routes';
+import { allRoutes } from './routes';
+import { guideArticles } from './blog/guides';
 
 const short = readFileSync('public/llms.txt', 'utf-8');
 const full = readFileSync('public/llms-full.txt', 'utf-8');
@@ -18,7 +19,7 @@ const MONEY = /[$£€]\s?\d|\bR\s?\d{1,3}(,\d{3})+\b|\bR\d{3,}\b|\b(USD|ZAR|GBP
 
 describe('llms.txt (short)', () => {
   it('stays short enough to be read whole', () => {
-    expect(Buffer.byteLength(short)).toBeLessThan(8_000);
+    expect(Buffer.byteLength(short)).toBeLessThan(9_000);
   });
 
   it('follows the llms.txt shape: H1, one-paragraph summary, link sections', () => {
@@ -42,10 +43,14 @@ describe('llms.txt (short)', () => {
   });
 
   it('links only to pages that exist', () => {
-    const known = new Set([...staticRoutes.map((r) => r.path), '/llms-full.txt', '/llms.txt']);
+    const known = new Set([...allRoutes.map((r) => r.path), '/llms-full.txt', '/llms.txt']);
     const links = [...short.matchAll(/\]\(https:\/\/n3xus\.media(\/[^)?#\s]*)/g)].map((m) => m[1]!);
     expect(links.length).toBeGreaterThan(10);
     for (const path of links) expect(known.has(path.replace(/\/$/, '') || '/'), path).toBe(true);
+  });
+
+  it('lists every guide, so the articles are one hop from the file assistants read', () => {
+    for (const a of guideArticles) expect(short, a.slug).toContain(`https://n3xus.media/blog/${a.slug}`);
   });
 
   it('publishes no prices and says so', () => {

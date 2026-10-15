@@ -56,6 +56,21 @@ We are registered and based in South Africa and work remotely with clients in So
 **Who owns what we build?**
 The client: the site, the data, the customer records and the accounts.
 
+## Guides
+
+Plain-language answers to questions we are asked most. All at https://n3xus.media/blog.
+
+- [How to check whether ChatGPT recommends your business](https://n3xus.media/blog/check-if-chatgpt-recommends-your-business)
+- [What is a website operating system, and is your business ready for one?](https://n3xus.media/blog/what-is-a-website-operating-system)
+- [How to move paper forms online without losing control of them](https://n3xus.media/blog/move-paper-forms-online)
+- [How to automate quotes and bookings without losing the personal touch](https://n3xus.media/blog/automate-quotes-and-bookings)
+- [Small business SEO in 2026: what still matters, and what to skip](https://n3xus.media/blog/small-business-seo-what-still-matters)
+- [How to tell which marketing channel is producing your customers](https://n3xus.media/blog/which-marketing-channel-is-working)
+- [Should you rebuild your website? A way to decide](https://n3xus.media/blog/should-you-rebuild-your-website)
+- [How to set up an AI assistant for customer questions that does not make things up](https://n3xus.media/blog/set-up-an-ai-assistant-for-customer-questions)
+- [Why your website isn't generating leads](https://n3xus.media/blog/why-your-website-isnt-generating-leads)
+- [How to get your business recommended by ChatGPT and Gemini](https://n3xus.media/blog/get-recommended-by-ai-assistants)
+
 ## Get in touch
 
 - [Request a call or quote](https://n3xus.media/contact?utm_source=llms.txt&utm_medium=ai): the quickest way. Replies within one business day.
@@ -65,6 +80,6 @@ The client: the site, the data, the customer records and the accounts.
 ## Optional
 
 - [About N3XUS](https://n3xus.media/about)
-- [Blog and insights](https://n3xus.media/blog)
+- [All articles](https://n3xus.media/blog)
 - [Detailed reference (services, stack, full Q&A)](https://n3xus.media/llms-full.txt)
 - [Terms](https://n3xus.media/terms) and [Privacy](https://n3xus.media/privacy)
