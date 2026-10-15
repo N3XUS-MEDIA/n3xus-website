@@ -16,6 +16,7 @@ import type { Article, Pillar } from './types';
 import { strategyArticles } from './strategy';
 import { intelligenceArticles } from './intelligence';
 import { growthArticles } from './growth';
+import { guideArticles } from './guides';
 
 export * from './types';
 
@@ -23,6 +24,7 @@ export const articles: Article[] = [
   ...strategyArticles,
   ...intelligenceArticles,
   ...growthArticles,
+  ...guideArticles,
 ];
 
 /** Newest first. */
