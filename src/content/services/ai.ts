@@ -90,6 +90,24 @@ export const aiPage: ServicePageContent = {
     },
 
     {
+      type: 'explainer',
+      eyebrow: 'Inside a knowledge-base assistant',
+      title: 'How it finds the answer instead of guessing.',
+      lede: 'Retrieval-augmented generation: before the model answers, it looks the facts up in your own documents and data.',
+      summary:
+        'A pipeline in five stages. Your documents, databases and website are ingested and split into chunks. The chunks are turned into embeddings and kept in a vector store. A question triggers a hybrid semantic and keyword search, and the results are reranked. The model then answers from those sources rather than from guesswork.',
+      diagram: {
+        kind: 'flow',
+        stages: [
+          { label: 'Your documents & data', icon: 'inbox', items: ['Documents', 'Databases', 'Your website'] },
+          { label: 'Ingest & chunk', icon: 'layers' },
+          { label: 'Embeddings & vector store', icon: 'box' },
+          { label: 'Hybrid search & reranking', icon: 'compass' },
+          { label: 'An answer, from your sources', icon: 'chat' },
+        ],
+      },
+    },
+    {
       type: 'chips',
       eyebrow: 'Where it applies',
       title: 'Sectors we have built for.',

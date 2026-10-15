@@ -23,5 +23,13 @@ export const THEME_INIT_SCRIPT = `
     // No stored choice: the CSS prefers-color-scheme query handles it, so
     // leave the attribute off entirely rather than guessing here.
   } catch (e) {}
+  // Explainer diagrams only start hidden (to animate in) when this is set.
+  // Set here, before paint, so a visitor who asked for reduced motion - or
+  // whose browser never runs scripts - always gets the finished diagram.
+  try {
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.setAttribute('data-motion', 'ok');
+    }
+  } catch (e) {}
 })();
 `.trim();
