@@ -128,8 +128,8 @@ export async function POST(req: Request) {
   if (!modelEnabled) {
     return NextResponse.json({
       reply: lead
-        ? 'Happy to help with that. The quickest way is to leave your details below — someone from the team will come back to you within one business day.'
-        : 'I don’t have a written answer for that one, and I’d rather not guess. Here are a few things I can tell you about — or leave your details and someone from the team will come back to you within one business day.',
+        ? 'Sounds like one worth talking through properly. Leave your details below and someone from the team will come back to you within a business day.'
+        : 'Honestly, I’m not sure about that one, and I’d rather not guess. These might help, or leave your details and someone from the team will get back to you within a business day.',
       source: 'fallback',
       suggestions: suggestQuestions(latest),
       lead: true,

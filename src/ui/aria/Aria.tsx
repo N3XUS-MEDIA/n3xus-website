@@ -5,6 +5,7 @@ import { cn } from '@/lib/cn';
 import { HexMark } from '@/ui/brand/HexMark';
 import { HexArtMark } from '@/ui/brand/HexArtMark';
 import { site } from '@/content/copy';
+import { ChatText, plainText } from '@/ui/aria/ChatText';
 
 /**
  * Aria — the assistant, launched by the hex mark.
@@ -29,7 +30,7 @@ interface Message {
 }
 
 const GREETING =
-  'Hi — I’m Aria. Ask me about what N3XUS does, how it works, or what something might cost. Or leave your details and someone from the team will get back to you.';
+  'Hi, I’m Aria. Ask me anything about what we do or how it works, or just leave your details and someone from the team will get back to you.';
 
 /** Opening questions, all answered from the knowledge base. */
 const STARTERS = [
@@ -247,7 +248,7 @@ export function Aria() {
         ...prev,
         {
           role: 'assistant',
-          content: `Thanks, ${String(fd.get('name') ?? '').split(' ')[0] || 'got it'} — your details are with the team, and someone will get back to you within one business day.`,
+          content: `Thanks${String(fd.get('name') ?? '').split(' ')[0] ? `, ${String(fd.get('name')).split(' ')[0]}` : ''}. Your details are with the team and someone will get back to you within a business day.`,
         },
       ]);
     } catch {
@@ -349,7 +350,7 @@ export function Aria() {
                     m.role === 'user' ? 'ml-auto bg-accent/15 text-ink' : 'bg-mist text-ink',
                   )}
                 >
-                  {m.content}
+                  {m.role === 'assistant' ? <ChatText text={m.content} /> : m.content}
                 </p>
                 {/* Suggestions only under the latest reply — older ones are stale. */}
                 {m.suggestions && i === messages.length - 1 ? (
@@ -436,7 +437,7 @@ export function Aria() {
             {/* Replies are announced here rather than by making the whole log a
                 live region, which would re-read the conversation on every turn. */}
             <p className="sr-only" aria-live="polite">
-              {sending ? 'Aria is typing' : messages.at(-1)?.role === 'assistant' ? messages.at(-1)?.content : ''}
+              {sending ? 'Aria is typing' : messages.at(-1)?.role === 'assistant' ? plainText(messages.at(-1)?.content ?? '') : ''}
             </p>
           </div>
 
