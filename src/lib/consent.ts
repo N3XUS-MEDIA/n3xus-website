@@ -59,12 +59,21 @@ export function parseConsent(raw: string | null, now = Date.now()): Consent | nu
   }
 }
 
+/**
+ * Held only when the browser refuses to store the choice (some private modes).
+ * Without it the banner would come back on every page and the choice would
+ * never take effect. Cleared as soon as a write succeeds.
+ */
+let memoryChoice: Consent | null = null;
+
 export function readConsent(): Consent | null {
   try {
-    return parseConsent(localStorage.getItem(CONSENT_KEY));
+    const stored = parseConsent(localStorage.getItem(CONSENT_KEY));
+    if (stored) return stored;
   } catch {
-    return null;
+    // Fall through to the in-memory choice.
   }
+  return memoryChoice;
 }
 
 /** Pure: the only thing that may switch analytics on. */
@@ -120,8 +129,10 @@ export function writeConsent(analytics: boolean): void {
   const c: Consent = { v: CONSENT_VERSION, analytics, at: Date.now() };
   try {
     localStorage.setItem(CONSENT_KEY, JSON.stringify(c));
+    memoryChoice = null;
   } catch {
-    // Storage blocked: the choice still applies for this page view via the event below.
+    // Storage blocked: keep the choice for this visit so it still takes effect.
+    memoryChoice = c;
   }
   applyConsent(analytics);
   window.dispatchEvent(new CustomEvent(CHANGE_EVENT, { detail: c }));
