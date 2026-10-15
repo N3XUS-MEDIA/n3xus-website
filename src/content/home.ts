@@ -1,3 +1,5 @@
+import type { IconName } from '@/ui/explainers/icons';
+
 /**
  * Homepage copy, lifted from index.html.
  *
@@ -21,6 +23,12 @@ export const hero = {
   title: 'You know something isn’t working. You’re just not sure what to fix first.',
   lede: 'Most business owners we meet can feel where the money is going — quotes sent too late, enquiries nobody chased, a system everyone works around. They just can’t prove which one is costing the most. That’s where we start.',
   sub: 'You don’t need to know what to ask for. Working that out is the job.',
+  /** The hero diagram — see src/ui/explainers/CoreSystem.tsx. */
+  system: {
+    loopLabel: 'What happened shapes what’s next',
+    summary:
+      'A diagram of how the three parts connect. Strategy decides what to fix first. Intelligence builds the systems that do the work and show what happened. Growth brings the customers. What happened then feeds back into the next decision.',
+  },
 };
 
 /**
@@ -53,10 +61,14 @@ export const audiences = {
 export const problem = {
   eyebrow: 'Sound familiar?',
   title: 'Everyone’s doing their bit. Nobody can tell you why it isn’t adding up.',
-  paragraphs: [
-    'One agency runs your ads. Someone else built the website and has since gone quiet. A consultant sent a deck that made sense at the time. Each of them is doing what you asked, and none of them can answer the only question that matters: what should we do next, and what will it be worth?',
-    'You end up being the one holding it together — chasing updates, joining the dots, and making calls on numbers you’re not confident in. That is an exhausting way to run a business, and it is the normal way.',
-  ],
+  lede: 'One agency runs your ads, someone else built the website, a consultant sent a deck — and you end up being the one joining the dots, making calls on numbers you’re not confident in.',
+  diagram: {
+    suppliers: ['Advice', 'Website', 'Ads', 'Reporting'] as [string, string, string, string],
+    you: 'You',
+    joined: 'One team · one set of numbers',
+    summary:
+      'Two diagrams side by side. In the usual setup, advice, the website, ads and reporting each come from a different supplier, all tangled together with you in the middle holding it together. In ours, the same four report into one team and one set of numbers before anything reaches you.',
+  },
 };
 
 /** The old-way / Core3 comparison. Kept — it does real explanatory work. */
@@ -133,16 +145,18 @@ export const core3 = {
 export const websiteOs = {
   eyebrow: 'Where most people start',
   title: 'Your website should be doing more of the work.',
-  paragraphs: [
-    'Right now it probably just describes you. Someone still answers the phone to take a booking, types the quote by hand, copies the details into a spreadsheet, and emails twice to chase the payment. All of that is work your website could be doing — including at nine on a Friday night, when you’re closed and your customer is deciding.',
-    'We turn it into the thing your business runs on: bookings, quotes, payments, customer records, portals and an assistant that answers properly. Usually built onto the site you already have, so there’s nothing to rebuild and nothing to relaunch.',
-  ],
-  points: [
-    'Customers book and pay themselves, without anyone picking up the phone',
-    'Every enquiry lands somewhere, with a name against it',
-    'The repetitive admin runs on its own',
-    'You add the parts you need, and only pay for those',
-  ],
+  lede: 'Right now it probably just describes you, while someone still answers the phone, types the quote and chases the payment. We turn it into the thing your business runs on — usually built onto the site you already have, so there’s nothing to relaunch.',
+  centre: 'Your website',
+  items: [
+    { label: 'Bookings', icon: 'calendar' },
+    { label: 'Quotes', icon: 'quote' },
+    { label: 'Payments', icon: 'card' },
+    { label: 'Customer records', icon: 'people' },
+    { label: 'Client portals', icon: 'portal' },
+    { label: 'AI assistant', icon: 'chat' },
+  ] as { label: string; icon: IconName }[],
+  summary:
+    'A diagram with your website at the centre, connected to bookings, quotes, payments, customer records, client portals and an AI assistant — the work it can take on so a person no longer has to sit in the middle.',
 };
 
 export interface ServiceCard {
@@ -228,24 +242,30 @@ export const intelligence = {
 export const process = {
   eyebrow: 'How working with us goes',
   title: 'What you have at the end of each step.',
+  summary:
+    'Four steps on a line: discover, strategise, execute, optimise. Each one names what you hold at the end of it — a costed list of what is holding you back, a fixed-scope plan, the most valuable piece live early, and a system that does more each month.',
   steps: [
     {
       n: '01',
+      holds: 'A costed list of what’s holding you back',
       title: 'Discover',
       body: 'A clear picture of where the money is going, with a number against each problem. It’s yours to keep, even if you decide not to carry on with us.',
     },
     {
       n: '02',
+      holds: 'A fixed-scope plan, in order',
       title: 'Strategise',
       body: 'A plan in order: what we do first, what it should be worth, and how we’ll both know if it worked. Fixed scope, fixed price.',
     },
     {
       n: '03',
+      holds: 'The most valuable piece, live early',
       title: 'Execute',
       body: 'The most valuable bit goes live early, so something is already paying off while the rest is still being built.',
     },
     {
       n: '04',
+      holds: 'A system that does more each month',
       title: 'Optimise',
       body: 'Every month it does a bit more, instead of slowly ageing towards the next expensive rebuild.',
     },

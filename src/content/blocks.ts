@@ -1,4 +1,37 @@
 import type { Faq } from './home';
+import type { IconName } from '@/ui/explainers/icons';
+
+/** One spoke on the Website OS hub. `title`/`body`/`outcome` make it clickable. */
+export interface HubItem {
+  label: string;
+  icon: IconName;
+  title?: string;
+  body?: string;
+  outcome?: string;
+}
+
+/**
+ * The diagram an `explainer` block draws. Every label here is shown on screen,
+ * so the same rules as the rest of the copy apply: no invented figures, no
+ * prices, nothing that needs a statistic to be true. Enforced in
+ * src/content/explainers.test.ts.
+ */
+export type Diagram =
+  | { kind: 'osHub'; centre: string; items: HubItem[] }
+  | {
+      kind: 'twoTrack';
+      before: { label: string; steps: { text: string; idle?: boolean }[] };
+      after: {
+        label: string;
+        steps: { time: string; actor: string; title: string; body: string }[];
+      };
+      coda?: string;
+    }
+  | {
+      kind: 'compareVisual';
+      before: { label: string; rows: string[] };
+      after: { label: string; rows: string[] };
+    };
 
 /**
  * The vocabulary a service page is built from.
@@ -73,6 +106,18 @@ export type Block =
       steps: { time: string; actor: string; title: string; body: string }[];
       /** Closing paragraph that lands the contrast. */
       coda?: string;
+    }
+  | {
+      /**
+       * An animated diagram. `summary` is the text alternative a screen reader
+       * gets instead of the drawing, and is required.
+       */
+      type: 'explainer';
+      eyebrow?: string;
+      title: string;
+      lede?: string;
+      summary: string;
+      diagram: Diagram;
     }
   | { type: 'faq'; title?: string; items: Faq[] }
   | {

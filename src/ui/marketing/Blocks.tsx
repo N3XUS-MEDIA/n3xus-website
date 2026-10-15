@@ -5,6 +5,16 @@ import { Button } from '@/ui/primitives/Button';
 import { FaqList } from '@/ui/marketing/FaqList';
 import { site } from '@/content/copy';
 import type { Block } from '@/content/blocks';
+import { CompareVisual } from '@/ui/explainers/CompareVisual';
+import { TwoTrack } from '@/ui/explainers/TwoTrack';
+import { WebsiteOsHub } from '@/ui/explainers/WebsiteOsHub';
+
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+/** A block type with no case below fails the type-check instead of rendering nothing. */
+function assertNever(x: never): never {
+  throw new Error(`Unhandled block: ${JSON.stringify(x)}`);
+}
 
 const COLUMNS = {
   2: 'sm:grid-cols-2',
@@ -290,6 +300,30 @@ export function BlockRenderer({
         </Section>
       );
 
+    case 'explainer': {
+      const id = slug(block.title);
+      const d = block.diagram;
+      return (
+        <Section tone={tone} bordered={bordered}>
+          <SectionHeading
+            eyebrow={block.eyebrow}
+            title={block.title}
+            lede={block.lede}
+            onCarbon={onCarbon}
+          />
+          {d.kind === 'osHub' ? (
+            <div className="mt-10">
+              <WebsiteOsHub centre={d.centre} items={d.items} summary={block.summary} interactive />
+            </div>
+          ) : d.kind === 'twoTrack' ? (
+            <TwoTrack diagram={d} summary={block.summary} id={id} />
+          ) : (
+            <CompareVisual diagram={d} summary={block.summary} id={id} />
+          )}
+        </Section>
+      );
+    }
+
     case 'faq':
       return (
         <Section tone={tone} bordered={bordered}>
@@ -353,6 +387,9 @@ export function BlockRenderer({
           </div>
         </Section>
       );
+
+    default:
+      return assertNever(block);
   }
 }
 
