@@ -18,6 +18,8 @@ export interface PainPoint {
   body: string;
   href: string;
   linkLabel: string;
+  /** Which of the three pillars this problem belongs to — lit up by the router. */
+  pillar: 'strategy' | 'build' | 'grow';
 }
 
 export const painPoints: PainPoint[] = [
@@ -26,42 +28,49 @@ export const painPoints: PainPoint[] = [
     body: 'Four plausible priorities, no way to compare them, and every supplier recommending the thing they happen to sell.',
     href: '/services/strategy',
     linkLabel: 'Strategy & advisory',
+    pillar: 'strategy',
   },
   {
     quote: 'Customers can’t find us.',
     body: 'You’re invisible in search, absent from the AI assistants buyers now ask, or spending on ads that don’t return.',
     href: '/services/digital',
     linkLabel: 'Demand & visibility',
+    pillar: 'grow',
   },
   {
     quote: 'We lose leads we already paid for.',
     body: 'Enquiries land in an inbox, get chased once, and go cold. Nobody can say which ones were lost or why.',
     href: '/services/software',
     linkLabel: 'Systems & development',
+    pillar: 'build',
   },
   {
     quote: 'Everything is done by hand.',
     body: 'Quotes typed one at a time, bookings by phone, data re-keyed between tools, invoices chased manually.',
     href: '/services/website-os',
     linkLabel: 'Website Operating System',
+    pillar: 'build',
   },
   {
     quote: 'I can’t see what’s actually working.',
     body: 'Numbers live in six dashboards, reporting arrives a month late, and nobody can attribute revenue to a channel.',
     href: '/intelligence',
     linkLabel: 'Intelligence & reporting',
+    pillar: 'build',
   },
   {
     quote: 'The software we need doesn’t exist.',
     body: 'Your operation has a process no off-the-shelf product handles, so it runs on spreadsheets and goodwill.',
     href: '/services/ai',
     linkLabel: 'Custom software & AI',
+    pillar: 'build',
   },
   {
     quote: 'We don’t look like the leader we are.',
     body: 'The brand undersells the business, and bigger competitors win work you could have done better.',
     href: '/services/brand',
     linkLabel: 'Brand & market presence',
+    pillar: 'grow',
   },
 ];
 
