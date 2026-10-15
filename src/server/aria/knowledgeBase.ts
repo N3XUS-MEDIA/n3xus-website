@@ -31,6 +31,9 @@ import { strategyPage } from '@/content/services/strategy';
 import { websiteOsPage } from '@/content/services/website-os';
 import { aiPage } from '@/content/services/ai';
 import { softwarePage } from '@/content/services/software';
+import { digitalPage } from '@/content/services/digital';
+import { brandPage } from '@/content/services/brand';
+import { intelligencePage } from '@/content/intelligence';
 
 export interface KnowledgeEntry {
   id: string;
@@ -52,7 +55,7 @@ function buildEntries(): KnowledgeEntry[] {
   for (const [i, f] of contactFaqs.entries()) {
     entries.push({ id: `contact-faq-${i}`, questions: [f.q], answer: f.a });
   }
-  for (const page of [strategyPage, websiteOsPage, aiPage, softwarePage]) {
+  for (const page of [strategyPage, websiteOsPage, aiPage, softwarePage, digitalPage, brandPage]) {
     for (const [i, f] of (page.faqs ?? []).entries()) {
       entries.push({ id: `${page.eyebrow}-faq-${i}`.toLowerCase().replace(/\s+/g, '-'), questions: [f.q], answer: f.a });
     }
@@ -173,6 +176,62 @@ function buildEntries(): KnowledgeEntry[] {
         `Do you do ${pillar.name}?`,
       ],
       answer: `${pillar.name}: ${pillar.summary} There is more at ${site.url}${pillar.href}.`,
+    });
+  }
+
+  // ── One entry per service page, from the page's own approved hero copy ────
+  // So "what is the Website OS?" or "do you do SEO?" is answered from the page
+  // itself, now that the assistant runs without a model behind it.
+  const services: { page: typeof websiteOsPage; path: string; keywords: string[]; questions: string[] }[] = [
+    {
+      page: websiteOsPage,
+      path: '/services/website-os',
+      keywords: ['website', 'os', 'operating', 'bookings', 'booking', 'portal', 'crm', 'payments', 'invoicing'],
+      questions: ['What is the Website OS?', 'What is a Website Operating System?', 'Can my website take bookings and payments?', 'Do you build websites?'],
+    },
+    {
+      page: aiPage,
+      path: '/services/ai',
+      keywords: ['ai', 'chatbot', 'assistant', 'agents', 'llm', 'automation', 'rag', 'whatsapp'],
+      questions: ['Do you build AI assistants?', 'Can you build a chatbot?', 'Do you do AI automation?', 'What AI do you build?'],
+    },
+    {
+      page: softwarePage,
+      path: '/services/software',
+      keywords: ['software', 'app', 'application', 'api', 'saas', 'integration', 'custom', 'tool'],
+      questions: ['Do you build custom software?', 'Can you build an app?', 'Do you do integrations?', 'Can you build internal tools?'],
+    },
+    {
+      page: digitalPage,
+      path: '/services/digital',
+      keywords: ['seo', 'google', 'ads', 'search', 'social', 'marketing', 'geo', 'chatgpt', 'leads', 'traffic'],
+      questions: ['Do you do SEO?', 'Can you run our ads?', 'Do you do social media?', 'How do we get more leads?', 'Can you get us found on ChatGPT?'],
+    },
+    {
+      page: brandPage,
+      path: '/services/brand',
+      keywords: ['brand', 'branding', 'tv', 'television', 'video', 'logo', 'identity', 'sponsorship', 'activation'],
+      questions: ['Do you do branding?', 'Do you do TV advertising?', 'Can you make a video?', 'Can you do our logo and identity?'],
+    },
+    {
+      page: strategyPage,
+      path: '/services/strategy',
+      keywords: ['strategy', 'consulting', 'advice', 'audit', 'diagnostic', 'plan', 'roadmap'],
+      questions: ['Do you do strategy?', 'Can you audit our business?', 'Where should we start?', 'Can you tell us what to fix first?'],
+    },
+    {
+      page: intelligencePage,
+      path: '/intelligence',
+      keywords: ['intelligence', 'dashboard', 'reporting', 'reports', 'analytics', 'attribution', 'data'],
+      questions: ['What is N3XUS Intelligence?', 'Do you provide reporting?', 'Do you have a dashboard?', 'How do we see what is working?'],
+    },
+  ];
+  for (const s of services) {
+    entries.push({
+      id: `service-${s.path.split('/').pop()}`,
+      keywords: s.keywords,
+      questions: s.questions,
+      answer: `${s.page.title} ${s.page.lede} You can read more at ${site.url}${s.path}.`,
     });
   }
 
@@ -322,6 +381,33 @@ export function findAnswer(query: string): Match | null {
   }
 
   return { entry: best.entry, score: best.score };
+}
+
+/**
+ * The closest questions we *can* answer, for when findAnswer declines.
+ *
+ * A miss should never be a dead end: offering "did you mean…" turns an
+ * unanswerable question into a click on one we have approved copy for.
+ */
+export function suggestQuestions(query: string, n = 3): string[] {
+  const tokens = tokenise(query);
+  const picks = KNOWLEDGE_BASE.map((entry) => ({ entry, ...scoreEntry(tokens, entry) }))
+    .filter((r) => r.score > 0)
+    .sort((a, b) => b.score - a.score || b.keywordHits - a.keywordHits)
+    .map((r) => r.entry.questions[0]!);
+  const fallback = ['What do you do?', 'How much does it cost?', 'What is the Website OS?'];
+  return [...new Set([...picks, ...fallback])].slice(0, n);
+}
+
+const LEAD_INTENT = [
+  'quote', 'proposal', 'book', 'booking', 'call', 'meeting', 'hire', 'interested', 'talk',
+  'speak', 'contact', 'start', 'started', 'help', 'need', 'want', 'looking', 'project',
+];
+
+/** Does this message sound like someone ready to talk, rather than browsing? */
+export function isLeadIntent(text: string): boolean {
+  const words = text.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/);
+  return words.some((w) => LEAD_INTENT.includes(w));
 }
 
 /**

@@ -3,6 +3,8 @@ import {
   KNOWLEDGE_BASE,
   findAnswer,
   isEligibleForKnowledgeBase,
+  isLeadIntent,
+  suggestQuestions,
 } from './knowledgeBase';
 
 describe('knowledge base contents', () => {
@@ -160,5 +162,34 @@ describe('cost behaviour', () => {
     expect(rate, `only ${answered}/${common.length} handled without the model`).toBeGreaterThanOrEqual(
       0.75,
     );
+  });
+});
+
+describe('running without a model (knowledge-base mode)', () => {
+  it.each([
+    ['What is the Website OS?', 'service-website-os'],
+    ['Do you do SEO?', 'service-digital'],
+    ['Can you build a chatbot?', 'service-ai'],
+    ['Do you do TV advertising?', 'service-brand'],
+    ['Do you build custom software?', 'service-software'],
+  ])('answers "%s" from the service page', (q, id) => {
+    expect(findAnswer(q)?.entry.id).toBe(id);
+  });
+
+  it('always has three suggestions to offer, even for nonsense', () => {
+    expect(suggestQuestions('zxqv blorp')).toHaveLength(3);
+    expect(suggestQuestions('ads')).toContain('Do you do SEO?');
+  });
+
+  it('every suggestion is itself answerable', () => {
+    for (const q of [...suggestQuestions('zxqv'), ...suggestQuestions('website'), ...suggestQuestions('price')]) {
+      expect(findAnswer(q), q).not.toBeNull();
+    }
+  });
+
+  it('recognises someone ready to talk', () => {
+    expect(isLeadIntent('Can I get a quote?')).toBe(true);
+    expect(isLeadIntent('I want to book a call')).toBe(true);
+    expect(isLeadIntent('Where are you based?')).toBe(false);
   });
 });
