@@ -1,4 +1,13 @@
+'use client';
+
 import Script from 'next/script';
+import { useSyncExternalStore } from 'react';
+import {
+  analyticsAllowed,
+  consentServerSnapshot,
+  consentSnapshot,
+  subscribeConsent,
+} from '@/lib/consent';
 
 /**
  * The Google tag, loaded twice by two different URLs.
@@ -56,8 +65,23 @@ const GA4_ID = 'G-223R7S2381';
  */
 const STANDALONE_GA4 = true;
 
+/**
+ * Loads the Google tag — and ONLY after the visitor has accepted analytics.
+ *
+ * Until then (first visit, "reject", a stale choice) no Google script is
+ * requested, no cookie is set and no event is queued, so there is nothing to
+ * replay later. Withdrawing consent is handled in src/lib/consent.ts: it sets
+ * Google's disable flag and expires the cookies; the already-loaded script then
+ * collects nothing.
+ *
+ * The GTM <noscript> iframe that used to live here is gone on purpose: it loaded
+ * a Google resource for every visitor without JavaScript, with no way to ask
+ * them first. The container behind it is empty (see above), so nothing is lost.
+ */
 export function Analytics() {
+  const state = useSyncExternalStore(subscribeConsent, consentSnapshot, consentServerSnapshot);
   if (process.env.NODE_ENV !== 'production') return null;
+  if (!analyticsAllowed(state)) return null;
 
   return (
     <>
@@ -81,22 +105,5 @@ gtag('js',new Date());gtag('config','${GA4_ID}');`}
         </>
       ) : null}
     </>
-  );
-}
-
-/** The <noscript> half of GTM. Must be the first thing inside <body>. */
-export function AnalyticsNoScript() {
-  if (process.env.NODE_ENV !== 'production') return null;
-
-  return (
-    <noscript>
-      <iframe
-        src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-        height="0"
-        width="0"
-        style={{ display: 'none', visibility: 'hidden' }}
-        title="Google Tag Manager"
-      />
-    </noscript>
   );
 }

@@ -11,9 +11,11 @@ import { readFileSync } from 'node:fs';
 import { allRoutes } from './routes';
 import { guideArticles } from './blog/guides';
 
-const short = readFileSync('public/llms.txt', 'utf-8');
-const full = readFileSync('public/llms-full.txt', 'utf-8');
-const robots = readFileSync('public/robots.txt', 'utf-8');
+// Normalised: a Windows checkout turns LF into CRLF, which is not a content change.
+const read = (f: string) => readFileSync(f, 'utf-8').split('\r\n').join('\n');
+const short = read('public/llms.txt');
+const full = read('public/llms-full.txt');
+const robots = read('public/robots.txt');
 
 const MONEY = /[$£€]\s?\d|\bR\s?\d{1,3}(,\d{3})+\b|\bR\d{3,}\b|\b(USD|ZAR|GBP)\s?\d/;
 
