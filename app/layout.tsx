@@ -4,6 +4,7 @@ import { SiteHeader } from '@/ui/layout/SiteHeader';
 import { SiteFooter } from '@/ui/layout/SiteFooter';
 import { THEME_INIT_SCRIPT } from '@/lib/theme';
 import { Analytics, AnalyticsNoScript } from '@/ui/Analytics';
+import { SourceCapture } from '@/ui/SourceCapture';
 import { Aria } from '@/ui/aria/Aria';
 import { site } from '@/content/copy';
 import './globals.css';
@@ -116,6 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteFooter />
         <Aria />
         <Analytics />
+        <SourceCapture />
       </body>
     </html>
   );

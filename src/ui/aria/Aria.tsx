@@ -6,6 +6,7 @@ import { HexMark } from '@/ui/brand/HexMark';
 import { HexArtMark } from '@/ui/brand/HexArtMark';
 import { site } from '@/content/copy';
 import { ChatText, plainText } from '@/ui/aria/ChatText';
+import { currentSourceLine } from '@/lib/source';
 
 /**
  * Aria — the assistant, launched by the hex mark.
@@ -233,6 +234,7 @@ export function Aria() {
           email: String(fd.get('email') ?? ''),
           phone: String(fd.get('phone') ?? ''),
           service: 'Website chat (Aria)',
+          source: currentSourceLine() ?? '',
           message: `${need || 'Asked to be contacted from the website chat.'}${transcript ? `\n\n— Chat so far —\n${transcript}` : ''}`.slice(0, 5000),
           _gotcha: String(fd.get('_gotcha') ?? ''),
         }),
