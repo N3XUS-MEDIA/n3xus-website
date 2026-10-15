@@ -21,7 +21,7 @@
  */
 type Gtag = (command: 'event', name: string, params?: Record<string, unknown>) => void;
 
-export function trackLead(service?: string): void {
+export function trackLead(service?: string, trafficSource?: string): void {
   try {
     // globalThis rather than window: identical in a browser, but defined
     // everywhere, so this cannot throw a ReferenceError if it is ever reached
@@ -34,6 +34,8 @@ export function trackLead(service?: string): void {
       // actually come for. A free-text field is never passed through here.
       lead_source: 'contact_form',
       ...(service ? { service } : {}),
+      // A category (ai-assistant, search, social…), never a URL or a name.
+      ...(trafficSource ? { traffic_source: trafficSource } : {}),
     });
   } catch {
     // Measurement is never worth an exception on the success path.

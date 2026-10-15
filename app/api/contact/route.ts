@@ -61,6 +61,8 @@ const schema = z.object({
   phone: z.string().trim().max(60).optional().or(z.literal('')),
   service: z.string().trim().max(200).optional().or(z.literal('')),
   message: z.string().trim().min(1, 'Message is required').max(5000),
+  /** How the visitor found us (see src/lib/source.ts). Optional and best-effort. */
+  source: z.string().trim().max(300).optional().or(z.literal('')),
   /**
    * Honeypot. Real people leave it empty; bots fill everything in.
    *
@@ -104,7 +106,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const { name, email, phone, service, message, _gotcha } = parsed.data;
+  const { name, email, phone, service, message, source, _gotcha } = parsed.data;
 
   // Honeypot tripped: accept and discard, so the bot sees success and doesn't
   // retry with a different shape.
@@ -123,7 +125,17 @@ export async function POST(req: Request) {
    * Now: try Resend, fall back to the endpoint that has been carrying real
    * enquiries, and only then show a visible error with a direct email address.
    */
-  const forward = { name, email, phone, service, message };
+  // The source rides along in the message for HQ and Formspree, whose
+  // payloads have no field for it, so it is never lost on any delivery path.
+  const forward = {
+    name,
+    email,
+    phone,
+    service,
+    message: source ? `${message}
+
+— How they found us: ${source}` : message,
+  };
 
   /**
    * Forward to N3XUS HQ, where the lead becomes a work order and an AI agent
@@ -167,6 +179,7 @@ export async function POST(req: Request) {
     <p><strong>Email:</strong> ${escapeHtml(email)}</p>
     ${phone ? `<p><strong>Phone:</strong> ${escapeHtml(phone)}</p>` : ''}
     ${service ? `<p><strong>Service interest:</strong> ${escapeHtml(service)}</p>` : ''}
+    ${source ? `<p><strong>How they found us:</strong> ${escapeHtml(source)}</p>` : ''}
     <p><strong>Message:</strong></p>
     <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
   `;
