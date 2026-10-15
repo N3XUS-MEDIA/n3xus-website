@@ -75,6 +75,30 @@ export const intelligencePage: ServicePageContent = {
     },
 
     {
+      type: 'explainer',
+      eyebrow: 'How it fits together',
+      title: 'Every channel reports into one place.',
+      summary:
+        'A flow diagram. Everything we run for you — the website and bookings, ads, social and content, TV and brand, and enquiries in the CRM — reports into N3XUS Intelligence, one live view. What comes out is attribution by channel, reports that are generated rather than assembled, and signals on what to change. What it shows then shapes the next campaign.',
+      diagram: {
+        kind: 'flow',
+        stages: [
+          {
+            label: 'Everything we run for you',
+            icon: 'layers',
+            items: ['Website & bookings', 'Ads', 'Social & content', 'TV & brand', 'Enquiries & CRM'],
+          },
+          { label: 'N3XUS Intelligence — one live view', icon: 'chart' },
+          {
+            label: 'What you get from it',
+            icon: 'check',
+            items: ['Attribution by channel', 'Reports generated, not assembled', 'Signals on what to change'],
+          },
+        ],
+        loop: 'What it shows shapes the next campaign',
+      },
+    },
+    {
       type: 'prose',
       eyebrow: 'Why it exists',
       title: 'Three programmes, one set of numbers.',

@@ -28,6 +28,22 @@ export type Diagram =
       coda?: string;
     }
   | {
+      /**
+       * Stages left to right (top to bottom on a phone). A stage with `items`
+       * draws as a group — several sources feeding one step. `note` is a muted
+       * aside under the stage; `loop` draws a return path back to the start.
+       */
+      kind: 'flow';
+      stages: { label: string; icon: IconName; items?: string[]; note?: string }[];
+      loop?: string;
+    }
+  | {
+      /** Ten links versus one answer naming a few businesses. Schematic only. */
+      kind: 'searchVsAnswer';
+      search: { label: string; caption: string };
+      answer: { label: string; caption: string; question: string; you: string };
+    }
+  | {
       kind: 'compareVisual';
       before: { label: string; rows: string[] };
       after: { label: string; rows: string[] };
@@ -118,6 +134,8 @@ export type Block =
       lede?: string;
       summary: string;
       diagram: Diagram;
+      /** Optional checklist under the diagram. */
+      points?: string[];
     }
   | { type: 'faq'; title?: string; items: Faq[] }
   | {

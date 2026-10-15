@@ -11,6 +11,11 @@ import { describe, expect, it } from 'vitest';
 import type { Block, Diagram } from './blocks';
 import { hero, problem, process, websiteOs } from './home';
 import { websiteOsPage } from './services/website-os';
+import { intelligencePage } from './intelligence';
+import { aiPage } from './services/ai';
+import { strategyPage } from './services/strategy';
+import { brandPage } from './services/brand';
+import { digitalPage } from './services/digital';
 
 const PERCENT_OR_MONEY = /%|[$£€]\s?\d|\bR\s?\d|\b(USD|ZAR|GBP)\b/;
 /** Bare numbers. Clock times ("17:12") and step numbers ("01") are allowed. */
@@ -24,11 +29,24 @@ function labels(d: Diagram): string[] {
       return [d.before.label, d.after.label, ...d.before.steps.map((s) => s.text), ...d.after.steps.map((s) => s.title)];
     case 'compareVisual':
       return [d.before.label, d.after.label, ...d.before.rows, ...d.after.rows];
+    case 'flow':
+      return [
+        ...d.stages.flatMap((s) => [s.label, ...(s.items ?? []), ...(s.note ? [s.note] : [])]),
+        ...(d.loop ? [d.loop] : []),
+      ];
+    case 'searchVsAnswer':
+      return [d.search.label, d.search.caption, d.answer.label, d.answer.question, d.answer.you];
   }
 }
 
-const explainers = websiteOsPage.blocks.filter(
-  (b): b is Extract<Block, { type: 'explainer' }> => b.type === 'explainer',
+type Explainer = Extract<Block, { type: 'explainer' }>;
+const isExplainer = (b: Block): b is Explainer => b.type === 'explainer';
+
+const explainers = websiteOsPage.blocks.filter(isExplainer);
+
+/** Every explainer on every block-driven page. */
+const allExplainers = [websiteOsPage, intelligencePage, aiPage, strategyPage, brandPage, digitalPage].flatMap(
+  (page) => page.blocks.filter(isExplainer),
 );
 
 const homeLabels = [
@@ -41,7 +59,7 @@ const homeLabels = [
   ...process.steps.map((s) => s.holds),
 ];
 
-const allLabels = [...homeLabels, ...explainers.flatMap((b) => labels(b.diagram))];
+const allLabels = [...homeLabels, ...allExplainers.flatMap((b) => labels(b.diagram))];
 
 describe('explainers', () => {
   it('the Website OS page uses all three diagram kinds', () => {
@@ -56,7 +74,7 @@ describe('explainers', () => {
       problem.diagram.summary,
       websiteOs.summary,
       process.summary,
-      ...explainers.map((b) => b.summary),
+      ...allExplainers.map((b) => b.summary),
     ];
     for (const s of summaries) expect(s.trim().length).toBeGreaterThan(60);
   });

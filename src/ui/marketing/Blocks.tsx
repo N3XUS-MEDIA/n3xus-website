@@ -6,6 +6,9 @@ import { FaqList } from '@/ui/marketing/FaqList';
 import { site } from '@/content/copy';
 import type { Block } from '@/content/blocks';
 import { CompareVisual } from '@/ui/explainers/CompareVisual';
+import { Flow } from '@/ui/explainers/Flow';
+import { ProcessRail } from '@/ui/explainers/ProcessRail';
+import { SearchVsAnswer } from '@/ui/explainers/SearchVsAnswer';
 import { TwoTrack } from '@/ui/explainers/TwoTrack';
 import { WebsiteOsHub } from '@/ui/explainers/WebsiteOsHub';
 
@@ -152,11 +155,20 @@ export function BlockRenderer({
             lede={block.lede}
             onCarbon={onCarbon}
           />
+          {/* Paper and mist bands get the animated rail; the card grid stays
+              for a carbon band, where the rail's paper badges would glare. */}
+          {!onCarbon ? (
+            <ProcessRail
+              steps={block.steps}
+              id={slug(block.title)}
+              summary={`${block.title} ${block.steps.map((s) => `${s.n}: ${s.title}.`).join(' ')}`}
+            />
+          ) : (
           <ol
             className={cn(
               'mt-10 grid gap-px overflow-hidden rounded-lg sm:grid-cols-2',
               block.steps.length >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3',
-              onCarbon ? 'bg-on-carbon/15' : 'bg-line',
+              'bg-on-carbon/15',
             )}
           >
             {block.steps.map((step) => (
@@ -176,6 +188,7 @@ export function BlockRenderer({
               </li>
             ))}
           </ol>
+          )}
         </Section>
       );
 
@@ -317,9 +330,23 @@ export function BlockRenderer({
             </div>
           ) : d.kind === 'twoTrack' ? (
             <TwoTrack diagram={d} summary={block.summary} id={id} />
+          ) : d.kind === 'flow' ? (
+            <Flow diagram={d} summary={block.summary} id={id} />
+          ) : d.kind === 'searchVsAnswer' ? (
+            <SearchVsAnswer diagram={d} summary={block.summary} id={id} />
           ) : (
             <CompareVisual diagram={d} summary={block.summary} id={id} />
           )}
+          {block.points ? (
+            <ul className="mt-10 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+              {block.points.map((point) => (
+                <li key={point} className="flex gap-3 text-ink-muted">
+                  <Check />
+                  <span className="leading-relaxed">{point}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </Section>
       );
     }

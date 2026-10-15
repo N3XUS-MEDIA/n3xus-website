@@ -73,13 +73,22 @@ export const digitalPage: ServicePageContent = {
     },
 
     {
-      type: 'prose',
+      type: 'explainer',
       eyebrow: 'The new frontier',
       title: 'Get found where your customers are now asking.',
-      paragraphs: [
-        'Most businesses invest heavily in ranking on Google. Very few have thought about what happens when a potential client opens ChatGPT, Claude or Gemini and asks which company they should use for the work you do.',
-        'Those systems do not return ten links. They return an answer — usually one to three named businesses. Being cited depends on whether your site is structured, credible and machine-readable enough for the model to rely on. Most sites are not, which is exactly why the position is still available.',
-      ],
+      lede: 'Most businesses invest heavily in ranking on Google. Very few have thought about what happens when a potential client asks ChatGPT, Claude or Gemini which company to use for the work you do.',
+      summary:
+        'Two panels side by side. A search engine returns a page of links for the searcher to sort through. An AI assistant, asked who to use, returns an answer naming one to three businesses — and the aim is for yours to be one of them. Being cited depends on whether your site is structured, credible and machine-readable enough for the model to rely on.',
+      diagram: {
+        kind: 'searchVsAnswer',
+        search: { label: 'A search engine', caption: 'A page of links. The searcher does the sorting.' },
+        answer: {
+          label: 'An AI assistant',
+          question: 'Who should I use for this?',
+          you: 'Your business',
+          caption: 'An answer — usually one to three named businesses. Being one of them depends on whether your site is structured and credible enough to rely on.',
+        },
+      },
       points: [
         'Structured data and entity mapping so models can identify who you are',
         'Semantic architecture that makes your expertise machine-readable',
