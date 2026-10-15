@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
-  return <LegalPage title="Privacy Policy" sections={privacySections} />;
+  return <LegalPage title="Privacy Policy" lede="Last updated 15 October 2026." sections={privacySections} />;
 }

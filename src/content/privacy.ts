@@ -5,6 +5,15 @@
  * below, where the original had gaps that made a sentence meaningless.
  * Anything else that reads oddly is how it reads on the live site today and
  * should be changed deliberately, not in passing.
+ *
+ * 2026-10-15 — deliberate edit, made alongside the cookie consent banner
+ * (src/lib/consent.ts): the policy described things the site does not do (Meta
+ * Pixel, Google Ads, Meta advertising, a booking platform) and left out things
+ * it does (the chat assistant, Resend, Vercel, the theme and consent storage).
+ * Sections 1, 2, 5, 6 and 8 were corrected to match the site as built. NOT
+ * legal advice and not reviewed by a lawyer: Jared should have this checked
+ * before relying on it, and update section 6 whenever anything that stores data
+ * in a visitor's browser is added.
  */
 
 export interface LegalBlock {
@@ -13,6 +22,8 @@ export interface LegalBlock {
 }
 
 export interface LegalSection {
+  /** Optional anchor, so a banner can link straight to this section. */
+  id?: string;
   heading: string;
   blocks: LegalBlock[];
 }
@@ -23,7 +34,7 @@ export const privacySections: LegalSection[] = [
     "blocks": [
       {
         "kind": "p",
-        "text": "N3XUS Media (Pty) Ltd (“N3XUS Media”, “we”, “us”, or “our”) is a full-service AI development and marketing agency headquartered in South Africa. We operate the website at n3xus.media and associated subdomains."
+        "text": "N3XUS Media (Pty) Ltd (“N3XUS Media”, “we”, “us”, or “our”) is a full-service marketing agency headquartered in South Africa. We operate the website at n3xus.media and associated subdomains."
       },
       {
         "kind": "p",
@@ -52,6 +63,10 @@ export const privacySections: LegalSection[] = [
       },
       {
         "kind": "li",
+        "text": "Messages you type into the assistant on our website, and any details you choose to leave in it. If you ask to be contacted, the conversation is sent to us with your details"
+      },
+      {
+        "kind": "li",
         "text": "Payment and billing information when you engage our services"
       },
       {
@@ -60,7 +75,7 @@ export const privacySections: LegalSection[] = [
       },
       {
         "kind": "li",
-        "text": "Usage data via Google Analytics 4 (pages visited, time on site, referral source)"
+        "text": "Usage data via Google Analytics 4 (pages visited, time on site, referral source), only if you accept analytics cookies"
       },
       {
         "kind": "li",
@@ -135,7 +150,7 @@ export const privacySections: LegalSection[] = [
       },
       {
         "kind": "li",
-        "text": "Service providers — including Formspree (form submissions), Google (Analytics, Ads), Meta (advertising), and our booking platform"
+        "text": "Service providers that help us run the website and handle your enquiry — Resend (email delivery of enquiries sent through our forms and chat), Formspree (a back-up route for form submissions), Vercel (website hosting) and, only if you accept analytics, Google (Analytics)"
       },
       {
         "kind": "li",
@@ -152,27 +167,44 @@ export const privacySections: LegalSection[] = [
     ]
   },
   {
+    "id": "cookies",
     "heading": "6. Cookies",
     "blocks": [
       {
         "kind": "p",
-        "text": "We use cookies and similar technologies to operate our website and understand how it is used. These include:"
-      },
-      {
-        "kind": "li",
-        "text": "Essential cookies — required for the website to function correctly"
-      },
-      {
-        "kind": "li",
-        "text": "Analytics cookies — Google Analytics 4, to understand visitor behaviour (anonymised)"
-      },
-      {
-        "kind": "li",
-        "text": "Marketing cookies — Google Tag Manager and Meta Pixel, to measure campaign effectiveness"
+        "text": "We use cookies and similar technologies (small items of data stored in your browser). A notice asks for your choice the first time you visit. Nothing optional is used until you accept it, and you can change your mind at any time using “Cookie settings” in the footer of every page."
       },
       {
         "kind": "p",
-        "text": "You can control cookies through your browser settings. Disabling certain cookies may affect website functionality."
+        "text": "Strictly necessary — always on, because the site cannot remember your choices without them:"
+      },
+      {
+        "kind": "li",
+        "text": "n3xus-consent — stored in your browser (local storage) for up to 12 months. Remembers your cookie choice."
+      },
+      {
+        "kind": "li",
+        "text": "n3xus-theme — stored in your browser (local storage) until you clear it. Remembers whether you chose the light or dark display."
+      },
+      {
+        "kind": "p",
+        "text": "Analytics — only if you accept:"
+      },
+      {
+        "kind": "li",
+        "text": "_ga and _ga_G-223R7S2381 — set by Google Analytics 4, for up to two years. They tell us, in aggregate, which pages are visited and how visitors reach us."
+      },
+      {
+        "kind": "li",
+        "text": "n3xus:source — stored in your browser for the visit only (session storage), and removed when you close the tab. It notes how you arrived (for example search, an AI assistant or a link) and the first page you saw, so that an enquiry you send can show where it came from. It holds no personal details."
+      },
+      {
+        "kind": "p",
+        "text": "We do not use advertising or marketing cookies, and we do not run advertising pixels such as Meta Pixel on this website."
+      },
+      {
+        "kind": "p",
+        "text": "If you decline, or later withdraw your consent, we stop analytics, remove the analytics cookies we can, and keep nothing in session storage. You can also control cookies in your browser settings; blocking the strictly necessary items means the site may not remember your choices."
       }
     ]
   },
@@ -214,7 +246,7 @@ export const privacySections: LegalSection[] = [
       },
       {
         "kind": "li",
-        "text": "Lodge a complaint with the Information Regulator () or your local data protection authority"
+        "text": "Lodge a complaint with the Information Regulator of South Africa (inforegulator.org.za) or your local data protection authority"
       },
       {
         "kind": "p",

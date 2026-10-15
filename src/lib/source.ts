@@ -9,9 +9,13 @@
  * nothing.
  *
  * Privacy: no personal data, no cookie. sessionStorage only, cleared when the
- * tab closes, and it holds a category, a hostname and a landing path.
+ * tab closes, and it holds a category, a hostname and a landing path. It counts
+ * as analytics, so it is only written once the visitor has accepted analytics
+ * (src/lib/consent.ts); until then it is held in memory and never stored.
  * Everything here is best-effort — a missing source is not an error.
  */
+
+import { analyticsAllowed, consentState } from '@/lib/consent';
 
 export type SourceKind = 'ai-assistant' | 'search' | 'social' | 'campaign' | 'referral' | 'direct';
 
@@ -89,15 +93,30 @@ export function describeSourceValue(s: Source): string {
   return s.landing ? `${head}, landed on ${s.landing}` : head;
 }
 
+/** Worked out on arrival, held in memory, and only written down once analytics is allowed. */
+let pending: Source | null = null;
+
 /** Call once per page load. Keeps the first source of the session, never overwrites it. */
 export function captureSource(): void {
   try {
+    if (!pending) {
+      pending = {
+        ...classifySource(location.search, document.referrer, location.hostname.replace(/^www\./, '')),
+        landing: location.pathname,
+      };
+    }
+    persistSource();
+  } catch {
+    // Not worth an exception.
+  }
+}
+
+/** Writes the captured source down — only if the visitor has accepted analytics. */
+export function persistSource(): void {
+  try {
+    if (!pending || !analyticsAllowed(consentState())) return;
     if (sessionStorage.getItem(KEY)) return;
-    const s: Source = {
-      ...classifySource(location.search, document.referrer, location.hostname.replace(/^www\./, '')),
-      landing: location.pathname,
-    };
-    sessionStorage.setItem(KEY, JSON.stringify(s));
+    sessionStorage.setItem(KEY, JSON.stringify(pending));
   } catch {
     // Storage blocked (private mode, embedded). Not worth an exception.
   }

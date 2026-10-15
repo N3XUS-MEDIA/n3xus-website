@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { CookieSettingsButton } from '@/ui/consent/CookieSettingsButton';
 import { Container } from './Container';
 import { Wordmark } from '@/ui/brand/Wordmark';
 import { legalNav, primaryNav, serviceLinks, site } from '@/content/copy';
@@ -71,6 +72,9 @@ export function SiteFooter() {
                 </Link>
               </li>
             ))}
+            <li>
+              <CookieSettingsButton className="text-sm text-on-carbon/65 hover:text-on-carbon" />
+            </li>
           </ul>
         </div>
       </Container>
