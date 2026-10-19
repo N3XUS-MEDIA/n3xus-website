@@ -10,7 +10,7 @@ import { site } from '@/content/copy';
 export const metadata: Metadata = {
   title: 'AI & LLM Development',
   description:
-    'LLM applications, RAG knowledge bases, autonomous AI agents and custom AI software — production-grade systems built on Claude, GPT-4o, Gemini and open-source models.',
+    'LLM applications, RAG knowledge bases, autonomous AI agents and custom AI software — production-grade systems built on Claude, GPT, Gemini and open-source models.',
   alternates: { canonical: '/services/ai' },
 };
 

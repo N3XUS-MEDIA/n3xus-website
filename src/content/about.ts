@@ -88,7 +88,7 @@ export const differentiators: Differentiator[] = [
   {
     n: '05',
     title: 'We know this market',
-    body: 'Founded in South Africa, working internationally. We understand WhatsApp as a primary business channel, how local buyers actually transact, and where assumptions imported from US playbooks break.',
+    body: 'Founded in South Africa, working with clients there, in the UK and in the US. We understand WhatsApp as a primary business channel, how local buyers actually transact, and where assumptions imported from US playbooks break.',
   },
   {
     n: '06',
@@ -98,18 +98,18 @@ export const differentiators: Differentiator[] = [
   },
 ];
 
-export const industries = [
-  'Real Estate',
-  'Financial Services',
-  'Insurance',
-  'Retail & E-commerce',
-  'Professional Services',
-  'Technology',
-  'Hospitality',
-  'Education',
-  'Sports & Lifestyle',
-  'Healthcare',
-] as const;
+/**
+ * "Who we serve", without a list of industries. The page used to show ten
+ * sector tags under "Clients across industries, worldwide" — a claim of past
+ * clients in each, which nothing on file backs up (no unverifiable claims,
+ * decided 2026-10-13). Restated as who the work is for; sector names can come
+ * back with case studies behind them.
+ */
+export const whoWeServe = {
+  eyebrow: 'Who we serve',
+  title: 'Owner-managed businesses through to larger companies.',
+  lede: 'In South Africa, the United Kingdom and the United States — in any industry where the website, the marketing and the numbers need to start working together.',
+};
 
 export const closing = {
   eyebrow: 'Work with us',

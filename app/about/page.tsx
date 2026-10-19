@@ -9,7 +9,7 @@ import {
   businessDetails,
   closing,
   differentiators,
-  industries,
+  whoWeServe,
   mission,
   missionFacts,
   missionFactsPendingConfirmation,
@@ -75,21 +75,7 @@ export default function AboutPage() {
       </Section>
 
       <Section>
-        <SectionHeading
-          eyebrow="Who we serve"
-          title="Clients across industries, worldwide."
-          lede="We serve businesses from owner-managed through to enterprise, locally and internationally."
-        />
-        <ul className="mt-8 flex flex-wrap gap-2">
-          {industries.map((industry) => (
-            <li
-              key={industry}
-              className="rounded-md border border-line px-4 py-2 text-sm text-ink-muted"
-            >
-              {industry}
-            </li>
-          ))}
-        </ul>
+        <SectionHeading eyebrow={whoWeServe.eyebrow} title={whoWeServe.title} lede={whoWeServe.lede} />
       </Section>
 
       {/* Plain business details. For visitors who want to know who they are

@@ -314,7 +314,7 @@ export const faqs: Faq[] = [
   },
   {
     q: 'Where are you based, and who do you serve?',
-    a: 'Founded in South Africa, working with clients internationally. Digital and AI services are delivered remotely to any market; TV and broadcast campaigns are executed wherever a client needs reach. The 20% local rate on retainers applies to entities registered and operating in South Africa.',
+    a: 'Founded and based in South Africa, working with businesses in South Africa, the United Kingdom and the United States. Digital and AI work is delivered remotely; TV and broadcast campaigns run wherever a client needs reach. Quotes are in rand, pounds or dollars, depending on where the business is.',
   },
 ];
 

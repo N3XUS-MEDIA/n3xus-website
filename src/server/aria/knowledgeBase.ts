@@ -128,18 +128,19 @@ function buildEntries(): KnowledgeEntry[] {
 
   entries.push({
     id: 'where-based',
-    keywords: ['where', 'based', 'located', 'location', 'country', 'south africa', 'usa', 'america', 'remote'],
+    keywords: ['where', 'based', 'located', 'location', 'country', 'south africa', 'usa', 'america', 'uk', 'united kingdom', 'britain', 'england', 'london', 'remote'],
     questions: [
       'Where are you based?',
       'Where are you located?',
       'Do you work with US clients?',
+      'Do you work with UK clients?',
       'Do you work internationally?',
       'Are you in South Africa?',
     ],
     answer:
-      `We're based in South Africa and work with clients here and in the US. It's all done remotely, ` +
-      `and we make sure there's overlap with US hours. Retainers are quoted in rand for South African ` +
-      `businesses (with a 20% local rate) and in dollars everywhere else.`
+      `We're based in South Africa and work with clients here, in the UK and in the US. It's all done ` +
+      `remotely: we share most of the UK working day, and our afternoons overlap US East Coast mornings. ` +
+      `Quotes are in rand, pounds or dollars, depending on where the business is.`
   });
 
   entries.push({
@@ -274,6 +275,12 @@ const SYNONYMS: Record<string, string> = {
   sa: 'southafrica',
   rsa: 'southafrica',
   za: 'southafrica',
+  uk: 'unitedkingdom',
+  gb: 'unitedkingdom',
+  britain: 'unitedkingdom',
+  british: 'unitedkingdom',
+  england: 'unitedkingdom',
+  london: 'unitedkingdom',
   pricing: 'price',
   prices: 'price',
   cost: 'price',
@@ -293,8 +300,8 @@ function tokenise(text: string): string[] {
   const joined: string[] = [];
   for (let i = 0; i < raw.length; i++) {
     const pair = `${raw[i]} ${raw[i + 1] ?? ''}`.trim();
-    if (pair === 'south africa' || pair === 'united states') {
-      joined.push(pair === 'south africa' ? 'southafrica' : 'unitedstates');
+    if (pair === 'south africa' || pair === 'united states' || pair === 'united kingdom') {
+      joined.push(pair === 'south africa' ? 'southafrica' : pair === 'united states' ? 'unitedstates' : 'unitedkingdom');
       i++;
     } else {
       joined.push(raw[i]);

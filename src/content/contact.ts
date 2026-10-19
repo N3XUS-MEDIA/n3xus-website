@@ -8,7 +8,7 @@ export const contactHero = {
 
 export const contactDetails = [
   { label: 'Email', value: 'info@n3xus.media', href: 'mailto:info@n3xus.media' },
-  { label: 'Availability', value: 'Worldwide, remote-first' },
+  { label: 'Where we work', value: 'South Africa, the UK and the US — remote-first' },
   { label: 'Response time', value: 'Within one business day' },
 ] as const;
 
@@ -80,7 +80,7 @@ export const contactFaqs: Faq[] = [
   },
   {
     q: 'Do you work with international clients?',
-    a: 'Yes. Most work is delivered remotely with regular video calls, for clients across the US, UK, Europe, Asia and elsewhere. We travel for TV productions and major brand activations.',
+    a: 'Yes. We work with clients in South Africa, the United Kingdom and the United States, remotely and with regular video calls, and take on clients elsewhere where the fit is right. We travel for TV productions and major brand activations.',
   },
   {
     q: 'What is your minimum engagement?',
