@@ -82,6 +82,16 @@ describe('matching — an answer that is right either way', () => {
     expect(match).not.toBeNull();
     expect(match!.entry.answer.toLowerCase()).toMatch(/remote|united states|us\b/);
   });
+
+  it('answers for the UK too, and quotes no rate', () => {
+    for (const q of ['do you work with UK clients', 'are you in the united kingdom', 'do you work with businesses in London']) {
+      const match = findAnswer(q);
+      expect(match, q).not.toBeNull();
+      expect(match!.entry.id, q).toBe('where-based');
+      expect(match!.entry.answer, q).toMatch(/UK/);
+      expect(match!.entry.answer, q).not.toMatch(/%/);
+    }
+  });
 });
 
 describe('matching — questions it must NOT guess at', () => {

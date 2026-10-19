@@ -25,9 +25,9 @@ export const aiPage: ServicePageContent = {
       lede: 'Frontier models, orchestration frameworks and the production infrastructure underneath — chosen per job rather than by habit.',
       items: [
         'Claude',
-        'GPT-4o',
+        'GPT',
         'Gemini',
-        'Llama 3',
+        'Llama',
         'Mistral',
         'LangChain',
         'LlamaIndex',
@@ -56,7 +56,7 @@ export const aiPage: ServicePageContent = {
       items: [
         {
           title: 'LLM application development',
-          body: 'Applications built on Claude, GPT-4o, Gemini or open-source Llama — well past simple API calls. Context architecture, prompt engineering, structured outputs, tool use, multi-modal inputs, streaming interfaces, evaluation and fallback strategies, and token-cost optimisation.',
+          body: 'Applications built on Claude, GPT, Gemini or open-source Llama — well past simple API calls. Context architecture, prompt engineering, structured outputs, tool use, multi-modal inputs, streaming interfaces, evaluation and fallback strategies, and token-cost optimisation.',
           outcome: 'Work that needed a specialist runs on demand',
         },
         {
@@ -170,7 +170,7 @@ export const aiPage: ServicePageContent = {
   faqs: [
     {
       q: 'Which model do you use?',
-      a: 'Whichever fits the job. Claude, GPT-4o, Gemini and open-source Llama all have different strengths in reasoning, cost, latency and context length, and the right answer changes per use case — and over time. Systems are built so the model can be swapped without rewriting the application around it.',
+      a: 'Whichever fits the job. Claude, GPT, Gemini and open-source Llama all have different strengths in reasoning, cost, latency and context length, and the right answer changes per use case — and over time. Systems are built so the model can be swapped without rewriting the application around it.',
     },
     {
       q: 'How do you stop it making things up?',

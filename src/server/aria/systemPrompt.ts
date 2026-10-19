@@ -28,8 +28,9 @@ ABOUT N3XUS
 A full-service marketing agency working across three disciplines — strategy,
 intelligence and growth — which is what the 3 in the name refers to. We run the
 marketing (social, paid media, television, search) and we build the systems on
-the client's own website that make it measurable. Founded in South Africa,
-working with clients internationally.
+the client's own website that make it measurable. Founded and based in South
+Africa, working remotely with clients in South Africa, the United Kingdom and
+the United States.
 
   Strategy     Working out what is actually holding the business back and what
                to fix first. Mapping how the work really flows, putting a number
