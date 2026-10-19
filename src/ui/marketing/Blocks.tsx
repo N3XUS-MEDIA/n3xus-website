@@ -3,8 +3,22 @@ import { cn } from '@/lib/cn';
 import { Section, SectionHeading } from '@/ui/layout/Section';
 import { Button } from '@/ui/primitives/Button';
 import { FaqList } from '@/ui/marketing/FaqList';
+import { EnquiryPanel } from '@/ui/marketing/EnquiryPanel';
 import { site } from '@/content/copy';
 import type { Block } from '@/content/blocks';
+import { CompareVisual } from '@/ui/explainers/CompareVisual';
+import { Flow } from '@/ui/explainers/Flow';
+import { ProcessRail } from '@/ui/explainers/ProcessRail';
+import { SearchVsAnswer } from '@/ui/explainers/SearchVsAnswer';
+import { TwoTrack } from '@/ui/explainers/TwoTrack';
+import { WebsiteOsHub } from '@/ui/explainers/WebsiteOsHub';
+
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+/** A block type with no case below fails the type-check instead of rendering nothing. */
+function assertNever(x: never): never {
+  throw new Error(`Unhandled block: ${JSON.stringify(x)}`);
+}
 
 const COLUMNS = {
   2: 'sm:grid-cols-2',
@@ -142,11 +156,20 @@ export function BlockRenderer({
             lede={block.lede}
             onCarbon={onCarbon}
           />
+          {/* Paper and mist bands get the animated rail; the card grid stays
+              for a carbon band, where the rail's paper badges would glare. */}
+          {!onCarbon ? (
+            <ProcessRail
+              steps={block.steps}
+              id={slug(block.title)}
+              summary={`${block.title} ${block.steps.map((s) => `${s.n}: ${s.title}.`).join(' ')}`}
+            />
+          ) : (
           <ol
             className={cn(
               'mt-10 grid gap-px overflow-hidden rounded-lg sm:grid-cols-2',
               block.steps.length >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3',
-              onCarbon ? 'bg-on-carbon/15' : 'bg-line',
+              'bg-on-carbon/15',
             )}
           >
             {block.steps.map((step) => (
@@ -166,6 +189,7 @@ export function BlockRenderer({
               </li>
             ))}
           </ol>
+          )}
         </Section>
       );
 
@@ -290,6 +314,44 @@ export function BlockRenderer({
         </Section>
       );
 
+    case 'explainer': {
+      const id = slug(block.title);
+      const d = block.diagram;
+      return (
+        <Section tone={tone} bordered={bordered}>
+          <SectionHeading
+            eyebrow={block.eyebrow}
+            title={block.title}
+            lede={block.lede}
+            onCarbon={onCarbon}
+          />
+          {d.kind === 'osHub' ? (
+            <div className="mt-10">
+              <WebsiteOsHub centre={d.centre} items={d.items} summary={block.summary} interactive />
+            </div>
+          ) : d.kind === 'twoTrack' ? (
+            <TwoTrack diagram={d} summary={block.summary} id={id} />
+          ) : d.kind === 'flow' ? (
+            <Flow diagram={d} summary={block.summary} id={id} />
+          ) : d.kind === 'searchVsAnswer' ? (
+            <SearchVsAnswer diagram={d} summary={block.summary} id={id} />
+          ) : (
+            <CompareVisual diagram={d} summary={block.summary} id={id} />
+          )}
+          {block.points ? (
+            <ul className="mt-10 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+              {block.points.map((point) => (
+                <li key={point} className="flex gap-3 text-ink-muted">
+                  <Check />
+                  <span className="leading-relaxed">{point}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </Section>
+      );
+    }
+
     case 'faq':
       return (
         <Section tone={tone} bordered={bordered}>
@@ -324,35 +386,40 @@ export function BlockRenderer({
     case 'cta':
       return (
         <Section tone={tone === 'carbon' ? 'paper' : tone} bordered={bordered}>
-          <div className="rounded-lg bg-carbon p-8 sm:p-12">
-            <SectionHeading
-              onCarbon
-              eyebrow={block.eyebrow}
-              title={block.title}
-              lede={block.lede}
-            />
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <a href={site.bookingUrl} {...site.bookingLinkProps}>
-                  Book a consultation
-                </a>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="secondary"
-                className="border-on-carbon/25 bg-transparent text-on-carbon hover:bg-on-carbon/10"
-              >
-                {block.secondary ? (
-                  <Link href={block.secondary.href}>{block.secondary.label}</Link>
-                ) : (
-                  <a href={`mailto:${site.email}`}>{site.email}</a>
-                )}
-              </Button>
-            </div>
-          </div>
+          <EnquiryPanel
+            eyebrow={block.eyebrow}
+            title={block.title}
+            lede={block.lede}
+            secondary={
+              block.secondary || site.bookingIsLive ? (
+                <div className="flex flex-wrap gap-x-6 gap-y-2">
+                  {site.bookingIsLive ? (
+                    <a
+                      href={site.bookingUrl}
+                      {...site.bookingLinkProps}
+                      className="inline-flex min-h-[44px] items-center font-medium text-on-carbon underline underline-offset-4 hover:no-underline"
+                    >
+                      Or book a call
+                    </a>
+                  ) : null}
+                  {block.secondary ? (
+                    <Link
+                      href={block.secondary.href}
+                      className="inline-flex min-h-[44px] items-center gap-2 font-medium text-on-carbon underline underline-offset-4 hover:no-underline"
+                    >
+                      {block.secondary.label}
+                      <span aria-hidden>→</span>
+                    </Link>
+                  ) : null}
+                </div>
+              ) : undefined
+            }
+          />
         </Section>
       );
+
+    default:
+      return assertNever(block);
   }
 }
 

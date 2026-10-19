@@ -1,4 +1,53 @@
 import type { Faq } from './home';
+import type { IconName } from '@/ui/explainers/icons';
+
+/** One spoke on the Website OS hub. `title`/`body`/`outcome` make it clickable. */
+export interface HubItem {
+  label: string;
+  icon: IconName;
+  title?: string;
+  body?: string;
+  outcome?: string;
+}
+
+/**
+ * The diagram an `explainer` block draws. Every label here is shown on screen,
+ * so the same rules as the rest of the copy apply: no invented figures, no
+ * prices, nothing that needs a statistic to be true. Enforced in
+ * src/content/explainers.test.ts.
+ */
+export type Diagram =
+  | { kind: 'osHub'; centre: string; items: HubItem[] }
+  | {
+      kind: 'twoTrack';
+      before: { label: string; steps: { text: string; idle?: boolean }[] };
+      after: {
+        label: string;
+        steps: { time: string; actor: string; title: string; body: string }[];
+      };
+      coda?: string;
+    }
+  | {
+      /**
+       * Stages left to right (top to bottom on a phone). A stage with `items`
+       * draws as a group — several sources feeding one step. `note` is a muted
+       * aside under the stage; `loop` draws a return path back to the start.
+       */
+      kind: 'flow';
+      stages: { label: string; icon: IconName; items?: string[]; note?: string }[];
+      loop?: string;
+    }
+  | {
+      /** Ten links versus one answer naming a few businesses. Schematic only. */
+      kind: 'searchVsAnswer';
+      search: { label: string; caption: string };
+      answer: { label: string; caption: string; question: string; you: string };
+    }
+  | {
+      kind: 'compareVisual';
+      before: { label: string; rows: string[] };
+      after: { label: string; rows: string[] };
+    };
 
 /**
  * The vocabulary a service page is built from.
@@ -73,6 +122,20 @@ export type Block =
       steps: { time: string; actor: string; title: string; body: string }[];
       /** Closing paragraph that lands the contrast. */
       coda?: string;
+    }
+  | {
+      /**
+       * An animated diagram. `summary` is the text alternative a screen reader
+       * gets instead of the drawing, and is required.
+       */
+      type: 'explainer';
+      eyebrow?: string;
+      title: string;
+      lede?: string;
+      summary: string;
+      diagram: Diagram;
+      /** Optional checklist under the diagram. */
+      points?: string[];
     }
   | { type: 'faq'; title?: string; items: Faq[] }
   | {

@@ -3,7 +3,9 @@ import { Inter, Space_Grotesk } from 'next/font/google';
 import { SiteHeader } from '@/ui/layout/SiteHeader';
 import { SiteFooter } from '@/ui/layout/SiteFooter';
 import { THEME_INIT_SCRIPT } from '@/lib/theme';
-import { Analytics, AnalyticsNoScript } from '@/ui/Analytics';
+import { Analytics } from '@/ui/Analytics';
+import { ConsentBanner } from '@/ui/consent/ConsentBanner';
+import { SourceCapture } from '@/ui/SourceCapture';
 import { Aria } from '@/ui/aria/Aria';
 import { site } from '@/content/copy';
 import './globals.css';
@@ -102,13 +104,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body className="flex min-h-dvh flex-col">
-        <AnalyticsNoScript />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-paper focus:px-4 focus:py-2 focus:text-ink"
         >
           Skip to content
         </a>
+        {/* Early in the DOM so keyboard users reach it first; never steals focus. */}
+        <ConsentBanner />
         <SiteHeader />
         <main id="main" className="flex-1">
           {children}
@@ -116,6 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteFooter />
         <Aria />
         <Analytics />
+        <SourceCapture />
       </body>
     </html>
   );

@@ -5,6 +5,8 @@ import { cn } from '@/lib/cn';
 import { HexMark } from '@/ui/brand/HexMark';
 import { HexArtMark } from '@/ui/brand/HexArtMark';
 import { site } from '@/content/copy';
+import { ChatText, plainText } from '@/ui/aria/ChatText';
+import { currentSourceLine } from '@/lib/source';
 
 /**
  * Aria — the assistant, launched by the hex mark.
@@ -22,16 +24,91 @@ import { site } from '@/content/copy';
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  /** Follow-up questions the knowledge base can answer. */
+  suggestions?: string[];
+  /** Offer the details form under this reply. */
+  lead?: boolean;
 }
 
 const GREETING =
-  'Hi — I’m Aria. Ask me anything about how N3XUS works, what we do, or what something might cost. If I don’t know, I’ll say so.';
+  'Hi, I’m Aria. Ask me anything about what we do or how it works, or just leave your details and someone from the team will get back to you.';
+
+/** Opening questions, all answered from the knowledge base. */
+const STARTERS = [
+  'What do you do?',
+  'How much does it cost?',
+  'What is the Website OS?',
+  'Do you build AI assistants?',
+];
+
+/** After this many answers, offer the details form even if nobody asked. */
+const NUDGE_AFTER = 2;
+
+type LeadState = 'closed' | 'open' | 'sending' | 'sent';
+
+function Chips({
+  items,
+  onPick,
+  disabled,
+}: {
+  items: string[];
+  onPick: (q: string) => void;
+  disabled: boolean;
+}) {
+  return (
+    <ul className="flex flex-wrap gap-2" aria-label="Suggested questions">
+      {items.map((q) => (
+        <li key={q}>
+          <button
+            type="button"
+            disabled={disabled}
+            onClick={() => onPick(q)}
+            className="min-h-[36px] rounded-md border border-line bg-paper px-3 py-1.5 text-left text-xs font-medium text-ink-muted transition-colors hover:border-accent-ink hover:text-ink disabled:opacity-50"
+          >
+            {q}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function LeadField({
+  name,
+  label,
+  type = 'text',
+  autoComplete,
+  required,
+}: {
+  name: string;
+  label: string;
+  type?: string;
+  autoComplete?: string;
+  required?: boolean;
+}) {
+  return (
+    <label className="block">
+      <span className="sr-only">{label}</span>
+      <input
+        name={name}
+        type={type}
+        autoComplete={autoComplete}
+        required={required}
+        maxLength={320}
+        placeholder={label}
+        className="min-h-[40px] w-full rounded-md border border-line bg-paper px-3 text-sm text-ink placeholder:text-ink-muted focus:border-accent-ink focus:outline-none"
+      />
+    </label>
+  );
+}
 
 export function Aria() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState(false);
+  const [leadState, setLeadState] = useState<LeadState>('closed');
+  const [leadError, setLeadError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const launcherRef = useRef<HTMLButtonElement>(null);
@@ -93,15 +170,15 @@ export function Aria() {
 
   useEffect(() => {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight });
-  }, [messages, sending]);
+  }, [messages, sending, leadState]);
 
-  async function send() {
-    const text = draft.trim();
+  async function send(preset?: string) {
+    const text = (preset ?? draft).trim();
     if (!text || sending) return;
 
-    const next = [...messages, { role: 'user' as const, content: text }];
+    const next: Message[] = [...messages, { role: 'user', content: text }];
     setMessages(next);
-    setDraft('');
+    if (!preset) setDraft('');
     setSending(true);
     setError(null);
 
@@ -109,7 +186,8 @@ export function Aria() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: next }),
+        // Only role and content: suggestions and flags are UI state.
+        body: JSON.stringify({ messages: next.map(({ role, content }) => ({ role, content })).slice(-20) }),
       });
       const data = await res.json().catch(() => null);
 
@@ -117,13 +195,72 @@ export function Aria() {
         setError(data?.error ?? `Something went wrong. Email ${site.email} and we’ll pick it up.`);
         return;
       }
-      setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
+      const answered = next.filter((m) => m.role === 'user').length;
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: data.reply,
+          suggestions: Array.isArray(data.suggestions) ? data.suggestions : undefined,
+          lead: Boolean(data.lead) || answered === NUDGE_AFTER,
+        },
+      ]);
     } catch {
       setError(`I can’t reach the server. Email ${site.email} and we’ll pick it up.`);
     } finally {
       setSending(false);
     }
   }
+
+  /**
+   * Sends the visitor's details through the same route as the contact form,
+   * so a chat lead lands in the same inbox (and HQ) as every other enquiry.
+   * The conversation goes with it, so nobody has to ask the same questions twice.
+   */
+  async function submitLead(form: HTMLFormElement) {
+    const fd = new FormData(form);
+    const need = String(fd.get('need') ?? '').trim();
+    const transcript = messages
+      .map((m) => `${m.role === 'user' ? 'Visitor' : 'Aria'}: ${m.content}`)
+      .join('\n');
+    setLeadState('sending');
+    setLeadError(null);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: String(fd.get('name') ?? ''),
+          email: String(fd.get('email') ?? ''),
+          phone: String(fd.get('phone') ?? ''),
+          service: 'Website chat (Aria)',
+          source: currentSourceLine() ?? '',
+          message: `${need || 'Asked to be contacted from the website chat.'}${transcript ? `\n\n— Chat so far —\n${transcript}` : ''}`.slice(0, 5000),
+          _gotcha: String(fd.get('_gotcha') ?? ''),
+        }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.ok) {
+        setLeadState('open');
+        setLeadError(data?.error ?? `That didn’t send. Email ${site.email} and we’ll pick it up.`);
+        return;
+      }
+      setLeadState('sent');
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: `Thanks${String(fd.get('name') ?? '').split(' ')[0] ? `, ${String(fd.get('name')).split(' ')[0]}` : ''}. Your details are with the team and someone will get back to you within a business day.`,
+        },
+      ]);
+    } catch {
+      setLeadState('open');
+      setLeadError(`I can’t reach the server. Email ${site.email} and we’ll pick it up.`);
+    }
+  }
+
+  const lastAssistant = [...messages].reverse().find((m) => m.role === 'assistant');
+  const showLeadButton = leadState === 'closed' && Boolean(lastAssistant?.lead);
 
   return (
     <>
@@ -195,24 +332,97 @@ export function Aria() {
             </button>
           </div>
 
-          <div ref={logRef} className="flex-1 space-y-3 overflow-y-auto p-4">
+          {/* min-h-0 lets this shrink below its content inside the flex column,
+              so it scrolls itself. Without it, a long conversation outgrew the
+              panel and focusing the details form scrolled the header away. */}
+          <div ref={logRef} className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
             <p className="rounded-md bg-mist px-3 py-2 text-sm leading-relaxed text-ink-muted">
               {GREETING}
             </p>
 
+            {messages.length === 0 ? (
+              <Chips items={STARTERS} onPick={(q) => void send(q)} disabled={sending} />
+            ) : null}
+
             {messages.map((m, i) => (
-              <p
-                key={i}
-                className={cn(
-                  'max-w-[85%] rounded-md px-3 py-2 text-sm leading-relaxed',
-                  m.role === 'user'
-                    ? 'ml-auto bg-accent/15 text-ink'
-                    : 'bg-mist text-ink',
-                )}
-              >
-                {m.content}
-              </p>
+              <div key={i} className="space-y-2">
+                <p
+                  className={cn(
+                    'max-w-[85%] rounded-md px-3 py-2 text-sm leading-relaxed',
+                    m.role === 'user' ? 'ml-auto bg-accent/15 text-ink' : 'bg-mist text-ink',
+                  )}
+                >
+                  {m.role === 'assistant' ? <ChatText text={m.content} /> : m.content}
+                </p>
+                {/* Suggestions only under the latest reply — older ones are stale. */}
+                {m.suggestions && i === messages.length - 1 ? (
+                  <Chips items={m.suggestions} onPick={(q) => void send(q)} disabled={sending} />
+                ) : null}
+              </div>
             ))}
+
+            {showLeadButton ? (
+              <button
+                type="button"
+                onClick={() => setLeadState('open')}
+                className="inline-flex min-h-[40px] items-center gap-2 rounded-md bg-accent px-3 text-sm font-medium text-carbon hover:bg-accent-deep"
+              >
+                Leave my details
+                <span aria-hidden>→</span>
+              </button>
+            ) : null}
+
+            {leadState === 'open' || leadState === 'sending' ? (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  void submitLead(e.currentTarget);
+                }}
+                className="space-y-2 rounded-md border border-line bg-paper p-3"
+                aria-label="Leave your details"
+              >
+                <p className="text-sm font-medium text-ink">Who should we get back to?</p>
+                <LeadField name="name" label="Your name" autoComplete="name" required />
+                <LeadField name="email" label="Email" type="email" autoComplete="email" required />
+                <LeadField name="phone" label="Phone (optional)" type="tel" autoComplete="tel" />
+                <label className="block">
+                  <span className="sr-only">What do you need help with?</span>
+                  <textarea
+                    name="need"
+                    rows={2}
+                    maxLength={1500}
+                    placeholder="What do you need help with? (optional)"
+                    className="w-full resize-none rounded-md border border-line bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-muted focus:border-accent-ink focus:outline-none"
+                  />
+                </label>
+                {/* Honeypot — hidden from people, filled in by bots. */}
+                <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
+                {leadError ? (
+                  <p role="alert" className="text-sm text-danger">
+                    {leadError}
+                  </p>
+                ) : null}
+                <div className="flex items-center gap-2">
+                  <button
+                    type="submit"
+                    disabled={leadState === 'sending'}
+                    className="inline-flex min-h-[40px] items-center rounded-md bg-accent px-3 text-sm font-medium text-carbon hover:bg-accent-deep disabled:opacity-50"
+                  >
+                    {leadState === 'sending' ? 'Sending…' : 'Send'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLeadState('closed')}
+                    className="min-h-[40px] px-2 text-sm text-ink-muted hover:text-ink"
+                  >
+                    Not now
+                  </button>
+                </div>
+                <p className="text-xs text-ink-muted">
+                  We only use this to reply to you. Our conversation is included so you don’t have to repeat yourself.
+                </p>
+              </form>
+            ) : null}
 
             {sending ? (
               <p className="text-sm text-ink-muted" aria-hidden>
@@ -229,7 +439,7 @@ export function Aria() {
             {/* Replies are announced here rather than by making the whole log a
                 live region, which would re-read the conversation on every turn. */}
             <p className="sr-only" aria-live="polite">
-              {sending ? 'Aria is typing' : messages.at(-1)?.role === 'assistant' ? messages.at(-1)?.content : ''}
+              {sending ? 'Aria is typing' : messages.at(-1)?.role === 'assistant' ? plainText(messages.at(-1)?.content ?? '') : ''}
             </p>
           </div>
 
@@ -280,6 +490,15 @@ export function Aria() {
                 </svg>
               </button>
             </div>
+            {leadState === 'closed' ? (
+              <button
+                type="button"
+                onClick={() => setLeadState('open')}
+                className="mt-2 text-xs font-medium text-accent-ink underline underline-offset-4 hover:no-underline"
+              >
+                Rather talk to a person? Leave your details
+              </button>
+            ) : null}
           </form>
         </div>
       ) : null}

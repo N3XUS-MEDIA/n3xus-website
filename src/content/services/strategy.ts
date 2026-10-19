@@ -89,13 +89,28 @@ export const strategyPage: ServicePageContent = {
     },
 
     {
-      type: 'prose',
+      type: 'explainer',
       eyebrow: 'Why it’s first',
       title: 'Why we always start here.',
-      paragraphs: [
-        'Build systems before you’ve worked out the problem and you just make the business do the wrong thing faster. Spend on marketing first and you pay to send people to a business that can’t handle them. Both are expensive ways of finding out what a much cheaper piece of work would have told you.',
-        'It’s also why we’ll happily tell you when you don’t need us for the next bit.'
-      ],
+      lede: 'Both shortcuts are expensive ways of finding out what a much cheaper piece of work would have told you. It’s also why we’ll happily tell you when you don’t need us for the next bit.',
+      summary:
+        'A chain of three steps: strategy works out what to fix first, systems build the fix, and growth brings the customers. Skip strategy and the business just does the wrong thing faster. Skip the systems and you pay to send people to a business that can’t handle them.',
+      diagram: {
+        kind: 'flow',
+        stages: [
+          { label: 'Strategy — what to fix first', icon: 'compass' },
+          {
+            label: 'Systems — build the fix',
+            icon: 'gear',
+            note: 'Skip strategy, and the business does the wrong thing faster',
+          },
+          {
+            label: 'Growth — bring the customers',
+            icon: 'megaphone',
+            note: 'Skip the systems, and you pay to send people to a business that can’t handle them',
+          },
+        ],
+      },
     },
 
     { type: 'faq', items: [] },

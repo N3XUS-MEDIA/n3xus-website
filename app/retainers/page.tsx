@@ -3,6 +3,7 @@ import { PageHero } from '@/ui/layout/PageHero';
 import { Section, SectionHeading } from '@/ui/layout/Section';
 import { Button } from '@/ui/primitives/Button';
 import { RETAINER_AREAS } from '@/content/retainerModules';
+import { RetainerStack } from '@/ui/explainers/RetainerStack';
 import { site } from '@/content/copy';
 
 /**
@@ -36,8 +37,19 @@ export default function PricingPage() {
         lede="Every build starts on the same Website OS base — the engine that routes leads, holds your data and keeps the lights on. Everything above it is modular: you take only what you need. We quote it once we understand what that is."
       />
 
+      <Section tone="mist" bordered>
+        <SectionHeading
+          eyebrow="How a retainer is built"
+          title="One base. Then only what you need."
+          lede="Select any module to read what it covers."
+        />
+        <div className="mt-10">
+          <RetainerStack areas={RETAINER_AREAS} />
+        </div>
+      </Section>
+
       {RETAINER_AREAS.map((area, i) => (
-        <Section key={area.id} size="sm" tone={i % 2 ? 'mist' : 'paper'} bordered>
+        <Section key={area.id} id={area.id} size="sm" tone={i % 2 ? 'mist' : 'paper'} bordered>
           <SectionHeading title={area.name} />
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {area.modules.map((m) => (

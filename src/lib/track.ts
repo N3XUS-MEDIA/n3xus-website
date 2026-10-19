@@ -21,15 +21,23 @@
  */
 type Gtag = (command: 'event', name: string, params?: Record<string, unknown>) => void;
 
-/** Where a lead came from. A fixed list, so the GA4 report has no typos in it. */
+/** Which form produced the lead. A fixed list, so the GA4 report has no typos in it. */
 export type LeadSource = 'contact_form' | 'website_audit';
 
-export function trackLead(service?: string, source: LeadSource = 'contact_form'): void {
+/**
+ * @param service       the service the enquirer picked, if any — never free text
+ * @param trafficSource where the visit came from (ai-assistant, search,
+ *                      social…) — a category from src/lib/source.ts, never a URL
+ * @param leadSource    which form produced the lead
+ */
+export function trackLead(service?: string, trafficSource?: string, leadSource: LeadSource = 'contact_form'): void {
   send('generate_lead', {
-    lead_source: source,
+    lead_source: leadSource,
     // Which service the enquiry chose, so the report can show what people
     // actually come for. A free-text field is never passed through here.
     ...(service ? { service } : {}),
+    // A category (ai-assistant, search, social…), never a URL or a name.
+    ...(trafficSource ? { traffic_source: trafficSource } : {}),
   });
 }
 

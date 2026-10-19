@@ -5,7 +5,14 @@ import { notifyHq } from '@/server/hq';
 
 export const runtime = 'nodejs';
 
-const TO_EMAIL = 'info@n3xus.media';
+/**
+ * Where enquiries are delivered. Deacon handles inbound since 2026-10-15
+ * (Jared's instruction). Override with ENQUIRY_TO_EMAIL in Vercel to reroute
+ * without a deploy. PUBLIC_EMAIL is what a visitor is told to write to if
+ * sending fails — kept separate so a personal inbox is never shown publicly.
+ */
+const TO_EMAIL = process.env.ENQUIRY_TO_EMAIL?.trim() || 'deacon@n3xus.media';
+const PUBLIC_EMAIL = 'info@n3xus.media';
 const FROM_EMAIL = 'website@n3xus.media'; // must be a verified sender in Resend
 
 /**
@@ -54,6 +61,8 @@ const schema = z.object({
   phone: z.string().trim().max(60).optional().or(z.literal('')),
   service: z.string().trim().max(200).optional().or(z.literal('')),
   message: z.string().trim().min(1, 'Message is required').max(5000),
+  /** How the visitor found us (see src/lib/source.ts). Optional and best-effort. */
+  source: z.string().trim().max(300).optional().or(z.literal('')),
   /**
    * Honeypot. Real people leave it empty; bots fill everything in.
    *
@@ -97,7 +106,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const { name, email, phone, service, message, _gotcha } = parsed.data;
+  const { name, email, phone, service, message, source, _gotcha } = parsed.data;
 
   // Honeypot tripped: accept and discard, so the bot sees success and doesn't
   // retry with a different shape.
@@ -116,7 +125,17 @@ export async function POST(req: Request) {
    * Now: try Resend, fall back to the endpoint that has been carrying real
    * enquiries, and only then show a visible error with a direct email address.
    */
-  const forward = { name, email, phone, service, message };
+  // The source rides along in the message for HQ and Formspree, whose
+  // payloads have no field for it, so it is never lost on any delivery path.
+  const forward = {
+    name,
+    email,
+    phone,
+    service,
+    message: source ? `${message}
+
+— How they found us: ${source}` : message,
+  };
 
   /**
    * Forward to N3XUS HQ, where the lead becomes a work order and an AI agent
@@ -147,7 +166,7 @@ export async function POST(req: Request) {
       NextResponse.json(
         {
           ok: false,
-          error: `Our contact form is temporarily unavailable. Please email ${TO_EMAIL} directly.`,
+          error: `Our contact form is temporarily unavailable. Please email ${PUBLIC_EMAIL} directly.`,
         },
         { status: 503 },
       ),
@@ -160,6 +179,7 @@ export async function POST(req: Request) {
     <p><strong>Email:</strong> ${escapeHtml(email)}</p>
     ${phone ? `<p><strong>Phone:</strong> ${escapeHtml(phone)}</p>` : ''}
     ${service ? `<p><strong>Service interest:</strong> ${escapeHtml(service)}</p>` : ''}
+    ${source ? `<p><strong>How they found us:</strong> ${escapeHtml(source)}</p>` : ''}
     <p><strong>Message:</strong></p>
     <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
   `;
@@ -188,7 +208,7 @@ export async function POST(req: Request) {
         NextResponse.json(
           {
             ok: false,
-            error: `We couldn't send that. Please email ${TO_EMAIL} directly.`,
+            error: `We couldn't send that. Please email ${PUBLIC_EMAIL} directly.`,
           },
           { status: 502 },
         ),
@@ -201,7 +221,7 @@ export async function POST(req: Request) {
     if (await sendViaFormspree(forward)) return done(NextResponse.json({ ok: true }));
     return done(
       NextResponse.json(
-        { ok: false, error: `We couldn't send that. Please email ${TO_EMAIL} directly.` },
+        { ok: false, error: `We couldn't send that. Please email ${PUBLIC_EMAIL} directly.` },
         { status: 502 },
       ),
     );

@@ -67,7 +67,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-7">
+          <div id="enquiry" className="scroll-mt-24 lg:col-span-7">
             <ContactForm />
           </div>
         </div>

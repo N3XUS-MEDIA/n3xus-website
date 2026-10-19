@@ -54,7 +54,7 @@ const SITE_URL = 'https://n3xus.media';
  * No code change is needed for step 3, and if the variable is ever set to a
  * host that goes dead again, the fix is to unset it rather than to ship.
  */
-const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim() || `${SITE_URL}/contact`;
+const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim() || `${SITE_URL}/contact#enquiry`;
 
 /**
  * Booking links open in a new tab only when they actually leave the site.

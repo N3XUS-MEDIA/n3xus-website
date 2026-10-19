@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/ui/primitives/Button';
 import { trackLead } from '@/lib/track';
+import { readSource } from '@/lib/source';
 import { site } from '@/content/copy';
 
 const FIELD =
@@ -53,7 +54,7 @@ export function UnlockForm({ token, onUnlocked }: { token: string; onUnlocked: (
         return;
       }
       // Only after HQ has the lead — a lead that failed to save is not a lead.
-      trackLead(undefined, 'website_audit');
+      trackLead(undefined, readSource()?.kind, 'website_audit');
       onUnlocked();
     } catch {
       setError(`We couldn’t reach the server. Email ${site.email} and we’ll send the report.`);

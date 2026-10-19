@@ -65,9 +65,21 @@ describe('website audit events', () => {
     const gtag = vi.fn();
     (globalThis as { gtag?: unknown }).gtag = gtag;
 
-    trackLead(undefined, 'website_audit');
+    trackLead(undefined, undefined, 'website_audit');
 
     expect(gtag).toHaveBeenCalledWith('event', 'generate_lead', { lead_source: 'website_audit' });
+  });
+
+  it('keeps the traffic source alongside the audit lead source', () => {
+    const gtag = vi.fn();
+    (globalThis as { gtag?: unknown }).gtag = gtag;
+
+    trackLead(undefined, 'ai-assistant', 'website_audit');
+
+    expect(gtag).toHaveBeenCalledWith('event', 'generate_lead', {
+      lead_source: 'website_audit',
+      traffic_source: 'ai-assistant',
+    });
   });
 
   it('records an audit start with no parameters — not even the address', () => {

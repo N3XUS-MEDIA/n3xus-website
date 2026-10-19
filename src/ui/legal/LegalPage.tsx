@@ -26,7 +26,7 @@ export function LegalPage({
       <Section width="narrow">
         <div className="longform">
           {sections.map((section) => (
-            <section key={section.heading}>
+            <section key={section.heading} id={section.id} className={section.id ? 'scroll-mt-24' : undefined}>
               <h2>{section.heading}</h2>
               {groupBlocks(section.blocks).map((group, i) =>
                 group.kind === 'ul' ? (

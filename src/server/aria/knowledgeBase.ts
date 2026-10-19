@@ -31,6 +31,18 @@ import { strategyPage } from '@/content/services/strategy';
 import { websiteOsPage } from '@/content/services/website-os';
 import { aiPage } from '@/content/services/ai';
 import { softwarePage } from '@/content/services/software';
+import { digitalPage } from '@/content/services/digital';
+import { brandPage } from '@/content/services/brand';
+
+/**
+ * Answers are written to be read in a chat bubble, by a person, so they use
+ * contractions, short sentences and one clear next step. Links are written as
+ * [label](url) and rendered as real links by the chat widget — the label is
+ * what the visitor reads, so make it say where it goes.
+ */
+const link = (label: string, path: string) => `[${label}](${site.url}${path})`;
+/** The enquiry form: the booking page if one is live, otherwise the contact form. */
+const enquiryLink = (label: string) => `[${label}](${site.bookingUrl})`;
 
 export interface KnowledgeEntry {
   id: string;
@@ -52,7 +64,7 @@ function buildEntries(): KnowledgeEntry[] {
   for (const [i, f] of contactFaqs.entries()) {
     entries.push({ id: `contact-faq-${i}`, questions: [f.q], answer: f.a });
   }
-  for (const page of [strategyPage, websiteOsPage, aiPage, softwarePage]) {
+  for (const page of [strategyPage, websiteOsPage, aiPage, softwarePage, digitalPage, brandPage]) {
     for (const [i, f] of (page.faqs ?? []).entries()) {
       entries.push({ id: `${page.eyebrow}-faq-${i}`.toLowerCase().replace(/\s+/g, '-'), questions: [f.q], answer: f.a });
     }
@@ -75,10 +87,10 @@ function buildEntries(): KnowledgeEntry[] {
       'What is your pricing?',
     ],
     answer:
-      `We quote every business individually rather than publishing a price list — what it costs ` +
-      `depends on which parts you actually need. Retainers are built from modules on top of a ` +
-      `Website OS base, so you only pay for what you use. Tell us what you are after at ` +
-      `${site.bookingUrl} and we will come back with a figure within one business day.`,
+      `We don't publish a price list, because it really does depend on what you need. ` +
+      `Retainers are a base plus whichever pieces make sense for you, so you only pay for what you'll use. ` +
+      `Tell us what you're after and we'll come back with a figure within one business day. ` +
+      `${enquiryLink('Ask us for a quote')}`
   });
 
   entries.push({
@@ -91,10 +103,10 @@ function buildEntries(): KnowledgeEntry[] {
       'What are the options?',
     ],
     answer:
-      `Retainers are grouped into ${RETAINER_AREAS.length} areas: ` +
-      RETAINER_AREAS.map((a) => a.name).join(', ') +
-      `. Every retainer includes the Website OS base, and you add only the modules you need. ` +
-      `They are all described at ${site.url}/retainers, and we quote the combination you choose.`,
+      `A retainer is built from ${RETAINER_AREAS.length} areas: ` +
+      RETAINER_AREAS.map((a) => a.name.toLowerCase()).join(', ') +
+      `. Everyone gets the Website OS base, and you add only what you need. ` +
+      `${link("It's all listed here", '/retainers')}, and we price whichever combination you pick.`
   });
 
   // ── Who we are and where we work ──────────────────────────────────────────
@@ -109,11 +121,9 @@ function buildEntries(): KnowledgeEntry[] {
       'What kind of company are you?',
     ],
     answer:
-      `${site.name} is a full-service marketing agency working across three areas — ` +
-      PILLARS.map((p) => `${p.name} (${p.summary.replace(/\.$/, '')})`).join(', ') +
-      `. That is what the 3 in the name stands for. We run the marketing — social, paid media, ` +
-      `television and search — and we also build the systems on your site that make it measurable, ` +
-      `so there is no handover between whoever plans it and whoever builds it.`,
+      `We're a full-service marketing agency with a build team. In plain terms: we work out what's ` +
+      `holding the business back, build the systems that fix it, and then bring in the customers. ` +
+      `Most agencies only do that last part and hand you a report. ${link('Here is what that looks like', '/services')}.`
   });
 
   entries.push({
@@ -127,9 +137,9 @@ function buildEntries(): KnowledgeEntry[] {
       'Are you in South Africa?',
     ],
     answer:
-      `We are based in South Africa and work with clients there and in the United States. Everything is ` +
-      `delivered remotely, with working overlap for US hours. Retainers are quoted in ZAR for South ` +
-      `African businesses at a 20% local rate, and in USD elsewhere.`,
+      `We're based in South Africa and work with clients here and in the US. It's all done remotely, ` +
+      `and we make sure there's overlap with US hours. Retainers are quoted in rand for South African ` +
+      `businesses (with a 20% local rate) and in dollars everywhere else.`
   });
 
   entries.push({
@@ -143,8 +153,8 @@ function buildEntries(): KnowledgeEntry[] {
       'I want to speak to someone',
     ],
     answer:
-      `Email ${site.email}, or tell us what you need at ${site.bookingUrl} and we will set up a free ` +
-      `call. We come back within one business day.`,
+      `Easiest is to ${enquiryLink('send us a quick message')} and we'll come back to you within one ` +
+      `business day. You can also just email ${site.email}.`
   });
 
   entries.push({
@@ -157,9 +167,9 @@ function buildEntries(): KnowledgeEntry[] {
       'What happens first?',
     ],
     answer:
-      `It starts with a conversation — you tell us what is going wrong, and we tell you what we would ` +
-      `look at first and roughly what it would take. No deck, no pressure, and you keep whatever we ` +
-      `work out even if you never speak to us again. Start it at ${site.bookingUrl}.`,
+      `It starts with a conversation. You tell us what's going wrong, and we tell you what we'd look at ` +
+      `first and roughly what it would take. No deck, no pressure, and you keep whatever we work out even ` +
+      `if you never speak to us again. ${enquiryLink('Start here')}.`
   });
 
   // ── One entry per discipline ──────────────────────────────────────────────
@@ -172,7 +182,63 @@ function buildEntries(): KnowledgeEntry[] {
         `Tell me about ${pillar.name}`,
         `Do you do ${pillar.name}?`,
       ],
-      answer: `${pillar.name}: ${pillar.summary} There is more at ${site.url}${pillar.href}.`,
+      answer: `${pillar.name} is about ${pillar.summary.charAt(0).toLowerCase()}${pillar.summary.slice(1)} ${link('Read more about it', pillar.href)}.`,
+    });
+  }
+
+  // ── One entry per service page, from the page's own approved hero copy ────
+  // So "what is the Website OS?" or "do you do SEO?" is answered from the page
+  // itself, now that the assistant runs without a model behind it.
+  const services: { path: string; keywords: string[]; questions: string[]; answer: string }[] = [
+    {
+      path: '/services/website-os',
+      keywords: ['website', 'os', 'operating', 'bookings', 'booking', 'portal', 'crm', 'payments', 'invoicing'],
+      questions: ['What is the Website OS?', 'What is a Website Operating System?', 'Can my website take bookings and payments?', 'Do you build websites?'],
+      answer: `Short version: it's your website doing the work your team does by hand today. Bookings, quotes, payments and customer records all run behind the site, instead of a contact form that lands in an inbox. Usually we build it onto the site you already have, so there's nothing to relaunch. ${link('Here is the full page', '/services/website-os')}.`,
+    },
+    {
+      path: '/services/ai',
+      keywords: ['ai', 'chatbot', 'assistant', 'agents', 'llm', 'automation', 'rag', 'whatsapp'],
+      questions: ['Do you build AI assistants?', 'Can you build a chatbot?', 'Do you do AI automation?', 'What AI do you build?'],
+      answer: `Yes, that's a big part of what we do. Assistants that answer real questions from your own information, take enquiries and bookings, and pass to a person when they should. We also automate the follow-ups and admin your team does by hand. ${link('More on the AI side', '/services/ai')}.`,
+    },
+    {
+      path: '/services/software',
+      keywords: ['software', 'app', 'application', 'api', 'saas', 'integration', 'custom', 'tool'],
+      questions: ['Do you build custom software?', 'Can you build an app?', 'Do you do integrations?', 'Can you build internal tools?'],
+      answer: `We do. If you've got a process no off-the-shelf tool handles properly, we'll build it: web apps, integrations, internal tools. We scope it up front so you know what you're getting. ${link('The details are here', '/services/software')}.`,
+    },
+    {
+      path: '/services/digital',
+      keywords: ['seo', 'google', 'ads', 'search', 'social', 'marketing', 'geo', 'chatgpt', 'leads', 'traffic'],
+      questions: ['Do you do SEO?', 'Can you run our ads?', 'Do you do social media?', 'How do we get more leads?', 'Can you get us found on ChatGPT?'],
+      answer: `Yes, that's our growth side: SEO, Google and Meta ads, social, email, and getting you found in ChatGPT and the other AI tools people now ask instead of searching. We tie it to real results so you can see what's working. ${link('Have a look', '/services/digital')}.`,
+    },
+    {
+      path: '/services/brand',
+      keywords: ['brand', 'branding', 'tv', 'television', 'video', 'logo', 'identity', 'sponsorship', 'activation'],
+      questions: ['Do you do branding?', 'Do you do TV advertising?', 'Can you make a video?', 'Can you do our logo and identity?'],
+      answer: `We do, from brand identity through to TV, streaming and video production. We plan campaigns so the effect shows up in your own numbers, not someone else's case study. ${link('More on brand and TV', '/services/brand')}.`,
+    },
+    {
+      path: '/services/strategy',
+      keywords: ['strategy', 'consulting', 'advice', 'audit', 'diagnostic', 'plan', 'roadmap'],
+      questions: ['Do you do strategy?', 'Can you audit our business?', 'Where should we start?', 'Can you tell us what to fix first?'],
+      answer: `That's usually where we start. We look at how the business really runs, put a number on what each problem is costing you, and tell you what to fix first, in writing. It's yours to keep either way. ${link('Read more about it', '/services/strategy')}.`,
+    },
+    {
+      path: '/intelligence',
+      keywords: ['intelligence', 'dashboard', 'reporting', 'reports', 'analytics', 'attribution', 'data'],
+      questions: ['What is N3XUS Intelligence?', 'Do you provide reporting?', 'Do you have a dashboard?', 'How do we see what is working?'],
+      answer: `It's our reporting platform: leads, bookings, spend and revenue on one screen, with attribution that shows which channel actually produced what. It comes with every retainer. ${link('See how it works', '/intelligence')}.`,
+    },
+  ];
+  for (const s of services) {
+    entries.push({
+      id: `service-${s.path.split('/').pop()}`,
+      keywords: s.keywords,
+      questions: s.questions,
+      answer: s.answer,
     });
   }
 
@@ -322,6 +388,33 @@ export function findAnswer(query: string): Match | null {
   }
 
   return { entry: best.entry, score: best.score };
+}
+
+/**
+ * The closest questions we *can* answer, for when findAnswer declines.
+ *
+ * A miss should never be a dead end: offering "did you mean…" turns an
+ * unanswerable question into a click on one we have approved copy for.
+ */
+export function suggestQuestions(query: string, n = 3): string[] {
+  const tokens = tokenise(query);
+  const picks = KNOWLEDGE_BASE.map((entry) => ({ entry, ...scoreEntry(tokens, entry) }))
+    .filter((r) => r.score > 0)
+    .sort((a, b) => b.score - a.score || b.keywordHits - a.keywordHits)
+    .map((r) => r.entry.questions[0]!);
+  const fallback = ['What do you do?', 'How much does it cost?', 'What is the Website OS?'];
+  return [...new Set([...picks, ...fallback])].slice(0, n);
+}
+
+const LEAD_INTENT = [
+  'quote', 'proposal', 'book', 'booking', 'call', 'meeting', 'hire', 'interested', 'talk',
+  'speak', 'contact', 'start', 'started', 'help', 'need', 'want', 'looking', 'project',
+];
+
+/** Does this message sound like someone ready to talk, rather than browsing? */
+export function isLeadIntent(text: string): boolean {
+  const words = text.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/);
+  return words.some((w) => LEAD_INTENT.includes(w));
 }
 
 /**

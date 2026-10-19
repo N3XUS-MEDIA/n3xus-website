@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { buildSystemPrompt } from '@/server/aria/systemPrompt';
-import { findAnswer, isEligibleForKnowledgeBase } from '@/server/aria/knowledgeBase';
+import {
+  findAnswer,
+  isEligibleForKnowledgeBase,
+  isLeadIntent,
+  suggestQuestions,
+} from '@/server/aria/knowledgeBase';
 import { clientIp, rateLimit } from '@/server/rateLimit';
 
 export const runtime = 'nodejs';
@@ -90,8 +95,24 @@ export async function POST(req: Request) {
    * It is also the stronger guarantee on pricing: a canned answer cannot invent
    * a number, which an instruction not to invent one only asks for.
    */
-  if (isEligibleForKnowledgeBase(parsed.data.messages)) {
-    const match = findAnswer(parsed.data.messages[0].content);
+  /**
+   * Knowledge-base mode (the default since 2026-10-15).
+   *
+   * The model account ran out of credit and the assistant went dark, so the
+   * assistant now answers every message — not just the first — from approved
+   * site copy, and turns anything it can't answer into suggestions plus an
+   * offer to take the visitor's details. Zero API cost, and it cannot invent
+   * a price or a claim.
+   *
+   * The model path below is kept, but only runs when ARIA_MODEL=on AND a key
+   * is set. Without both, a miss is never an error.
+   */
+  const modelEnabled = process.env.ARIA_MODEL === 'on' && !!process.env.ANTHROPIC_API_KEY;
+  const latest = [...parsed.data.messages].reverse().find((m) => m.role === 'user')?.content ?? '';
+  const lead = isLeadIntent(latest);
+
+  if (!modelEnabled || isEligibleForKnowledgeBase(parsed.data.messages)) {
+    const match = findAnswer(latest);
     if (match) {
       return NextResponse.json({
         reply: match.entry.answer,
@@ -99,8 +120,20 @@ export async function POST(req: Request) {
         // says whether this layer is earning its place.
         source: 'knowledge-base',
         matched: match.entry.id,
+        lead,
       });
     }
+  }
+
+  if (!modelEnabled) {
+    return NextResponse.json({
+      reply: lead
+        ? 'Sounds like one worth talking through properly. Leave your details below and someone from the team will come back to you within a business day.'
+        : 'Honestly, I’m not sure about that one, and I’d rather not guess. These might help, or leave your details and someone from the team will get back to you within a business day.',
+      source: 'fallback',
+      suggestions: suggestQuestions(latest),
+      lead: true,
+    });
   }
 
   if (!process.env.ANTHROPIC_API_KEY) {

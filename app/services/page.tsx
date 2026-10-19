@@ -4,6 +4,8 @@ import { PageHero } from '@/ui/layout/PageHero';
 import { Section, SectionHeading } from '@/ui/layout/Section';
 import { Button } from '@/ui/primitives/Button';
 import { CapabilityGrid } from '@/ui/marketing/CapabilityGrid';
+import { PillarMap } from '@/ui/explainers/PillarMap';
+import { ProblemRouter } from '@/ui/explainers/ProblemRouter';
 import { CLAIMS } from '@/content/about';
 import { ctas, site } from '@/content/copy';
 import {
@@ -52,21 +54,10 @@ export default function ServicesPage() {
           lede="You don’t need to know what to call the solution. You only need to know what’s broken."
         />
 
-        <ul className="mt-10 grid gap-px overflow-hidden rounded-lg bg-line sm:grid-cols-2 lg:grid-cols-3">
-          {painPoints.map((point) => (
-            <li key={point.quote} className="flex flex-col bg-paper p-6">
-              <h3 className="text-lg text-ink">“{point.quote}”</h3>
-              <p className="mt-3 flex-1 leading-relaxed text-ink-muted">{point.body}</p>
-              <Link
-                href={point.href}
-                className="mt-5 inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-accent-ink underline underline-offset-4 hover:no-underline"
-              >
-                {point.linkLabel}
-                <span aria-hidden>→</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ProblemRouter
+          points={painPoints}
+          summary="A list of seven common problems. Choosing one shows which of the three pillars — strategy, intelligence or growth — it belongs to, what it usually looks like, and the page to read next."
+        />
       </Section>
 
       <Section size="sm">
@@ -75,6 +66,7 @@ export default function ServicesPage() {
           title="Everything across the three disciplines."
           lede="Strategy decides what to fix. Technology builds it. Growth feeds it. Every item below carries the outcome it produces, because a capability nobody can value is just a line on an invoice."
         />
+        <PillarMap pillars={layers.slice(0, 3)} base={intelligenceLayer} />
       </Section>
 
       {layers.map((layer, i) => (

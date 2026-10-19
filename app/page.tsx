@@ -4,6 +4,7 @@ import { Container } from '@/ui/layout/Container';
 import { Section, SectionHeading } from '@/ui/layout/Section';
 import { Button } from '@/ui/primitives/Button';
 import { FaqList } from '@/ui/marketing/FaqList';
+import { EnquiryPanel } from '@/ui/marketing/EnquiryPanel';
 import { JsonLd } from '@/ui/seo/JsonLd';
 import { AUDIT_LIVE, ctas, site } from '@/content/copy';
 import { auditHomeBand } from '@/content/audit';
@@ -21,6 +22,10 @@ import {
   websiteOs,
   whatWeDo,
 } from '@/content/home';
+import { CoreSystem } from '@/ui/explainers/CoreSystem';
+import { ProcessRail } from '@/ui/explainers/ProcessRail';
+import { ScatteredVsConnected } from '@/ui/explainers/ScatteredVsConnected';
+import { WebsiteOsHub } from '@/ui/explainers/WebsiteOsHub';
 import { faqLd, organisationLd, serviceLd, visibleFaqs, websiteLd } from '@/content/structuredData';
 
 export const metadata: Metadata = {
@@ -69,23 +74,16 @@ export default function HomePage() {
             </div>
 
             <div className="lg:col-span-5 lg:pl-8">
-              <dl className="divide-y divide-line border-y border-line">
-                {core3.layers.map((layer) => (
-                  <div key={layer.n} className="py-5">
-                    <dt className="flex items-baseline gap-3">
-                      <span className="font-heading text-sm font-bold text-accent-ink">
-                        {layer.n}
-                      </span>
-                      <span className="font-heading font-semibold text-ink">
-                        {layer.title.split(' — ')[0]}
-                      </span>
-                    </dt>
-                    <dd className="mt-1.5 pl-8 text-sm text-ink-muted">
-                      {layer.title.split(' — ')[1]}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+              <CoreSystem
+                layers={core3.layers.map((layer, i) => ({
+                  n: layer.n,
+                  name: layer.title.split(' — ')[0] ?? layer.title,
+                  sub: layer.title.split(' — ')[1] ?? '',
+                  icon: (['compass', 'layers', 'megaphone'] as const)[i] ?? 'compass',
+                }))}
+                loopLabel={hero.system.loopLabel}
+                summary={hero.system.summary}
+              />
             </div>
           </div>
         </Container>
@@ -135,36 +133,14 @@ export default function HomePage() {
         <div className="mx-auto max-w-3xl text-center">
           <p className="eyebrow-on-carbon">{problem.eyebrow}</p>
           <h2 className="mt-4 text-3xl text-on-carbon sm:text-4xl">{problem.title}</h2>
-          {problem.paragraphs.map((p) => (
-            <p key={p} className="mt-5 text-lg leading-relaxed text-on-carbon/75">
-              {p}
-            </p>
-          ))}
+          <p className="mt-5 text-lg leading-relaxed text-on-carbon/75">{problem.lede}</p>
         </div>
 
-        <div className="mx-auto mt-12 grid max-w-3xl gap-px overflow-hidden rounded-lg bg-on-carbon/15 sm:grid-cols-2">
-          <div className="bg-carbon p-6">
-            <p className="eyebrow-on-carbon">{comparison.before.label}</p>
-            <ul className="mt-4 space-y-3">
-              {comparison.before.rows.map(([label, note]) => (
-                <li key={label} className="text-on-carbon/70">
-                  <span className="text-on-carbon">{label}</span>
-                  {note ? <span className="text-on-carbon/65"> — {note}</span> : null}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="bg-carbon-light p-6">
-            <p className="eyebrow-on-carbon">{comparison.after.label}</p>
-            <ul className="mt-4 space-y-3">
-              {comparison.after.rows.map(([label]) => (
-                <li key={label} className="text-on-carbon">
-                  {label}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <ScatteredVsConnected
+          {...problem.diagram}
+          before={comparison.before}
+          after={comparison.after}
+        />
       </Section>
 
       <Section>
@@ -189,13 +165,8 @@ export default function HomePage() {
 
       <Section tone="mist" bordered>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-7">
-            <SectionHeading eyebrow={websiteOs.eyebrow} title={websiteOs.title} />
-            <div className="longform mt-8">
-              {websiteOs.paragraphs.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
+          <div className="lg:col-span-5">
+            <SectionHeading eyebrow={websiteOs.eyebrow} title={websiteOs.title} lede={websiteOs.lede} />
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild>
                 <Link href="/services/website-os">Explore Website OS</Link>
@@ -206,26 +177,12 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="lg:col-span-5">
-            <ul className="space-y-4">
-              {websiteOs.points.map((point) => (
-                <li key={point} className="flex gap-3 text-ink-muted">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="mt-1 size-4 shrink-0 text-accent-ink"
-                    aria-hidden
-                  >
-                    <path d="M20 6 9 17l-5-5" />
-                  </svg>
-                  <span className="leading-relaxed">{point}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="lg:col-span-7">
+            <WebsiteOsHub
+              centre={websiteOs.centre}
+              items={websiteOs.items}
+              summary={websiteOs.summary}
+            />
           </div>
         </div>
       </Section>
@@ -278,15 +235,7 @@ export default function HomePage() {
 
       <Section>
         <SectionHeading eyebrow={process.eyebrow} title={process.title} />
-        <ol className="mt-10 grid gap-px overflow-hidden rounded-lg bg-line sm:grid-cols-2 lg:grid-cols-4">
-          {process.steps.map((step) => (
-            <li key={step.n} className="bg-paper p-6">
-              <p className="font-heading text-sm font-bold text-accent-ink">{step.n}</p>
-              <h3 className="mt-3 text-lg text-ink">{step.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink-muted">{step.body}</p>
-            </li>
-          ))}
-        </ol>
+        <ProcessRail steps={process.steps} summary={process.summary} />
       </Section>
 
       <Section tone="mist" bordered width="default">
@@ -295,29 +244,7 @@ export default function HomePage() {
       </Section>
 
       <Section>
-        <div className="rounded-lg bg-carbon p-8 sm:p-12">
-          <SectionHeading
-            onCarbon
-            eyebrow={closing.eyebrow}
-            title={closing.title}
-            lede={closing.lede}
-          />
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg">
-              <a href={site.bookingUrl} {...site.bookingLinkProps}>
-                {ctas.book}
-              </a>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="secondary"
-              className="border-on-carbon/25 bg-transparent text-on-carbon hover:bg-on-carbon/10"
-            >
-              <a href={`mailto:${site.email}`}>{site.email}</a>
-            </Button>
-          </div>
-        </div>
+        <EnquiryPanel eyebrow={closing.eyebrow} title={closing.title} lede={closing.lede} />
       </Section>
     </>
   );

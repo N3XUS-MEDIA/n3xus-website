@@ -5,6 +5,7 @@ import { Button } from '@/ui/primitives/Button';
 import { serviceOptions } from '@/content/contact';
 import { site } from '@/content/copy';
 import { trackLead } from '@/lib/track';
+import { currentSourceLine, readSource } from '@/lib/source';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
@@ -19,7 +20,9 @@ export function ContactForm() {
     e.preventDefault();
     if (status === 'sending') return;
 
-    const data = Object.fromEntries(new FormData(e.currentTarget));
+    const data: Record<string, FormDataEntryValue> = Object.fromEntries(new FormData(e.currentTarget));
+    const source = currentSourceLine();
+    if (source) data.source = source;
     setStatus('sending');
     setError(null);
 
@@ -40,7 +43,7 @@ export function ContactForm() {
       setStatus('sent');
       // After the enquiry is confirmed delivered, never before — a lead that
       // failed to send is not a lead, and trackLead cannot throw either way.
-      trackLead(typeof data.service === 'string' ? data.service : undefined);
+      trackLead(typeof data.service === 'string' ? data.service : undefined, readSource()?.kind);
     } catch {
       setError(`We couldn't reach the server. Please email ${site.email} directly.`);
       setStatus('error');

@@ -69,14 +69,26 @@ export const brandPage: ServicePageContent = {
       paragraphs: [
         'There is a persistent belief that broadcast is finished and every rand belongs in performance. Businesses acting on that assumption compete only where their competitors already are, on the channels where the cost of a click rises every year.',
         'Broadcast and physical presence do something performance advertising structurally cannot: they make a business look established to people who were not searching for it. That is an authority signal, and it is why the same digital campaign converts differently for a brand somebody has already heard of.',
-        'What we will not do is quote you an industry statistic to prove it. We plan the campaign so its effect on your digital performance is measurable — brand recall measured after the flight, and the lift in your own conversion rates tracked against it — so the argument is settled by your numbers rather than someone else’s case study.',
       ],
-      points: [
-        'Campaigns planned to be measured, not just delivered',
-        'Brand recall measured after the flight',
-        'Broadcast timing connected to your digital retargeting',
-        'Reported through N3XUS Intelligence alongside every other channel',
-      ],
+    },
+    {
+      type: 'explainer',
+      eyebrow: 'How we prove it',
+      title: 'Settled by your numbers, not someone else’s case study.',
+      lede: 'We won’t quote you an industry statistic. The campaign is planned so its effect on your digital performance is measured.',
+      summary:
+        'A loop in five stages: the broadcast flight runs; brand recall is measured after the flight; digital retargeting is timed to the broadcast; the lift in your own conversion rates is tracked against it; and it is all reported in N3XUS Intelligence alongside every other channel. The next flight is planned from what this one showed.',
+      diagram: {
+        kind: 'flow',
+        stages: [
+          { label: 'The broadcast flight', icon: 'megaphone' },
+          { label: 'Brand recall, measured after the flight', icon: 'people' },
+          { label: 'Retargeting timed to the broadcast', icon: 'compass' },
+          { label: 'Lift in your own conversion rates', icon: 'chart' },
+          { label: 'Reported alongside every other channel', icon: 'layers' },
+        ],
+        loop: 'The next flight is planned from what this one showed',
+      },
     },
 
     {

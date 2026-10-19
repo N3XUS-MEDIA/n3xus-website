@@ -111,7 +111,7 @@ export const RETAINER_AREAS: RetainerArea[] = [
       },
       {
         id: 'phone-assistant',
-        name: '24/7 AI Inbound Phone Assistant',
+        name: 'After-Hours AI Phone Assistant',
         scope: 'Voice agent answering calls, qualifying leads and booking appointments directly to calendar.',
       },
     ],

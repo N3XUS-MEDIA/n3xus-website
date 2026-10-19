@@ -28,9 +28,13 @@ export const websiteOsPage: ServicePageContent = {
     },
 
     {
-      type: 'compare',
+      type: 'explainer',
       title: 'Two versions of the same website.',
-      before: {
+      summary:
+        'Five behaviours of a brochure website, each paired with what a Website Operating System does instead. A brochure lists services and the visitor leaves; the operating system books, quotes and sells. A contact form lands in an inbox; leads are qualified into your CRM. Quoting is manual and slow; quotes and payments are instant. Data sits in spreadsheets; there is one live source of truth. A brochure is rebuilt every few years; the operating system improves every month.',
+      diagram: {
+        kind: 'compareVisual',
+        before: {
         label: 'A brochure website',
         rows: [
           'Lists services — visitor leaves',
@@ -50,95 +54,136 @@ export const websiteOsPage: ServicePageContent = {
           'Compounds every single month',
         ],
       },
+      },
     },
 
     {
-      type: 'features',
+      type: 'explainer',
       eyebrow: 'What we connect',
       title: 'Everything your business runs on — behind one front door.',
       lede: 'We don’t sell you more tools. We connect the ones you already pay for, and add what’s missing — so your website stops being a separate thing you maintain and becomes the place the business operates from.',
-      items: [
-        {
-          title: 'Bookings & scheduling',
-          body: 'Customers book, reschedule and pay deposits themselves. Calendars sync, reminders send automatically, and no-shows drop without anyone lifting a phone.',
-          outcome: 'Replaces phone-tag, and the no-show that follows it',
-        },
-        {
-          title: 'CRM & sales pipeline',
-          body: 'Every enquiry lands as a tracked record, scored and routed to the right person. Nothing sits forgotten in a shared inbox, and you can see exactly where revenue is stuck.',
-          outcome: 'Replaces the shared inbox nobody actually owns',
-        },
-        {
-          title: 'Payments, quotes & invoicing',
-          body: 'Generate quotes, take deposits, run subscriptions and reconcile invoices directly from the site. Card and EFT settlement.',
-          outcome: 'Turns days of quote turnaround into minutes',
-        },
-        {
-          title: 'AI agents & assistants',
-          body: 'An assistant that knows your business, answers real questions, qualifies leads, books jobs and hands off to a human at the right moment — on the site and on WhatsApp.',
-          outcome: 'Answers the enquiry that arrives after hours',
-        },
-        {
-          title: 'Workflow automation',
-          body: 'Follow-ups, reminders, handovers, escalations and reports. Every repetitive step your staff does by hand becomes a workflow that runs without them.',
-          outcome: 'Staff hours back, and steps that never get skipped',
-        },
-        {
-          title: 'Live dashboards',
-          body: 'Leads, bookings, revenue, spend and pipeline on one screen, updating as it happens, with attribution back to the channel that produced each sale.',
-          outcome: 'Decisions stop waiting on a monthly spreadsheet',
-        },
-        {
-          title: 'Client & staff portals',
-          body: 'Secure logins where customers track jobs, download documents and pay, and where your team works — without another per-seat subscription.',
-          outcome: 'Fewer “where is my job?” calls, every week',
-        },
-        {
-          title: 'Inventory & operations',
-          body: 'Stock, orders, job progress and fulfilment connected to the same system your customers and staff already use, with no double-capturing.',
-          outcome: 'One version of the truth, so decisions stop waiting',
-        },
-      ],
+      summary:
+        'A diagram with your website at the centre, connected to eight parts of the business: bookings, crm & pipeline, quotes & payments, ai assistant, automation, live dashboards, portals, inventory. Each part can be selected to read what it does and what it replaces.',
+      diagram: {
+        kind: 'osHub',
+        centre: 'Your website',
+        items: [
+          {
+            label: 'Bookings',
+            icon: 'calendar',
+            title: 'Bookings & scheduling',
+            body: 'Customers book, reschedule and pay deposits themselves. Calendars sync, reminders send automatically, and no-shows drop without anyone lifting a phone.',
+            outcome: 'Replaces phone-tag, and the no-show that follows it',
+          },
+          {
+            label: 'CRM & pipeline',
+            icon: 'people',
+            title: 'CRM & sales pipeline',
+            body: 'Every enquiry lands as a tracked record, scored and routed to the right person. Nothing sits forgotten in a shared inbox, and you can see exactly where revenue is stuck.',
+            outcome: 'Replaces the shared inbox nobody actually owns',
+          },
+          {
+            label: 'Quotes & payments',
+            icon: 'card',
+            title: 'Payments, quotes & invoicing',
+            body: 'Generate quotes, take deposits, run subscriptions and reconcile invoices directly from the site. Card and EFT settlement.',
+            outcome: 'Turns days of quote turnaround into minutes',
+          },
+          {
+            label: 'AI assistant',
+            icon: 'chat',
+            title: 'AI agents & assistants',
+            body: 'An assistant that knows your business, answers real questions, qualifies leads, books jobs and hands off to a human at the right moment — on the site and on WhatsApp.',
+            outcome: 'Answers the enquiry that arrives after hours',
+          },
+          {
+            label: 'Automation',
+            icon: 'gear',
+            title: 'Workflow automation',
+            body: 'Follow-ups, reminders, handovers, escalations and reports. Every repetitive step your staff does by hand becomes a workflow that runs without them.',
+            outcome: 'Staff hours back, and steps that never get skipped',
+          },
+          {
+            label: 'Live dashboards',
+            icon: 'chart',
+            title: 'Live dashboards',
+            body: 'Leads, bookings, revenue, spend and pipeline on one screen, updating as it happens, with attribution back to the channel that produced each sale.',
+            outcome: 'Decisions stop waiting on a monthly spreadsheet',
+          },
+          {
+            label: 'Portals',
+            icon: 'portal',
+            title: 'Client & staff portals',
+            body: 'Secure logins where customers track jobs, download documents and pay, and where your team works — without another per-seat subscription.',
+            outcome: 'Fewer “where is my job?” calls, every week',
+          },
+          {
+            label: 'Inventory',
+            icon: 'box',
+            title: 'Inventory & operations',
+            body: 'Stock, orders, job progress and fulfilment connected to the same system your customers and staff already use, with no double-capturing.',
+            outcome: 'One version of the truth, so decisions stop waiting',
+          },
+        ],
+      },
     },
 
     {
-      type: 'timeline',
+      type: 'explainer',
       eyebrow: 'What it looks like in practice',
       title: 'One enquiry, start to finish, after you’ve closed for the weekend.',
       lede: 'Friday, twelve minutes after the last person in your office logged off. This is the same journey on a brochure site and on an operating system — the difference isn’t the traffic, it’s what happens after someone arrives.',
-      steps: [
-        {
-          time: '17:12',
-          actor: 'Customer',
-          title: 'They arrive from an AI answer, not a search result',
-          body: 'Someone asks an assistant who to use for the work you do. Your site is structured and credible enough to be cited, so you’re in the answer. They land on the page just after five on a Friday.',
+      summary:
+        'The same Friday-evening enquiry shown on two websites side by side. On a brochure website the visitor fills in a contact form at 17:12 and nothing else happens until someone reads it on Monday at 08:10, by which time they have booked elsewhere. On a Website Operating System they get answers from the assistant, book and pay a deposit, and their record is created automatically, so on Monday the job is already handled.',
+      diagram: {
+        kind: 'twoTrack',
+        before: {
+          label: 'A brochure website',
+          steps: [
+            { text: 'They fill in the contact form, and wait' },
+            { text: 'No reply — the form is sitting in an inbox', idle: true },
+            { text: 'No booking, no deposit', idle: true },
+            { text: 'No record — nobody has seen it yet', idle: true },
+            { text: 'Someone reads the form. They’ve already booked whoever answered first.' },
+          ],
         },
-        {
-          time: '17:14',
-          actor: 'Assistant',
-          title: 'They get a real answer instead of a contact form',
-          body: 'They ask something specific — do you cover their area, can you handle their size of job, roughly what does it cost. The assistant knows your business well enough to answer properly, and asks the two or three questions you’d have asked yourself.',
+        after: {
+          label: 'A Website Operating System',
+          steps: [
+            {
+              time: '17:12',
+              actor: 'Customer',
+              title: 'They arrive from an AI answer, not a search result',
+              body: 'Someone asks an assistant who to use for the work you do. Your site is structured and credible enough to be cited, so you’re in the answer. They land on the page just after five on a Friday.',
+            },
+            {
+              time: '17:14',
+              actor: 'Assistant',
+              title: 'They get a real answer instead of a contact form',
+              body: 'They ask something specific — do you cover their area, can you handle their size of job, roughly what does it cost. The assistant knows your business well enough to answer properly, and asks the two or three questions you’d have asked yourself.',
+            },
+            {
+              time: '17:19',
+              actor: 'System',
+              title: 'They book, and pay a deposit, without you',
+              body: 'A real slot from your live calendar, not a “we’ll be in touch”. Deposit taken, confirmation sent, reminders scheduled. The slot is gone from your availability before you’ve reached the car park.',
+            },
+            {
+              time: '17:19',
+              actor: 'System',
+              title: 'The record writes itself',
+              body: 'They exist in your CRM with everything they said, scored against how you rank a good job, routed to whoever handles that kind of work. Nobody re-types anything, and nothing depends on someone remembering.',
+            },
+            {
+              time: 'Mon 08:10',
+              actor: 'You',
+              title: 'You find out on Monday — and it’s already handled',
+              body: 'The job is on the calendar, the deposit cleared on Friday, the file is prepared, and the dashboard shows where it came from. Your first decision of the week is about the work, not about which weekend enquiries still need chasing.',
+            },
+          ],
         },
-        {
-          time: '17:19',
-          actor: 'System',
-          title: 'They book, and pay a deposit, without you',
-          body: 'A real slot from your live calendar, not a “we’ll be in touch”. Deposit taken, confirmation sent, reminders scheduled. The slot is gone from your availability before you’ve reached the car park.',
-        },
-        {
-          time: '17:19',
-          actor: 'System',
-          title: 'The record writes itself',
-          body: 'They exist in your CRM with everything they said, scored against how you rank a good job, routed to whoever handles that kind of work. Nobody re-types anything, and nothing depends on someone remembering.',
-        },
-        {
-          time: 'Mon 08:10',
-          actor: 'You',
-          title: 'You find out on Monday — and it’s already handled',
-          body: 'The job is on the calendar, the deposit cleared on Friday, the file is prepared, and the dashboard shows where it came from. Your first decision of the week is about the work, not about which weekend enquiries still need chasing.',
-        },
-      ],
-      coda: 'On a brochure site, that same person filled in a form at 17:12 on Friday and waited. By the time anyone read it on Monday morning, they had already booked whoever answered first. Nothing about the traffic changed. Everything about the outcome did.',
+        coda: 'On a brochure site, that same person filled in a form at 17:12 on Friday and waited. By the time anyone read it on Monday morning, they had already booked whoever answered first. Nothing about the traffic changed. Everything about the outcome did.',
+      },
     },
 
     {

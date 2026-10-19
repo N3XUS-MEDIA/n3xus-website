@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Container } from '@/ui/layout/Container';
 import { Section, SectionHeading } from '@/ui/layout/Section';
-import { Button } from '@/ui/primitives/Button';
+import { EnquiryPanel } from '@/ui/marketing/EnquiryPanel';
 import { JsonLd } from '@/ui/seo/JsonLd';
 import {
   INTENT_LABEL,
@@ -14,7 +14,7 @@ import {
 } from '@/content/blog';
 import { FaqList } from '@/ui/marketing/FaqList';
 import { breadcrumbLd, faqLd } from '@/content/structuredData';
-import { ctas, site } from '@/content/copy';
+import { site } from '@/content/copy';
 
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
@@ -151,22 +151,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         </Section>
       ) : null}
 
-      <Section tone="mist" bordered width="narrow">
-        <div className="rounded-lg bg-carbon p-8 sm:p-10">
-          <SectionHeading
-            onCarbon
-            eyebrow="Next step"
-            title="Ready to put this into practice?"
-            lede="Book a consultation and we will map where this applies to your business — and you keep the findings either way."
-          />
-          <div className="mt-8">
-            <Button asChild size="lg">
-              <a href={site.bookingUrl} {...site.bookingLinkProps}>
-                {ctas.book}
-              </a>
-            </Button>
-          </div>
-        </div>
+      <Section tone="mist" bordered>
+        <EnquiryPanel
+          eyebrow="Next step"
+          title="Want help putting this into practice?"
+          lede="Tell us what you’re dealing with and we’ll tell you what we’d look at first. You keep whatever we work out, whether or not we work together."
+        />
       </Section>
 
       {related.length ? (
